@@ -17,7 +17,7 @@ class AsesiResource extends Resource
 {
     protected static ?string $model = Asesi::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user-group';
 
     protected static ?string $navigationGroup = 'Admin';
 
@@ -50,7 +50,8 @@ class AsesiResource extends Resource
                     ->email()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('aktif')
-                    ->required(),
+                    ->required()
+                    ->inline(false),
             ]);
     }
 
@@ -64,8 +65,7 @@ class AsesiResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

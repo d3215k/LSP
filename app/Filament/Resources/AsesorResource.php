@@ -73,8 +73,7 @@ class AsesorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

@@ -24,6 +24,8 @@ class UserResource extends Resource
 
     protected static ?string $modelLabel = 'Pengguna';
 
+    protected static ?int $navigationSort = 10;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -57,8 +59,7 @@ class UserResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('type')
                     ->badge(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

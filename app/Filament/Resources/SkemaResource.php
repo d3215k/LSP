@@ -22,6 +22,8 @@ class SkemaResource extends Resource
 
     protected static ?string $navigationGroup = 'Admin';
 
+    protected static ?int $navigationSort = 9;
+
     public static function form(Form $form): Form
     {
         return $form
@@ -52,6 +54,7 @@ class SkemaResource extends Resource
                                 Forms\Components\TextInput::make('level_kkni')
                                     ->maxLength(255),
                                 Forms\Components\Toggle::make('aktif')
+                                    ->inline(false)
                                     ->required(),
                             ]),
                         Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')
@@ -71,7 +74,9 @@ class SkemaResource extends Resource
                                 Forms\Components\TextInput::make('sub_bidang_kbji')
                                     ->maxLength(255),
                             ]),
-                    ]),
+                    ])
+                    ->columns(2)
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -91,9 +96,9 @@ class SkemaResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

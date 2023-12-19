@@ -13,6 +13,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SertifikatResource extends Resource
@@ -23,20 +24,28 @@ class SertifikatResource extends Resource
 
     protected static ?string $navigationGroup = 'Admin';
 
+    protected static ?int $navigationSort = 1;
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\TextInput::make('no_sertifikat')
+                    ->default('LSP-' . random_int(100000, 999999))
+                    ->disabled()
+                    ->dehydrated()
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(32)
+                    ->unique(Sertifikat::class, 'no_sertifikat', ignoreRecord: true),
                 Forms\Components\Select::make('nama')
                     ->label('Nama')
                     ->options(Asesi::all()->pluck('nama', 'nama'))
+                    ->required()
                     ->searchable(),
                 Forms\Components\Select::make('skema')
                     ->label('Skema')
-                    ->options(Skema::all()->pluck('judul', 'judul'))
+                    ->options(Skema::all()->pluck('nama', 'nama'))
+                    ->required()
                     ->searchable(),
                 Forms\Components\TextInput::make('tempat')
                     ->required()
@@ -54,28 +63,31 @@ class SertifikatResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('no_sertifikat')
-                    ->searchable(),
+                    ->searchable()
+                    ->description(fn (Sertifikat $record): string => $record->skema),
                 Tables\Columns\TextColumn::make('nama')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('skema')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tempat')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('tanggal')
-                    ->date()
-                    ->sortable(),
-                Tables\Columns\TextColumn::make('masa_berlaku')
                     ->searchable(),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('Cetak Sertifikat')
+                    ->iconButton()
+                    ->icon('heroicon-m-printer'),
+                Tables\Actions\ActionGroup::make([
+                    Tables\Actions\ViewAction::make(),
+                    Tables\Actions\EditAction::make(),
+                    Tables\Actions\DeleteAction::make(),
+                ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Cetak Sertifikat')
+                        ->requiresConfirmation()
+                        ->icon('heroicon-m-printer')
+                        ->action(fn (Collection $records) => $records->each->print())
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
