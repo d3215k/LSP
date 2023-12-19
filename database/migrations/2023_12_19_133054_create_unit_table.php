@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Skema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,15 +12,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('unit', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');
-            $table->unsignedTinyInteger('type')->default(3);
+            $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
+            $table->string('kode');
+            $table->string('judul');
+            $table->text('deskripsi')->nullable();
             $table->boolean('aktif')->default(true);
-            $table->rememberToken();
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('unit');
     }
 };
