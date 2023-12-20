@@ -29,9 +29,9 @@ class KriteriaUnjukKerjaResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('elemen_id')
+                Forms\Components\Select::make('elemen_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship(name: 'elemen', titleAttribute: 'nama'),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),

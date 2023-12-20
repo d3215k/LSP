@@ -29,14 +29,16 @@ class ElemenResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('unit_id')
+                Forms\Components\Select::make('unit_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship(name: 'unit', titleAttribute: 'judul'),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Toggle::make('aktif')
-                    ->required(),
+                    ->required()
+                    ->inline(false)
+                    ->default(true),
             ]);
     }
 
@@ -76,7 +78,7 @@ class ElemenResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\KukRelationManager::class
         ];
     }
 

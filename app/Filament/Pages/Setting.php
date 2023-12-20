@@ -9,7 +9,7 @@ use Filament\Pages\SettingsPage;
 
 class Setting extends SettingsPage
 {
-    protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static ?string $navigationIcon = 'heroicon-o-home-modern';
 
     protected static ?string $navigationLabel = 'Profil LSP';
 

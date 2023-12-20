@@ -29,20 +29,23 @@ class UnitResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('skema_id')
+                Forms\Components\Select::make('skema_id')
                     ->required()
-                    ->numeric(),
+                    ->relationship(name: 'skema', titleAttribute: 'nama'),
                 Forms\Components\TextInput::make('kode')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('judul')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('deskripsi')
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
-                    ->required(),
+                    ->required()
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
