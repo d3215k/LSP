@@ -53,6 +53,9 @@ class SkemaResource extends Resource
                                     ->numeric(),
                                 Forms\Components\TextInput::make('level_kkni')
                                     ->maxLength(255),
+                                Forms\Components\FileUpload::make('file')
+                                    ->directory('skema')
+                                    ->acceptedFileTypes(['application/pdf']),
                                 Forms\Components\Toggle::make('aktif')
                                     ->inline(false)
                                     ->required(),

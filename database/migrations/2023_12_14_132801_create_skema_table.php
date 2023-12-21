@@ -29,6 +29,7 @@ return new class extends Migration
             $table->string('kbji')->nullable();
             $table->string('sub_kbji')->nullable();
             $table->string('sub_bidang_kbji')->nullable();
+            $table->string('file')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

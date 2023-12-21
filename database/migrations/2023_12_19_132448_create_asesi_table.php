@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('asesi', function (Blueprint $table) {
             $table->id();
-            $table->string('no_identitas')->nullable();
+            $table->foreignId('kompetensi_keahlian_id')->constrained('kompetensi_keahlian')->cascadeOnDelete();
             $table->string('nama');
+            $table->string('nisn')->nullable();
+            $table->string('nik')->nullable();
             $table->char('jk', 1)->nullable();
             $table->string('tempat_lahir')->nullable();
             $table->date('tanggal_lahir')->nullable();
@@ -24,6 +26,7 @@ return new class extends Migration
             $table->string('no_telepon_rumah')->nullable();
             $table->string('no_telepon_hp')->nullable();
             $table->string('email')->nullable();
+            $table->string('foto')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

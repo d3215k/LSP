@@ -25,10 +25,18 @@ class AsesiResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('no_identitas')
+                Forms\Components\Select::make('kompetensi')
+                    ->relationship('kompetensiKeahlian', 'nama')
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\TextInput::make('nisn')
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('nik')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->required(),
                 Forms\Components\TextInput::make('jk')
                     ->maxLength(1),
                 Forms\Components\TextInput::make('tempat_lahir')
@@ -48,10 +56,12 @@ class AsesiResource extends Resource
                     ->maxLength(255),
                 Forms\Components\TextInput::make('email')
                     ->email()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->required(),
                 Forms\Components\Toggle::make('aktif')
                     ->required()
-                    ->inline(false),
+                    ->inline(false)
+                    ->default(true),
             ]);
     }
 
