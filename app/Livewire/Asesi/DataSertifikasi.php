@@ -20,8 +20,6 @@ class DataSertifikasi extends Component implements HasForms
 
     public ?array $data = [];
 
-    public $signature;
-
     public function mount(): void
     {
         $this->form->fill();
@@ -52,7 +50,7 @@ class DataSertifikasi extends Component implements HasForms
 
     public function save(): void
     {
-        dd($this->signature);
+        dd($this->form->getState());
     }
 
     public function render()

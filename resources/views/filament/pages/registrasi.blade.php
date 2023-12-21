@@ -24,9 +24,11 @@
 
     @if ($activeTab === 'tab1')
 
-        @livewire('asesi.rincian-data-pemohon-sertifikasi')
+        {{-- @livewire('asesi.rincian-data-pemohon-sertifikasi')
 
-        @livewire('asesi.data-sertifikasi')
+        @livewire('asesi.data-sertifikasi') --}}
+
+        @livewire('asesi.bukti-kelengkapan-pemohon')
 
     @endif
 

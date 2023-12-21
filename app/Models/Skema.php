@@ -16,4 +16,9 @@ class Skema extends Model
     {
         return $this->hasMany(Unit::class);
     }
+
+    public function persyaratan(): HasMany
+    {
+        return $this->hasMany(Persyaratan::class);
+    }
 }
