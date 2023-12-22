@@ -23,14 +23,14 @@ class PeriodeResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('nama')
+                    ->required()
+                    ->maxLength(255),
                 Forms\Components\Select::make('skema_id')
                     ->required()
                     ->relationship('skema', 'nama')
                     ->searchable()
                     ->preload(),
-                Forms\Components\TextInput::make('nama')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\DatePicker::make('buka')
                     ->required(),
                 Forms\Components\DatePicker::make('tutup')

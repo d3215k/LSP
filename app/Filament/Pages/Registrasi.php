@@ -12,6 +12,6 @@ class Registrasi extends Page
 
     protected static ?string $navigationGroup = 'Uji Kompetensi';
 
-    public string $activeTab = 'tab1';
+    public string $activeTab = 'tab2';
 
 }

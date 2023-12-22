@@ -1,22 +1,16 @@
 <x-filament::section>
     <x-slot name="heading">
-        Bagian 3 : Bukti Kelengkapan Pemohon
+        Bagian 1 : Dokumen Bukti Asesmen Mandiri
     </x-slot>
 
     <x-slot name="description">
-        Bukti Persyaratan Dasar Pemohon
+        Upload Semua Dokumen Bukti-bukti Untuk Mendukung Asesmen Mandiri
     </x-slot>
 
     {{ $this->table }}
 
     <form>
-
-
-        <p class="py-2">Tanda tangan</p>
-
-        <x-signature-pad wire:model="signature"/>
-
-        <x-filament::button wire:click="handleSubmit" type="submit" class="mt-2">
+        <x-filament::button wire:click="handleSubmit" type="button" class="mt-2">
             Submit
         </x-filament::button>
     </form>

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asesmen', function (Blueprint $table) {
+        Schema::create('bukti_asesmen_mandiri', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
-            $table->string('tujuan')->nullable();
-            $table->unsignedTinyInteger('status')->default();
+            $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
+            $table->string('nama');
+            $table->string('deskripsi')->nullable();
+            $table->string('file');
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asesmen');
+        Schema::dropIfExists('bukti_asesmen_mandiri');
     }
 };

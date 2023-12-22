@@ -34,6 +34,8 @@
 
     @if ($activeTab === 'tab2')
 
+        @livewire('asesi.dokumen-bukti-asesmen-mandiri')
+
     @endif
 
 </x-filament-panels::page>

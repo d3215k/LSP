@@ -10,6 +10,8 @@ class Periode extends Model
 {
     use HasFactory;
 
+    protected $table = 'periode';
+
     public function skema(): BelongsTo
     {
         return $this->belongsTo(Skema::class);

@@ -69,13 +69,12 @@ class AsesiResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('no_identitas')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('kompetensiKeahlian.nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //
