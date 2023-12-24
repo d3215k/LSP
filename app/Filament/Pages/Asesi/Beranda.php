@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Asesi;
 
+use App\Enums\AsesmenStatus;
 use Filament\Pages\Page;
 
 class Beranda extends Page
@@ -10,6 +11,8 @@ class Beranda extends Page
 
     protected static string $view = 'filament.pages.asesi.beranda';
 
+    public $showDaftarAsesmen = false;
+
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->isAsesi;
@@ -17,6 +20,7 @@ class Beranda extends Page
 
     public function mount(): void
     {
+        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
         abort_unless(auth()->user()->isAsesi, 403);
     }
 }

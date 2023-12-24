@@ -1,5 +1,7 @@
 <x-filament-panels::page>
 
-    @livewire('asesi.daftar-asesmen-component')
+    @if ($showDaftarAsesmen)
+        @livewire('asesi.daftar-asesmen-component')
+    @endif
 
 </x-filament-panels::page>

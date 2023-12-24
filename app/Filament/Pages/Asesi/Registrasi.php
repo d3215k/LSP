@@ -14,7 +14,7 @@ class Registrasi extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return false;
+        return auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
     }
 
     public $asesmen;

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Pages\Asesi;
 
+use App\Enums\AsesmenStatus;
 use App\Enums\UserType;
 use Filament\Pages\Page;
 
@@ -15,7 +16,7 @@ class UjiKompetensi extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi;
+        return auth()->user()->asesi->asesmen()->where('status', '>', 1)->exists();
     }
 
     public function mount(): void

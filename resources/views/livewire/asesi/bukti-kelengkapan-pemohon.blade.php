@@ -11,7 +11,6 @@
 
     <form>
 
-
         <p class="py-2">Tanda tangan</p>
 
         <x-signature-pad wire:model="signature"/>

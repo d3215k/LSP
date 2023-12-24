@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Asesi;
 
+use App\Models\Asesmen;
 use App\Models\BuktiPersyaratan;
 use App\Models\Persyaratan;
 use App\Models\Skema;
@@ -24,6 +25,8 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
 
     public $signature;
 
+    public Asesmen $asesmen;
+
     public $data;
 
     public function mount(): void
@@ -37,9 +40,10 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
     {
         return $table
             ->query(
-                Persyaratan::query()->where('skema_id', 1) // TODO
+                Persyaratan::query()->where('skema_id', $this->asesmen->skema_id)
             )
             ->columns([
+                TextColumn::make('nama'),
                 TextColumn::make('nama'),
             ])
             ->filters([
