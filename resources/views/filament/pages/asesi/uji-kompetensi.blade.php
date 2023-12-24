@@ -24,9 +24,9 @@
 
     @if ($activeTab === 'tab1')
 
-        {{-- @livewire('asesi.rincian-data-pemohon-sertifikasi')
+        @livewire('asesi.rincian-data-pemohon-sertifikasi')
 
-        @livewire('asesi.data-sertifikasi') --}}
+        @livewire('asesi.data-sertifikasi')
 
         @livewire('asesi.bukti-kelengkapan-pemohon')
 
@@ -34,7 +34,9 @@
 
     @if ($activeTab === 'tab2')
 
-        @livewire('asesi.dokumen-bukti-asesmen-mandiri')
+        {{-- @livewire('asesi.dokumen-bukti-asesmen-mandiri') --}}
+
+        @livewire('asesi.asesmen-mandiri-component')
 
     @endif
 

@@ -19,6 +19,16 @@ class Setting extends SettingsPage
 
     protected static ?int $navigationSort = 11;
 
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->isAdmin;
+    }
+
+    public function mount(): void
+    {
+        abort_unless(auth()->user()->isAdmin, 403);
+    }
+
     public function form(Form $form): Form
     {
         return $form

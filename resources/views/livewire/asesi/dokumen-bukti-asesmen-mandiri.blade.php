@@ -9,12 +9,4 @@
 
     {{ $this->table }}
 
-    <form>
-        <x-filament::button wire:click="handleSubmit" type="button" class="mt-2">
-            Submit
-        </x-filament::button>
-    </form>
-
-    {{-- <x-filament-actions::modals /> --}}
-
 </x-filament::section>

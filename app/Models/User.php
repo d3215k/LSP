@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserType;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,4 +45,24 @@ class User extends Authenticatable
         'password' => 'hashed',
         'type' => UserType::class,
     ];
+
+    public function getIsAdminAttribute(): bool
+    {
+        return $this->type === UserType::ADMIN;
+    }
+
+    public function getIsAsesorAttribute(): bool
+    {
+        return $this->type === UserType::ASESOR;
+    }
+
+    public function getIsAsesiAttribute(): bool
+    {
+        return $this->type === UserType::ASESI;
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return true;
+    }
 }

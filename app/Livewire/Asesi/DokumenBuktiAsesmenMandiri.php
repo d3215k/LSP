@@ -8,8 +8,11 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
+use Filament\Tables\Actions\ActionGroup;
 use Filament\Tables\Actions\CreateAction;
 use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\ViewAction;
+use Filament\Tables\Columns\SelectColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -30,10 +33,15 @@ class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
             ->columns([
                 TextColumn::make('nama'),
                 TextColumn::make('deskripsi'),
-                TextColumn::make('file'),
+                SelectColumn::make('status')
+                    ->options([
+                        'transkrip Nilai',
+                        'PKL',
+                    ])
             ])
             ->headerActions([
                 CreateAction::make()
+                    ->label('Tambah Dokumen')
                     ->model(BuktiAsesmenMandiri::class)
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['asesmen_id'] = 1;
@@ -50,7 +58,14 @@ class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
                     ])
             ])
             ->actions([
-                DeleteAction::make(),
+                Action::make('Lihat dokumen')
+                    ->button()
+                    ->icon('heroicon-m-paper-clip')
+                    ->url(fn (BuktiAsesmenMandiri $record): string => asset('storage/'.$record->file))
+                    ->openUrlInNewTab(),
+                ActionGroup::make([
+                    DeleteAction::make(),
+                ])
             ])
             ->paginated(false);
     }

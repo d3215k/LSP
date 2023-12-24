@@ -75,7 +75,6 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
 
     public function handleSubmit(): void
     {
-        dd($this->signature);
 
         $folderPath = public_path('signature/');
 

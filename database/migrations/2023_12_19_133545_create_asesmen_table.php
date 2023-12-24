@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\AsesmenStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -15,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
             $table->string('tujuan')->nullable();
-            $table->unsignedTinyInteger('status')->default();
+            $table->unsignedTinyInteger('status')->default(AsesmenStatus::REGISTRASI);
             $table->timestamps();
         });
     }
