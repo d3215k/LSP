@@ -26,7 +26,9 @@ class RincianDataPemohonSertifikasi extends Component implements HasForms
 
     public function mount(): void
     {
-        $this->form->fill();
+        $this->form->fill(
+            $this->asesmen->rincian->toArray()
+        );
     }
 
     public function form(Form $form): Form
