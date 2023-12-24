@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Asesi;
 
+use App\Models\Asesmen;
+use App\Models\Unit;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -9,16 +11,21 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Concerns\InteractsWithTable;
+use Filament\Tables\Contracts\HasTable;
+use Filament\Tables\Table;
 use Livewire\Component;
 
-use function Pest\Laravel\options;
-
-class DataSertifikasi extends Component implements HasForms
+class DataSertifikasi extends Component implements HasForms, HasTable
 {
-
+    use InteractsWithTable;
     use InteractsWithForms;
 
     public ?array $data = [];
+
+    public Asesmen $asesmen;
 
     public function mount(): void
     {
@@ -32,25 +39,44 @@ class DataSertifikasi extends Component implements HasForms
                 Fieldset::make('Skema Sertifikasi (Okupasi)')
                     ->schema([
                         Placeholder::make('judul')
-                            ->content('SKEMA')
+                            ->content($this->asesmen->skema->nama)
                             ->inlineLabel(),
                         Placeholder::make('nomor')
-                            ->content('1345678')
+                            ->content($this->asesmen->skema->kode)
                             ->inlineLabel(),
                     ])->columns(1),
-                // Select::make('tujuan')
-                //     ->options([
-                //         'sertifikasi' => 'Sertifikasi'
-                //     ])
-                //     ->default('sertifikasi')
-                //     ->inlineLabel()
-                //     ->selectablePlaceholder(false),
-            ]);
+                Select::make('tujuan')
+                    ->options([
+                        'sertifikasi' => 'Sertifikasi',
+                        'lainnya' => 'Lainnya',
+                    ])
+                    ->default('sertifikasi')
+                    ->inlineLabel()
+                    ->required()
+                    ->selectablePlaceholder(false),
+            ])
+            ->statePath('data');
     }
 
-    public function save(): void
+    public function table(Table $table): Table
     {
-        dd($this->form->getState());
+        return $table
+            ->query(Unit::query()->where('skema_id', $this->asesmen->skema->id))
+            ->columns([
+                TextColumn::make('kode'),
+                TextColumn::make('judul'),
+            ])
+            ->paginated(false);
+    }
+
+    public function handleSubmit(): void
+    {
+        $this->asesmen->update($this->form->getState());
+
+        Notification::make()
+            ->title('Data Sertifikasi Tersimpan!')
+            ->success()
+            ->send();
     }
 
     public function render()

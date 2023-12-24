@@ -19,7 +19,9 @@ class PeriodeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationGroup = 'Admin';
+protected static ?string $navigationGroup = 'Admin';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -47,10 +49,9 @@ class PeriodeResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('skema_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('nama')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('skema.nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('buka')
                     ->date()
@@ -60,14 +61,7 @@ class PeriodeResource extends Resource
                     ->sortable(),
                 Tables\Columns\TextColumn::make('lokasi')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

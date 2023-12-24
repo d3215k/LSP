@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('buka');
             $table->date('tutup');
             $table->string('lokasi');
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

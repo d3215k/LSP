@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedTinyInteger('type')->default(3);
             $table->boolean('aktif')->default(true);
             $table->rememberToken();
+            $table->foreignId('asesi_id')->nullable()->cascadeOnDelete();
             $table->timestamps();
         });
     }

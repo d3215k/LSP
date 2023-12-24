@@ -58,6 +58,7 @@ class SkemaResource extends Resource
                                     ->acceptedFileTypes(['application/pdf']),
                                 Forms\Components\Toggle::make('aktif')
                                     ->inline(false)
+                                    ->default(true)
                                     ->required(),
                             ]),
                         Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')

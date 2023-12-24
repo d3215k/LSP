@@ -13,7 +13,7 @@ class Setting extends SettingsPage
 
     protected static ?string $navigationLabel = 'Profil LSP';
 
-    protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationGroup = 'Sistem';
 
     protected static string $settings = GeneralSetting::class;
 

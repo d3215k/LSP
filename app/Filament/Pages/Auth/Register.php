@@ -36,13 +36,15 @@ class Register extends BaseRegister
 
         $data = $this->form->getState();
 
-        Asesi::create([
+        $asesi = Asesi::create([
             'nama' => $data['name'],
             'email' => $data['email'],
             'kompetensi_keahlian_id' => $data['kompetensi_keahlian_id'],
         ]);
 
         unset($data['kompetensi_keahlian_id']);
+
+        $data['asesi_id'] = $asesi->id;
 
         $user = $this->getUserModel()::create($data);
 
