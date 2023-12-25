@@ -12,17 +12,17 @@
             <p class="text-sm font-medium leading-6 text-gray-950 dark:text-white">Tanda tangan</p>
 
             <div class="mt-6">
-                @if ($asesmen->rincian->ttd)
+                @if ($asesmen->rincian?->ttd)
                     <img width="300px" alt="{{ 'ttd of '.$asesmen->rincian->nama }}" src="{{ asset('storage/'.$asesmen->rincian->ttd) }}" />
                 @else
-                <x-signature-pad wire:model="signature"/>
+                    <x-signature-pad wire:model="signature"/>
                 @endif
             </div>
         </form>
 
     </x-filament::fieldset>
 
-    <x-filament::button class="mt-4" wire:click="handleSubmit" wire:confirm="Apakah anda yakin semua data sudah benar?">
+    <x-filament::button class="mt-4" wire:click="handleSubmit" wire:confirm="Anda yakin untuk submit Pendaftaran APL 01?">
         Simpan
     </x-filament::button>
 </div>

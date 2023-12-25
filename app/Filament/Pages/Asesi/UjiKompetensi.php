@@ -12,7 +12,7 @@ class UjiKompetensi extends Page
 
     protected static string $view = 'filament.pages.asesi.uji-kompetensi';
 
-    public string $activeTab = 'tab1';
+    public string $activeTab = 'tab2';
 
     public static function shouldRegisterNavigation(): bool
     {

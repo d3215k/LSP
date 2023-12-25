@@ -12,6 +12,10 @@ class Registrasi extends Page
 
     protected static string $view = 'filament.pages.asesi.registrasi';
 
+    protected static ?string $title = 'FR.APL.01';
+
+    protected ?string $subheading = ' PERMOHONAN SERTIFIKASI KOMPETENSI';
+
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();

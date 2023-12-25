@@ -20,7 +20,8 @@ class Beranda extends Page
 
     public function mount(): void
     {
-        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
         abort_unless(auth()->user()->isAsesi, 403);
+
+        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
     }
 }

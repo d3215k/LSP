@@ -15,8 +15,8 @@ return new class extends Migration
         Schema::create('asesmen', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asesi_id')->constrained('asesi', 'id')->cascadeOnDelete();
-            $table->foreignId('asesor_id')->constrained('asesor', 'id')->cascadeOnDelete();
-            $table->foreignId('periode_id')->constrained('periode', 'id')->cascadeOnDelete();
+            $table->foreignId('asesor_id')->nullable();
+            $table->foreignId('periode_id')->nullable(); // TODO
             $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
             $table->string('tujuan')->nullable();
             $table->unsignedTinyInteger('status')->default(AsesmenStatus::REGISTRASI);
