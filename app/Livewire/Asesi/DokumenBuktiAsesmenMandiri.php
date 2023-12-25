@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Asesi;
 
-use App\Models\BuktiAsesmenMandiri;
+use App\Models\BuktiMandiri;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -19,7 +19,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
+class DokumenBuktiMandiri extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -29,7 +29,7 @@ class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(BuktiAsesmenMandiri::query())
+            ->query(BuktiMandiri::query())
             ->columns([
                 TextColumn::make('nama'),
                 TextColumn::make('deskripsi'),
@@ -42,7 +42,7 @@ class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
             ->headerActions([
                 CreateAction::make()
                     ->label('Tambah Dokumen')
-                    ->model(BuktiAsesmenMandiri::class)
+                    ->model(BuktiMandiri::class)
                     ->mutateFormDataUsing(function (array $data): array {
                         $data['asesmen_id'] = 1;
                         return $data;
@@ -61,7 +61,7 @@ class DokumenBuktiAsesmenMandiri extends Component implements HasForms, HasTable
                 Action::make('Lihat dokumen')
                     ->button()
                     ->icon('heroicon-m-paper-clip')
-                    ->url(fn (BuktiAsesmenMandiri $record): string => asset('storage/'.$record->file))
+                    ->url(fn (BuktiMandiri $record): string => asset('storage/'.$record->file))
                     ->openUrlInNewTab(),
                 ActionGroup::make([
                     DeleteAction::make(),

@@ -10,16 +10,16 @@ class JawabanAsesmenMandiri extends Model
 {
     use HasFactory;
 
-    protected $table = 'jawaban_asesmen_mandiri';
+    protected $table = 'jawaban_mandiri';
 
     public function asesmenMandiri(): BelongsTo
     {
-        return $this->belongsTo(AsesmenMandiri::class);
+        return $this->belongsTo(Mandiri::class);
     }
 
     public function bukti(): BelongsTo
     {
-        return $this->belongsTo(BuktiAsesmenMandiri::class);
+        return $this->belongsTo(BuktiMandiri::class);
     }
 
     public function elemen(): BelongsTo
