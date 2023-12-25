@@ -1,46 +1,56 @@
 <?php
 
-namespace App\Livewire\Asesi;
+namespace App\Filament\Resources;
 
+use App\Filament\Resources\AsesmenResource\Pages;
+use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
-use App\Models\RincianDataPemohon;
+use App\Models\Periode;
+use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Section;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Concerns\InteractsWithForms;
-use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Notifications\Notification;
-use Livewire\Component;
+use Filament\Resources\Resource;
+use Filament\Tables;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class RincianDataPemohonSertifikasi extends Component implements HasForms
+class AsesmenResource extends Resource
 {
-    use InteractsWithForms;
+    protected static ?string $model = Asesmen::class;
 
-    public Asesmen $asesmen;
+    protected static ?string $navigationIcon = 'heroicon-o-document-check';
 
-    public ?array $data = [];
+    protected static ?string $navigationGroup = 'Admin';
 
-    public function mount(): void
-    {
-        $this->form->fill(
-            $this->asesmen->rincian?->toArray()
-        );
-    }
+    protected static ?int $navigationSort = 2;
 
-    public function form(Form $form): Form
+    public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\Select::make('skema_id')
+                    ->relationship('skema', 'nama') // TODO
+                    ->columnSpanFull()
+                    ->required(),
+                Forms\Components\Select::make('asesor_id')
+                    ->relationship('asesor', 'nama')
+                    ->required(),
+                Forms\Components\Select::make('periode_id')
+                    ->relationship('periode', 'nama')
+                    ->options(Periode::all()->pluck('nama', 'id')) // TODO
+                    ->required(),
+                Forms\Components\TextInput::make('tujuan')
+                    ->maxLength(255),
                 Fieldset::make('A. Data Pribadi')
+                    ->relationship('rincian')
                     ->schema([
                         TextInput::make('nama')
                             ->label('Nama Lengkap')
-                            ->required()
-                            ->default($this->asesmen->asesi->nama),
+                            ->required(),
                         TextInput::make('no_identitas')
                             ->label('No KTP/NIK/Paspor')
                             ->required(),
@@ -79,6 +89,7 @@ class RincianDataPemohonSertifikasi extends Component implements HasForms
                     ])
                     ->columns(2),
                 Fieldset::make('B. Data Pekerjaan Sekarang')
+                    ->relationship('rincian')
                     ->schema([
                         TextInput::make('nama_institusi')
                             ->label('Nama Institusi / Perusahaan')
@@ -102,33 +113,48 @@ class RincianDataPemohonSertifikasi extends Component implements HasForms
                             ->label('Email Kantor')
                             ->required(),
                     ]),
+            ]);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return $table
+            ->columns([
+                Tables\Columns\TextColumn::make('rincian.nama')
+                    ->label('Asesi')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('skema.nama')
+                    ->label('Skema')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('status')
+                    ->badge(),
             ])
-            ->statePath('data');
+            ->filters([
+                //
+            ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    // Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
-    public function save(): void
+    public static function getRelations(): array
     {
-        $data = $this->form->getState();
-
-        $data['tanggal_registrasi'] = today();
-
-        RincianDataPemohon::updateOrCreate(
-            [
-                'asesmen_id' => $this->asesmen->id,
-            ],
-            $data,
-        );
-
-        $this->dispatch('rincian-saved');
-
-        Notification::make()
-            ->title('Rincian Data Pemohon Sertifikasi Tersimpan!')
-            ->success()
-            ->send();
+        return [
+            RelationManagers\BuktiRelationManager::class,
+        ];
     }
 
-    public function render()
+    public static function getPages(): array
     {
-        return view('livewire.asesi.rincian-data-pemohon-sertifikasi');
+        return [
+            'index' => Pages\ListAsesmens::route('/'),
+            'create' => Pages\CreateAsesmen::route('/create'),
+            'edit' => Pages\EditAsesmen::route('/{record}/edit'),
+        ];
     }
 }

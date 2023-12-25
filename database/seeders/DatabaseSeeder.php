@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             KompetensiKeahlianSeeder::class,
+            SkemaSeeder::class,
         ]);
 
         \App\Models\User::factory()->create([

@@ -6,4 +6,6 @@
 
     <livewire:asesi.bukti-kelengkapan-pemohon :asesmen="$asesmen" />
 
+    <livewire:asesi.pemohon-asesmen-component :asesmen="$asesmen" />
+
 </x-filament-panels::page>

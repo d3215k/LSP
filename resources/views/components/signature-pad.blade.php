@@ -37,7 +37,7 @@
             </x-filament::button>
 
             <x-filament::button size="xs" color="success" x-on:click.prevent="save()">
-                Simpan
+                Simpan Tanda tangan
             </x-filament::button>
 
             <span x-data="{

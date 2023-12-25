@@ -23,17 +23,13 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
     use InteractsWithTable;
     use InteractsWithForms;
 
-    public $signature;
-
     public Asesmen $asesmen;
 
     public $data;
 
     public function mount(): void
     {
-        $skema = Skema::first();
-
-        $this->data['skema'] = $skema;
+        //
     }
 
     public function table(Table $table): Table
@@ -44,26 +40,43 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
             )
             ->columns([
                 TextColumn::make('nama'),
-                TextColumn::make('nama'),
-            ])
-            ->filters([
-                // ...
             ])
             ->actions([
+                Action::make('Lihat dokumen')
+                    ->button()
+                    ->icon('heroicon-m-paper-clip')
+                    ->url(function (Persyaratan $record): string {
+                        return asset('storage/' . $record->bukti()->where('asesmen_id', $this->asesmen->id)->first()?->file);
+                    })
+                    ->hidden(function (Persyaratan $record): string {
+                        return ! $record->bukti()->where('asesmen_id', $this->asesmen->id)->exists();
+                    })
+                    ->openUrlInNewTab(),
                 Action::make('Unggah')
                     ->form([
-                        TextInput::make('nama')
-                            ->required(),
                         FileUpload::make('file')
                             // ->required(),
                     ])
+                    ->button()
                     ->action(function (array $data, Persyaratan $record): void {
                         try {
+                            BuktiPersyaratan::updateOrCreate(
+                                [
+                                    'asesmen_id' => $this->asesmen->id,
+                                    'persyaratan_id' => $record->id,
+                                ],
+                                [
+                                    'nama' => $record->nama,
+                                    'file' => $data['file'],
+                                ]
+                            );
                             Notification::make()
                                 ->success()
                                 ->title('saved')
                                 ->send();
                         } catch (\Throwable $th) {
+                            report($th->getMessage());
+
                             Notification::make()
                                 ->danger()
                                 ->title('saved')
@@ -71,28 +84,7 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
                         }
                     })
             ])
-            ->bulkActions([
-                // ...
-            ])
             ->paginated(false);
-    }
-
-    public function handleSubmit(): void
-    {
-
-        $folderPath = public_path('signature/');
-
-        $image_parts = explode(";base64,", $this->signature);
-
-        $image_type_aux = explode("image/", $image_parts[0]);
-
-        $image_type = $image_type_aux[1];
-
-        $image_base64 = base64_decode($image_parts[1]);
-
-        $file = $folderPath . uniqid() . '.'.$image_type;
-
-        file_put_contents($file, $image_base64);
     }
 
     public function render()

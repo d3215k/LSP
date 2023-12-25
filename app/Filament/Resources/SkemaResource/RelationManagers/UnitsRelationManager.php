@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class UnitsRelationManager extends RelationManager
 {
-    protected static string $relationship = 'units';
+    protected static string $relationship = 'unit';
 
     public function form(Form $form): Form
     {
@@ -35,6 +35,7 @@ class UnitsRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('judul')
             ->columns([
+                Tables\Columns\TextColumn::make('kode'),
                 Tables\Columns\TextColumn::make('judul'),
             ])
             ->filters([

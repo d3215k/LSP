@@ -4,7 +4,6 @@ namespace App\Enums;
 
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
-use phpDocumentor\Reflection\Types\Self_;
 
 enum AsesmenStatus: int implements HasLabel
 {
@@ -21,11 +20,11 @@ enum AsesmenStatus: int implements HasLabel
         return match ($this) {
             Self::DITOLAK => 'Ditolak',
             self::REGISTRASI => 'Registrasi',
-            self::ASESMEN_MANDIRI => 'Mengisi Asesmen Mandiri',
+            self::ASESMEN_MANDIRI => 'Asesmen Mandiri',
             self::DITERIMA => 'Diterima dan Dijadwalkan',
-            self::SELESAI_KOMPETEN => 'Selesai, dan dinyatakan Kompeten',
-            self::SELESAI_BELUM_KOMPETEN => 'Selesai, dan dinyatakan Belum Kompeten',
-            self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Selesai, dan dinyatakan Belum Kompeten dan Perlu Tindak Lanjut',
+            self::SELESAI_KOMPETEN => 'Kompeten',
+            self::SELESAI_BELUM_KOMPETEN => 'Belum Kompeten',
+            self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Perlu Tindak Lanjut',
         };
     }
 }

@@ -71,4 +71,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Asesi::class);
     }
+
+    public function getRedirectRoute()
+    {
+        return match((int)$this->type) {
+            1 => '/app/dasbor',
+            2 => '/app/dasbor',
+            3 => '/app/beranda',
+        };
+    }
 }

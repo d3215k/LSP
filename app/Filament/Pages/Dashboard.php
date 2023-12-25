@@ -9,8 +9,10 @@ class Dashboard extends \Filament\Pages\Dashboard
         return ! auth()->user()->isAsesi;
     }
 
-    public function mount(): void
+    public function mount()
     {
-        abort_if(auth()->user()->isAsesi, 403);
+        if (auth()->user()->isAsesi) {
+            return to_route('filament.app.pages.beranda');
+        }
     }
 }

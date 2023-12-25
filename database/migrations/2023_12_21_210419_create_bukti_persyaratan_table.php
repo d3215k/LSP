@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\BuktiPersyaratanStatus;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -13,10 +14,11 @@ return new class extends Migration
     {
         Schema::create('bukti_persyaratan', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
             $table->foreignId('persyaratan_id')->constrained('persyaratan')->cascadeOnDelete();
             $table->string('nama');
-            $table->string('deskripsi');
             $table->string('file');
+            $table->unsignedTinyInteger('status', 1)->default(BuktiPersyaratanStatus::ADA);
             $table->timestamps();
         });
     }

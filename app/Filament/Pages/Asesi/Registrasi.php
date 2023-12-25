@@ -14,12 +14,12 @@ class Registrasi extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
+        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
     }
 
     public $asesmen;
 
-    public function mount(): void
+    public function mount()
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
@@ -27,5 +27,9 @@ class Registrasi extends Page
             ->where('asesi_id', auth()->user()->asesi->id)
             ->where('status', AsesmenStatus::REGISTRASI)
             ->first();
+
+        if (! $this->asesmen) {
+            return to_route('filament.app.pages.beranda');
+        }
     }
 }

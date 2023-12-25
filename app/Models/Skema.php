@@ -12,7 +12,7 @@ class Skema extends Model
 
     protected $table = 'skema';
 
-    public function units(): HasMany
+    public function unit(): HasMany
     {
         return $this->hasMany(Unit::class);
     }

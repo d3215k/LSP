@@ -16,7 +16,7 @@ class UjiKompetensi extends Page
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->asesi->asesmen()->where('status', '>', 1)->exists();
+        return auth()->user()->isAsesi && auth()->user()->asesi->asesmen()->where('status', '>', 1)->exists();
     }
 
     public function mount(): void
