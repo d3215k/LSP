@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignId('persyaratan_id')->constrained('persyaratan')->cascadeOnDelete();
             $table->string('nama');
             $table->string('file');
-            $table->unsignedTinyInteger('status', 1)->default(BuktiPersyaratanStatus::ADA);
+            $table->unsignedTinyInteger('status')->default(BuktiPersyaratanStatus::ADA);
             $table->timestamps();
         });
     }

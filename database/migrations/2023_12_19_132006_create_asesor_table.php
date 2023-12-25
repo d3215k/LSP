@@ -30,6 +30,7 @@ return new class extends Migration
             $table->string('alamat_tempat_tinggal_provinsi')->nullable();
             $table->string('alamat_tempat_tinggal_kota_kabupaten')->nullable();
             $table->string('alamat_tempat_tinggal_lengkap')->nullable();
+            $table->string('email')->unique();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

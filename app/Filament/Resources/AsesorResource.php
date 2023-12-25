@@ -30,6 +30,9 @@ class AsesorResource extends Resource
                 Forms\Components\TextInput::make('nomor_registrasi')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\TextInput::make('email')
+                    ->required()
+                    ->email(),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
@@ -63,6 +66,7 @@ class AsesorResource extends Resource
                 Forms\Components\TextInput::make('alamat_tempat_tinggal_lengkap')
                     ->maxLength(255),
                 Forms\Components\Toggle::make('aktif')
+                    ->default(true)
                     ->required(),
             ]);
     }
@@ -85,7 +89,7 @@ class AsesorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

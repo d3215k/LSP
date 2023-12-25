@@ -21,6 +21,7 @@ return new class extends Migration
             $table->boolean('aktif')->default(true);
             $table->rememberToken();
             $table->foreignId('asesi_id')->nullable()->cascadeOnDelete();
+            $table->foreignId('asesor_id')->nullable()->cascadeOnDelete();
             $table->timestamps();
         });
     }
