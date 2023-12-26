@@ -21,7 +21,7 @@ class Registrasi extends Page
         return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
     }
 
-    public $asesmen;
+    public Asesmen $asesmen;
 
     public function mount()
     {

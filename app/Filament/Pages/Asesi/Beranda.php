@@ -22,6 +22,6 @@ class Beranda extends Page
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
-        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->where('status', AsesmenStatus::REGISTRASI)->exists();
+        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->whereIn('status', [AsesmenStatus::REGISTRASI, AsesmenStatus::ASESMEN_MANDIRI, AsesmenStatus::DITERIMA])->exists();
     }
 }

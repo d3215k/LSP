@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Asesi;
 
+use App\Models\Asesmen;
 use App\Models\Asesmen\BuktiMandiri;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
@@ -24,7 +25,13 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
     use InteractsWithTable;
     use InteractsWithForms;
 
+    public Asesmen $asesmen;
+
     public $data;
+
+    public function mount() {
+        //
+    }
 
     public function table(Table $table): Table
     {
@@ -44,7 +51,7 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                     ->label('Tambah Dokumen')
                     ->model(BuktiMandiri::class)
                     ->mutateFormDataUsing(function (array $data): array {
-                        $data['asesmen_id'] = 1;
+                        $data['asesmen_id'] = $this->asesmen->id;
                         return $data;
                     })
                     ->form([

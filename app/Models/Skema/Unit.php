@@ -14,7 +14,7 @@ class Unit extends Model
 
     protected $table = 'unit';
 
-    public function elements(): HasMany
+    public function elemen(): HasMany
     {
         return $this->hasMany(Elemen::class);
     }

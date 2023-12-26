@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AsesmenStatus;
+use App\Models\Asesmen\BuktiMandiri;
 use App\Models\Asesmen\BuktiPersyaratan;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Asesmen\ObservasiAktivitas;
@@ -55,6 +56,11 @@ class Asesmen extends Model
     public function buktiPersyaratan(): HasMany
     {
         return $this->hasMany(BuktiPersyaratan::class);
+    }
+
+    public function buktiMandiri(): HasMany
+    {
+        return $this->hasMany(BuktiMandiri::class);
     }
 
     public function mandiri(): HasOne

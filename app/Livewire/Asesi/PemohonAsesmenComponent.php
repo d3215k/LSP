@@ -31,10 +31,10 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
     public function asesiInfolist(Infolist $infolist): Infolist
     {
         return $infolist
-            ->record($this->asesmen?->rincian)
+            ->record($this->asesmen?->rincianDataPemohon)
             ->schema([
                 TextEntry::make('nama')->inlineLabel(),
-                TextEntry::make('tanggal_registrasi')->inlineLabel(),
+                TextEntry::make('tanggal_registrasi')->label('Tanggal')->inlineLabel(),
             ]);
     }
 
