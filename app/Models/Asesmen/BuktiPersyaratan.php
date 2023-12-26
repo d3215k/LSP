@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Asesmen;
 
 use App\Enums\BuktiPersyaratanStatus;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

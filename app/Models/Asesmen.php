@@ -3,8 +3,16 @@
 namespace App\Models;
 
 use App\Enums\AsesmenStatus;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Asesmen\BuktiPersyaratan;
+use App\Models\Asesmen\Mandiri;
+use App\Models\Asesmen\ObservasiAktivitas;
+use App\Models\Asesmen\ObservasiPendukung;
+use App\Models\Asesmen\Persetujuan;
+use App\Models\Asesmen\Rekaman;
+use App\Models\Asesmen\RincianDataPemohon;
+use App\Models\Asesmen\TertulisEsai;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
@@ -29,16 +37,6 @@ class Asesmen extends Model
         return $this->belongsTo(Asesi::class);
     }
 
-    public function rincian(): HasOne
-    {
-        return $this->hasOne(RincianDataPemohon::class);
-    }
-
-    public function bukti(): HasMany
-    {
-        return $this->hasMany(BuktiPersyaratan::class);
-    }
-
     public function asesor(): BelongsTo
     {
         return $this->belongsTo(Asesor::class);
@@ -47,6 +45,46 @@ class Asesmen extends Model
     public function periode(): BelongsTo
     {
         return $this->belongsTo(Periode::class);
+    }
+
+    public function rincianDataPemohon(): HasOne
+    {
+        return $this->hasOne(RincianDataPemohon::class);
+    }
+
+    public function buktiPersyaratan(): HasMany
+    {
+        return $this->hasMany(BuktiPersyaratan::class);
+    }
+
+    public function mandiri(): HasOne
+    {
+        return $this->hasOne(Mandiri::class);
+    }
+
+    public function tertulisEsai(): HasOne
+    {
+        return $this->hasOne(TertulisEsai::class);
+    }
+
+    public function rekaman(): HasOne
+    {
+        return $this->hasOne(Rekaman::class);
+    }
+
+    public function persetujuan(): HasOne
+    {
+        return $this->hasOne(Persetujuan::class);
+    }
+
+    public function observasiPendukung(): HasOne
+    {
+        return $this->hasOne(ObservasiPendukung::class);
+    }
+
+    public function observasiAktivitas(): HasOne
+    {
+        return $this->hasOne(ObservasiAktivitas::class);
     }
 
 }

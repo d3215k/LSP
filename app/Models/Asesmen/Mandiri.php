@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Asesmen;
 
 use App\Enums\RekomendasiAsesmenMandiri;
+use App\Models\Asesmen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Mandiri extends Model
@@ -20,5 +22,10 @@ class Mandiri extends Model
     public function jawaban(): HasMany
     {
         return $this->hasMany(JawabanAsesmenMandiri::class);
+    }
+
+    public function asesmen(): BelongsTo
+    {
+        return $this->belongsTo(Asesmen::class);
     }
 }
