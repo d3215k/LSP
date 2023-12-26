@@ -28,7 +28,7 @@
 
     @if ($activeTab === 'tab2')
 
-        {{-- @livewire('asesi.dokumen-bukti-asesmen-mandiri') --}}
+        {{-- @livewire('asesi.dokumen-bukti-mandiri-component') --}}
 
         @livewire('asesi.asesmen-mandiri-component')
 

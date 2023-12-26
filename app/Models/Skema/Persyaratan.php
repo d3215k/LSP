@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Skema;
 
+use App\Models\Skema;
 use App\Models\Asesmen\BuktiPersyaratan;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\KriteriaUnjukKerja;
+use App\Models\Skema\KriteriaUnjukKerja;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 

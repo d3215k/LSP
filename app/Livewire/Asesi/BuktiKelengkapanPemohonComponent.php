@@ -4,7 +4,7 @@ namespace App\Livewire\Asesi;
 
 use App\Models\Asesmen;
 use App\Models\Asesmen\BuktiPersyaratan;
-use App\Models\Persyaratan;
+use App\Models\Skema\Persyaratan;
 use Filament\Forms\Components\FileUpload;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -16,7 +16,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
+class BuktiKelengkapanPemohonComponent extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -87,6 +87,6 @@ class BuktiKelengkapanPemohon extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.asesi.bukti-kelengkapan-pemohon');
+        return view('livewire.asesi.bukti-kelengkapan-pemohon-component');
     }
 }

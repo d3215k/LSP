@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Pages;
+namespace App\Filament\Pages\Admin;
 
 use App\Settings\GeneralSetting;
 use Filament\Forms;
@@ -27,13 +27,14 @@ class Setting extends SettingsPage
     public function mount(): void
     {
         abort_unless(auth()->user()->isAdmin, 403);
+        parent::mount();
     }
 
     public function form(Form $form): Form
     {
         return $form
             ->schema([
-                Forms\Components\Tabs::make('Setting')
+                Forms\Components\Tabs::make('setting')
                     ->tabs([
                         Forms\Components\Tabs\Tab::make('Detail Profile LSP')
                             ->schema([

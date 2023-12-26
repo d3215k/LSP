@@ -3,7 +3,7 @@
 namespace App\Livewire\Asesi;
 
 use App\Models\Asesmen;
-use App\Models\Unit;
+use App\Models\Skema\Unit;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
@@ -18,7 +18,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class DataSertifikasi extends Component implements HasForms, HasTable
+class DataSertifikasiComponent extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -80,6 +80,6 @@ class DataSertifikasi extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.asesi.data-sertifikasi');
+        return view('livewire.asesi.data-sertifikasi-component');
     }
 }

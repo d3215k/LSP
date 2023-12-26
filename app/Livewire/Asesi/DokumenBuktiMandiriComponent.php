@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Asesi;
 
-use App\Models\BuktiMandiri;
+use App\Models\Asesmen\BuktiMandiri;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -19,7 +19,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Livewire\Component;
 
-class DokumenBuktiMandiri extends Component implements HasForms, HasTable
+class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -77,6 +77,6 @@ class DokumenBuktiMandiri extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.asesi.dokumen-bukti-asesmen-mandiri');
+        return view('livewire.asesi.dokumen-bukti-mandiri-component');
     }
 }

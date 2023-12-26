@@ -22,6 +22,6 @@ return new class extends SettingsMigration
         $this->migrator->add('general.no_telepon_kantor', '(0266) 532510');
         $this->migrator->add('general.no_handphone_admin', '081546995547');
         $this->migrator->add('general.email', 'lspp1smkn1cibadak@gmail.com');
-        $this->migrator->add('general.website', '');
+        $this->migrator->add('general.website', 'https://smkn1cibadak.sch.id');
     }
 };

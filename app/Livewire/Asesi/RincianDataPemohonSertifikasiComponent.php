@@ -16,7 +16,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Livewire\Component;
 
-class RincianDataPemohonSertifikasi extends Component implements HasForms
+class RincianDataPemohonSertifikasiComponent extends Component implements HasForms
 {
     use InteractsWithForms;
 
@@ -129,6 +129,6 @@ class RincianDataPemohonSertifikasi extends Component implements HasForms
 
     public function render()
     {
-        return view('livewire.asesi.rincian-data-pemohon-sertifikasi');
+        return view('livewire.asesi.rincian-data-pemohon-sertifikasi-component');
     }
 }

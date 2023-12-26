@@ -1,10 +1,10 @@
 <x-filament-panels::page>
 
-    <livewire:asesi.rincian-data-pemohon-sertifikasi :asesmen="$asesmen" />
+    <livewire:asesi.rincian-data-pemohon-sertifikasi-component :asesmen="$asesmen" />
 
-    <livewire:asesi.data-sertifikasi :asesmen="$asesmen" />
+    <livewire:asesi.data-sertifikasi-component :asesmen="$asesmen" />
 
-    <livewire:asesi.bukti-kelengkapan-pemohon :asesmen="$asesmen" />
+    <livewire:asesi.bukti-kelengkapan-pemohon-component :asesmen="$asesmen" />
 
     <livewire:asesi.pemohon-asesmen-component :asesmen="$asesmen" />
 
