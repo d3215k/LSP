@@ -3,7 +3,7 @@
 namespace App\Livewire\Asesi;
 
 use App\Models\Asesmen;
-use App\Models\RincianDataPemohon;
+use App\Models\Asesmen\RincianDataPemohon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
@@ -27,7 +27,7 @@ class RincianDataPemohonSertifikasi extends Component implements HasForms
     public function mount(): void
     {
         $this->form->fill(
-            $this->asesmen->rincian?->toArray()
+            $this->asesmen->rincianDataPemohon?->toArray()
         );
     }
 

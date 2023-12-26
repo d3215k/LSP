@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class BuktiRelationManager extends RelationManager
 {
-    protected static string $relationship = 'bukti';
+    protected static string $relationship = 'buktiPersyaratan';
 
     protected static ?string $title = 'Bukti Kelengkapan Pemohon';
 

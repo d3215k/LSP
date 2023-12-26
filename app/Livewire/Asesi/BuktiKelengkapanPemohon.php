@@ -3,11 +3,9 @@
 namespace App\Livewire\Asesi;
 
 use App\Models\Asesmen;
-use App\Models\BuktiPersyaratan;
+use App\Models\Asesmen\BuktiPersyaratan;
 use App\Models\Persyaratan;
-use App\Models\Skema;
 use Filament\Forms\Components\FileUpload;
-use Filament\Forms\Components\TextInput;
 use Filament\Tables\Actions\Action;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;

@@ -75,9 +75,9 @@ class User extends Authenticatable
     public function getRedirectRoute()
     {
         return match((int)$this->type) {
-            1 => '/app/dasbor',
-            2 => '/app/dasbor',
-            3 => '/app/beranda',
+            1 => route('filament.app.pages.dashboard'),
+            2 => route('filament.app.pages.dashboard'),
+            3 => route('filament.app.pages.beranda'),
         };
     }
 }

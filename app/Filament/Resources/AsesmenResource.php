@@ -36,17 +36,17 @@ class AsesmenResource extends Resource
                     ->relationship('skema', 'nama') // TODO
                     ->columnSpanFull()
                     ->required(),
-                Forms\Components\Select::make('asesor_id')
-                    ->relationship('asesor', 'nama')
-                    ->required(),
                 Forms\Components\Select::make('periode_id')
                     ->relationship('periode', 'nama')
                     ->options(Periode::all()->pluck('nama', 'id')) // TODO
                     ->required(),
+                Forms\Components\Select::make('asesor_id')
+                    ->relationship('asesor', 'nama')
+                    ->required(),
                 Forms\Components\TextInput::make('tujuan')
                     ->maxLength(255),
                 Fieldset::make('A. Data Pribadi')
-                    ->relationship('rincian')
+                    ->relationship('rincianDataPemohon')
                     ->schema([
                         TextInput::make('nama')
                             ->label('Nama Lengkap')
@@ -89,7 +89,7 @@ class AsesmenResource extends Resource
                     ])
                     ->columns(2),
                 Fieldset::make('B. Data Pekerjaan Sekarang')
-                    ->relationship('rincian')
+                    ->relationship('rincianDataPemohon')
                     ->schema([
                         TextInput::make('nama_institusi')
                             ->label('Nama Institusi / Perusahaan')
@@ -120,7 +120,7 @@ class AsesmenResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('rincian.nama')
+                Tables\Columns\TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('skema.nama')
