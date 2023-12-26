@@ -46,7 +46,7 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
 
         try {
             $ttd = uploadSignature('ttd/registrasi/', $this->signature, $this->asesmen->rincian->id);
-            $this->asesmen->rincian()->update(['ttd' => $ttd]);
+            $this->asesmen->update(['ttd_asesi' => $ttd]);
             $this->dispatch('rincian-saved');
 
             // return to_route('filament.app.pages.beranda');

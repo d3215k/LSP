@@ -33,7 +33,6 @@ return new class extends Migration
             $table->string('no_fax_kantor')->nullable();
             $table->string('email_kantor')->nullable();
             $table->date('tanggal_registrasi')->nullable();
-            $table->string('ttd')->nullable();
             $table->timestamps();
         });
     }
