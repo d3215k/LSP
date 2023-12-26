@@ -9,10 +9,18 @@ class AsesmenMandiriComponent extends Component
 {
     public Asesmen $asesmen;
 
+    public $data;
+
     public function mount() {
         $this->asesmen->load(['skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kuk', 'buktiMandiri']);
 
-        // dd($this->asesmen->skema->id);
+        $this->data['kompeten'] = [];
+        $this->data['bukti'] = [];
+    }
+
+    public function handleSave()
+    {
+        dd($this->data);
     }
 
     public function render()

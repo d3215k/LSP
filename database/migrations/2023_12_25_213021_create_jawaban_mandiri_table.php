@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asesmen_mandiri_id')->constrained('asesmen_mandiri')->cascadeOnDelete();
             $table->foreignId('elemen_id')->constrained('elemen')->cascadeOnDelete();
-            $table->boolean('kompeten');
+            $table->char('kompeten', 2)->nullable();
             $table->foreignId('bukti_asesmen_mandiri_id')->nullable();
             $table->timestamps();
         });
