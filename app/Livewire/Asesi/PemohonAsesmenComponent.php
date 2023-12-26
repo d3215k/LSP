@@ -40,12 +40,12 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
 
     public function handleSubmit()
     {
-        if ($this->asesmen->rincian->ttd) {
+        if ($this->asesmen->ttd_asesi) {
             return;
         }
 
         try {
-            $ttd = uploadSignature('ttd/registrasi/', $this->signature, $this->asesmen->rincian->id);
+            $ttd = uploadSignature('ttd/asesmen/asesi', $this->signature, $this->asesmen->id);
             $this->asesmen->update(['ttd_asesi' => $ttd]);
             $this->dispatch('rincian-saved');
 
