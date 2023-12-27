@@ -6,6 +6,7 @@ use App\Enums\AsesmenStatus;
 use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
@@ -32,8 +33,6 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
                     ->label('Asesi'),
                 TextColumn::make('asesmen.skema.nama')
                     ->label('Skema'),
-                TextColumn::make('tanggal_asesmen_mandiri')
-                    ->label('Tanggal Asesmen'),
                 TextColumn::make('rekomendasi')
                     ->label('Rekomendasi'),
             ])
@@ -41,7 +40,9 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
                 // ...
             ])
             ->actions([
-                EditAction::make(),
+                Action::make('nilai')
+                    ->button()
+                    ->url(fn (Mandiri $record): string => route('asesor.nilai-asesmen-mandiri', $record))
             ])
             ->bulkActions([
                 // ...
