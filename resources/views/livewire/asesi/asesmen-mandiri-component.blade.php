@@ -140,9 +140,10 @@
                                                 @if ($asesmen->buktiMandiri()->exists())
                                                     <x-filament::input.wrapper>
                                                         <x-filament::input.select wire:model="data.bukti.{{ $unit->id }}">
-                                                            <option value="draft">Draft</option>
-                                                            <option value="reviewing">Reviewing</option>
-                                                            <option value="published">Published</option>
+                                                                <option value="">-- Pilih salah satu</option>
+                                                            @foreach ($asesmen->buktiMandiri as $bukti)
+                                                                <option value="{{ $bukti->id }}">{{ $bukti->nama }}</option>
+                                                            @endforeach
                                                         </x-filament::input.select>
                                                     </x-filament::input.wrapper>
                                                 @endif

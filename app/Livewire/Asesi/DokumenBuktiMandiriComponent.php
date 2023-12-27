@@ -39,12 +39,6 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
             ->query(BuktiMandiri::query())
             ->columns([
                 TextColumn::make('nama'),
-                TextColumn::make('deskripsi'),
-                SelectColumn::make('status')
-                    ->options([
-                        'transkrip Nilai',
-                        'PKL',
-                    ])
             ])
             ->headerActions([
                 CreateAction::make()
@@ -58,11 +52,10 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                         TextInput::make('nama')
                             ->required()
                             ->maxLength(255),
-                        TextInput::make('deskripsi')
-                            ->required()
-                            ->maxLength(255),
                         FileUpload::make('file'),
                     ])
+                    ->after(fn (Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
+
             ])
             ->actions([
                 Action::make('Lihat dokumen')
@@ -71,7 +64,8 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                     ->url(fn (BuktiMandiri $record): string => asset('storage/'.$record->file))
                     ->openUrlInNewTab(),
                 ActionGroup::make([
-                    DeleteAction::make(),
+                    // DeleteAction::make()
+                    //     ->after(fn(Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
                 ])
             ])
             ->paginated(false);

@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
             $table->string('nama');
-            $table->string('deskripsi')->nullable();
             $table->string('file');
             $table->timestamps();
         });
