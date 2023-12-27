@@ -3,6 +3,8 @@
 namespace App\Livewire\Asesor;
 
 use App\Enums\AsesmenStatus;
+use App\Enums\RekomendasiAsesmenMandiri;
+use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -15,7 +17,7 @@ use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Livewire\Component;
 
-class ListAsesmenMandiriComponent extends Component implements HasForms, HasTable
+class ListPraAsesmenComponent extends Component implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
@@ -23,27 +25,26 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
     public function table(Table $table): Table
     {
         return $table
-            ->query(Mandiri::query()->whereHas('asesmen', function ($query) {
-                $query
-                    ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
-                    ->where('asesor_id', auth()->user()->asesor_id);
-            }))
+            ->query(Asesmen::query()
+                ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
+                ->where('asesor_id', auth()->user()->asesor_id)
+                ->whereHas('mandiri', function ($query) {
+                    $query->where('rekomendasi', RekomendasiAsesmenMandiri::DILANJUTKAN);
+                })
+            )
             ->columns([
-                TextColumn::make('asesmen.rincianDataPemohon.nama')
+                TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi'),
-                TextColumn::make('asesmen.skema.nama')
+                TextColumn::make('skema.nama')
                     ->label('Skema'),
-                TextColumn::make('rekomendasi')
-                    ->label('Rekomendasi')
-                    ->badge(),
             ])
             ->filters([
                 // ...
             ])
             ->actions([
-                Action::make('nilai')
+                Action::make('persetujuan')
                     ->button()
-                    ->url(fn (Mandiri $record): string => route('asesor.nilai-asesmen-mandiri', $record))
+                    ->url(fn (Asesmen $record): string => route('asesor.nilai-asesmen-mandiri', $record))
             ])
             ->bulkActions([
                 // ...
@@ -52,6 +53,6 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
 
     public function render()
     {
-        return view('livewire.asesor.list-asesmen-mandiri-component');
+        return view('livewire.asesor.list-pra-asesmen-component');
     }
 }

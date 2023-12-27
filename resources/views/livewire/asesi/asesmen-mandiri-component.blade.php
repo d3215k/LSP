@@ -7,12 +7,12 @@
         <div class="space-y-6">
             @foreach ($asesmen->skema->unit as $unit)
                 <div class="fi-ta" wire:key="{{ $unit->id }}">
-                    <div class="overflow-hidden bg-white divide-y divide-gray-200 shadow-sm fi-ta-ctn rounded-xl ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
+                    <div class="overflow-hidden bg-white divide-y divide-gray-200 shadow-sm fi-ta-ctn ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
                         <div class="overflow-x-auto divide-y divide-gray-200 fi-ta-content dark:divide-white/10 dark:border-t-white/10">
                             <table class="w-full divide-y divide-gray-200 table-auto fi-ta-table text-start dark:divide-white/5">
                                 <thead class="bg-gray-100 divide-y divide-gray-200 dark:bg-white/5">
                                     <tr class="divide-x divide-gray-200">
-                                        <th colspan="4" class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <th colspan="4" class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                             <span class="flex items-center justify-start w-full group gap-x-1 whitespace-nowrap">
                                                 <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                     Unit Kompetensi 1 : {{ $unit->kode . ' ' . $unit->judul }}
@@ -21,28 +21,28 @@
                                         </th>
                                     </tr>
                                     <tr class="divide-x divide-gray-200">
-                                        <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <th class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                             <span class="flex items-center justify-start w-full group gap-x-1 whitespace-wrap">
                                                 <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                     Dapatkah saya ... ?
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <th class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                             <span class="flex items-center justify-center w-full group gap-x-1 whitespace-wrap">
                                                 <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                     Kompeten
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <th class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                             <span class="flex items-center justify-center w-full group gap-x-1 whitespace-wrap">
                                                 <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                     Belum Kompeten
                                                 </span>
                                             </span>
                                         </th>
-                                        <th class="fi-ta-header-cell px-3 py-3.5 sm:first-of-type:ps-6 sm:last-of-type:pe-6">
+                                        <th class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
                                             <span class="flex items-center justify-center w-full group gap-x-1 whitespace-nowrap">
                                                 <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                     Bukti Yang Relevan

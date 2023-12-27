@@ -15,9 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
             $table->date('tanggal_asesmen_mandiri')->nullable();
-            $table->string('ttd_asesi')->nullable();
             $table->date('tanggal_ditinjau')->nullable();
-            $table->string('ttd_asesor')->nullable();
             $table->unsignedTinyInteger('rekomendasi')->nullable();
             $table->string('catatan')->nullable();
             $table->timestamps();

@@ -20,10 +20,12 @@ class NilaiAsesmenMandiri extends Page
 
     public function mount(Mandiri $mandiri)
     {
-        abort_unless(auth()->user()->isAsesor, 403);
+        abort_unless(
+            auth()->user()->isAsesor && $mandiri?->asesmen?->asesor_id === auth()->user()->asesor_id,
+            403
+        );
 
-        if (!$mandiri) {
-            return to_route('filament.app.pages.dashboard');
-        }
+        $this->mandiri = $mandiri;
+
     }
 }
