@@ -64,8 +64,8 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                     ->url(fn (BuktiMandiri $record): string => asset('storage/'.$record->file))
                     ->openUrlInNewTab(),
                 ActionGroup::make([
-                    // DeleteAction::make()
-                    //     ->after(fn(Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
+                    DeleteAction::make()
+                        ->after(fn(Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
                 ])
             ])
             ->paginated(false);

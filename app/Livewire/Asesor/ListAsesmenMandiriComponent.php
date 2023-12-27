@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Asesor;
 
+use App\Enums\AsesmenStatus;
 use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
@@ -20,15 +22,26 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
     public function table(Table $table): Table
     {
         return $table
-            ->query(Mandiri::query())
+            ->query(Mandiri::query()->whereHas('asesmen', function ($query) {
+                $query
+                    ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
+                    ->where('asesor_id', auth()->user()->asesor_id);
+            }))
             ->columns([
-                TextColumn::make('name'),
+                TextColumn::make('asesmen.rincianDataPemohon.nama')
+                    ->label('Asesi'),
+                TextColumn::make('asesmen.skema.nama')
+                    ->label('Skema'),
+                TextColumn::make('tanggal_asesmen_mandiri')
+                    ->label('Tanggal Asesmen'),
+                TextColumn::make('rekomendasi')
+                    ->label('Rekomendasi'),
             ])
             ->filters([
                 // ...
             ])
             ->actions([
-                // ...
+                EditAction::make(),
             ])
             ->bulkActions([
                 // ...
