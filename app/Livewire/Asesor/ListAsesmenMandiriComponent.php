@@ -34,7 +34,8 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
                 TextColumn::make('asesmen.skema.nama')
                     ->label('Skema'),
                 TextColumn::make('rekomendasi')
-                    ->label('Rekomendasi'),
+                    ->label('Rekomendasi')
+                    ->badge(),
             ])
             ->filters([
                 // ...
