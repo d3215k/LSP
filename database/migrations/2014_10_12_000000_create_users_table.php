@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UserType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -17,7 +18,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->unsignedTinyInteger('type')->default(3);
+            $table->unsignedTinyInteger('type')->default(UserType::ASESI);
             $table->boolean('aktif')->default(true);
             $table->rememberToken();
             $table->foreignId('asesi_id')->nullable()->cascadeOnDelete();

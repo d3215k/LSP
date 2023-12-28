@@ -2,7 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Enums\JenisSkema;
+use App\Models\Periode;
 use App\Models\Skema;
+use App\Models\Skema\Elemen;
+use App\Models\Skema\KriteriaUnjukKerja;
+use App\Models\Skema\Unit;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +21,7 @@ class SkemaSeeder extends Seeder
         $skema = Skema::create([
             'mode' => 'Referensi BNSP',
             'nama' => 'SKEMA SERTIFIKASI KKNI LEVEL III PADA KOMPETENSI KEAHLIAN  AGROINDUSTRI',
-            'jenis' => 'KKNI',
+            'jenis' => JenisSkema::KKNI,
             'kode' => 'SKM/BNSP/00003/1/2020/98',
             // 'tanggal_penetapan' => '',
             'no_urut' => 8,
@@ -34,39 +39,84 @@ class SkemaSeeder extends Seeder
             // 'file' => 3,
         ]);
 
-        $skema->unit()->createMany([
-            [
-                'kode' => 'C.10SRM00.008.1',
-                'judul' => 'Membuat Surimi',
-            ],
-            [
-                'kode' => 'C.110000.018.01',
-                'judul' => 'Menganalisis Angka Lempeng Total (ALT)',
-            ],
-            [
-                'kode' => 'M.749000.031.01',
-                'judul' => 'Melaksanakan Analisis Fisiko-Kimia Mengikuti Prosedur',
-            ],
-            [
-                'kode' => 'A.01TAN00.015.01',
-                'judul' => 'Mengoperasikan Mesin Sangrai Kopi dan Kakao',
-            ],
-            [
-                'kode' => 'THP.ID02.023.01',
-                'judul' => 'Mengidentifikasi Bahan/Komoditas Hasil Ternak',
-            ],
-            [
-                'kode' => 'THP.ID02.024.01',
-                'judul' => 'Mengidentifikasi Bahan/Komoditas Ikan',
-            ],
-            [
-                'kode' => 'THP.ID02.025.01',
-                'judul' => 'Mengidentifikasi Bahan/Komoditas Hasil Samping',
-            ],
-            [
-                'kode' => 'THP.OO01.003.01',
-                'judul' => 'Mengidentifikasi Bahan/Komoditas Pertanian',
-            ],
+        Periode::create([
+            'skema_id' => $skema->id,
+            'nama' => 'Periode 1 2024',
+            'buka' => today()->subDays(7),
+            'tutup' => today()->addDays(7),
+            'lokasi' => 'Cibadak',
+        ]);
+
+        $unit1 = Unit::create([
+            'skema_id' => $skema->id,
+            'kode' => 'S.1100000.018.01',
+            'judul' => 'Judul Unit 1',
+        ]);
+
+        $unit2 = Unit::create([
+            'skema_id' => $skema->id,
+            'kode' => 'S.1100000.018.02',
+            'judul' => 'Judul Unit 2',
+        ]);
+
+        $elemen1 = Elemen::create([
+            'unit_id' => $unit1->id,
+            'nama' => 'Elemen 1',
+        ]);
+
+        $elemen2 = Elemen::create([
+            'unit_id' => $unit1->id,
+            'nama' => 'Elemen 2',
+        ]);
+
+        $elemen3 = Elemen::create([
+            'unit_id' => $unit2->id,
+            'nama' => 'Elemen 3',
+        ]);
+
+        $elemen4 = Elemen::create([
+            'unit_id' => $unit2->id,
+            'nama' => 'Elemen 4',
+        ]);
+
+        $kuk1 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen1->id,
+            'nama' => 'Kriteria Unjuk Kerja 1'
+        ]);
+
+        $kuk2 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen1->id,
+            'nama' => 'Kriteria Unjuk Kerja 2'
+        ]);
+
+        $kuk3 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen2->id,
+            'nama' => 'Kriteria Unjuk Kerja 3'
+        ]);
+
+        $kuk4 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen2->id,
+            'nama' => 'Kriteria Unjuk Kerja 4'
+        ]);
+
+        $kuk5 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen3->id,
+            'nama' => 'Kriteria Unjuk Kerja 5'
+        ]);
+
+        $kuk6 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen3->id,
+            'nama' => 'Kriteria Unjuk Kerja 6'
+        ]);
+
+        $kuk7 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen4->id,
+            'nama' => 'Kriteria Unjuk Kerja 7'
+        ]);
+
+        $kuk8 = KriteriaUnjukKerja::create([
+            'elemen_id' => $elemen4->id,
+            'nama' => 'Kriteria Unjuk Kerja 8'
         ]);
     }
 }

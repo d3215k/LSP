@@ -31,7 +31,9 @@ class KriteriaUnjukKerjaResource extends Resource
             ->schema([
                 Forms\Components\Select::make('elemen_id')
                     ->required()
-                    ->relationship(name: 'elemen', titleAttribute: 'nama'),
+                    ->relationship(name: 'elemen', titleAttribute: 'nama')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
@@ -44,21 +46,8 @@ class KriteriaUnjukKerjaResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('elemen_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -68,7 +57,7 @@ class KriteriaUnjukKerjaResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }

@@ -59,7 +59,7 @@ class GenerateUsers extends Command
                     [
                         'email' => $item->email,
                         'name' => $item->nama,
-                        'password' => bcrypt('P45sw0rd'),
+                        'password' => bcrypt('password'),
                         'type' => UserType::ASESOR,
                     ]
                 );

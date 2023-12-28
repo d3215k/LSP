@@ -111,6 +111,7 @@ class SkemaResource extends Resource
         return [
             RelationManagers\UnitsRelationManager::class,
             RelationManagers\PersyaratanRelationManager::class,
+            RelationManagers\TempatUjiKompetensiRelationManager::class,
         ];
     }
 

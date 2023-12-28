@@ -14,16 +14,16 @@ return new class extends Migration
         Schema::create('tempat_uji_kompetensi', function (Blueprint $table) {
             $table->id();
             $table->string('nama');
-            $table->string('jenis');
+            $table->unsignedTinyInteger('jenis');
             $table->string('kode');
-            $table->string('provinsi');
-            $table->string('kota_kabupaten');
-            $table->string('alamat');
-            $table->string('koordinat_lokasi');
-            $table->string('no_telp');
-            $table->string('no_hp');
-            $table->string('no_fax');
-            $table->string('email');
+            $table->string('provinsi')->nullable();
+            $table->string('kota_kabupaten')->nullable();
+            $table->string('alamat')->nullable();
+            $table->string('koordinat_lokasi')->nullable();
+            $table->string('no_telepon')->nullable();
+            $table->string('no_hp')->nullable();
+            $table->string('no_fax')->nullable();
+            $table->string('email')->nullable();
             $table->timestamps();
         });
 

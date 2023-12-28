@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Enums\UserType;
+use App\Models\Periode;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,10 +18,12 @@ class DatabaseSeeder extends Seeder
         $this->call([
             KompetensiKeahlianSeeder::class,
             SkemaSeeder::class,
+            AsesiSeeder::class,
+            AsesorSeeder::class,
         ]);
 
         \App\Models\User::factory()->create([
-            'name' => 'Admin User',
+            'name' => 'Admin 1',
             'email' => 'admin@example.com',
             'password' => bcrypt('password'),
             'type' => UserType::ADMIN

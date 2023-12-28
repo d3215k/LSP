@@ -31,7 +31,9 @@ class ElemenResource extends Resource
             ->schema([
                 Forms\Components\Select::make('unit_id')
                     ->required()
-                    ->relationship(name: 'unit', titleAttribute: 'judul'),
+                    ->relationship(name: 'unit', titleAttribute: 'judul')
+                    ->searchable()
+                    ->preload(),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
@@ -46,21 +48,8 @@ class ElemenResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('unit_id')
-                    ->numeric()
-                    ->sortable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
@@ -70,7 +59,7 @@ class ElemenResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                    // Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
