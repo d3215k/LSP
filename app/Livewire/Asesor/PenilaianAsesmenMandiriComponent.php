@@ -47,7 +47,8 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
         return $form
             ->schema([
                 TextInput::make('catatan')
-                    ->required(),
+                    ->required()
+                    ->inlineLabel(),
                 Radio::make('rekomendasi')
                     ->options(RekomendasiAsesmenMandiri::class)
                     ->inlineLabel()

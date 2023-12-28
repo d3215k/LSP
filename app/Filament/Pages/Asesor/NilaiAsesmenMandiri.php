@@ -13,6 +13,8 @@ class NilaiAsesmenMandiri extends Page
 
     protected static ?string $slug = 'nilai-asesmen-mandiri/{mandiri}';
 
+    protected ?string $heading = 'Penilaian Asesmen Mandiri';
+
 	protected static bool $shouldRegisterNavigation = false;
 
     public Mandiri $mandiri;
