@@ -44,7 +44,7 @@ class ListPraAsesmenComponent extends Component implements HasForms, HasTable
             ->actions([
                 Action::make('persetujuan')
                     ->button()
-                    ->url(fn (Asesmen $record): string => route('asesor.nilai-asesmen-mandiri', $record))
+                    ->url(fn (Asesmen $record): string => route('filament.app.pages.nilai-asesmen-mandiri.{mandiri}', $record))
             ])
             ->bulkActions([
                 // ...
