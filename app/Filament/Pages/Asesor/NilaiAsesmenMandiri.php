@@ -13,7 +13,9 @@ class NilaiAsesmenMandiri extends Page
 
     protected static ?string $slug = 'nilai-asesmen-mandiri/{mandiri}';
 
-    protected ?string $heading = 'Penilaian Asesmen Mandiri';
+    protected static ?string $title = 'FR.APL.02';
+
+    protected ?string $subheading = 'Penilaian Asesmen Mandiri';
 
 	protected static bool $shouldRegisterNavigation = false;
 
