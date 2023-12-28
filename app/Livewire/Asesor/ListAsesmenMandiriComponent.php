@@ -43,7 +43,7 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
             ->actions([
                 Action::make('nilai')
                     ->button()
-                    ->url(fn (Mandiri $record): string => route('asesor.nilai-asesmen-mandiri', $record))
+                    ->url(fn (Mandiri $record): string => 'nilai-asesmen-mandiri/'.$record->id)
             ])
             ->bulkActions([
                 // ...

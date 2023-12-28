@@ -11,17 +11,16 @@ class NilaiAsesmenMandiri extends Page
 
     protected static string $view = 'filament.pages.asesor.nilai-asesmen-mandiri';
 
-    public static function shouldRegisterNavigation(): bool
-    {
-        return false;
-    }
+    protected static ?string $slug = 'nilai-asesmen-mandiri/{mandiri}';
+
+	protected static bool $shouldRegisterNavigation = false;
 
     public Mandiri $mandiri;
 
     public function mount(Mandiri $mandiri)
     {
         abort_unless(
-            auth()->user()->isAsesor && $mandiri?->asesmen?->asesor_id === auth()->user()->asesor_id,
+            auth()->user()->isAsesor && $mandiri?->asesmen->asesor_id === auth()->user()->asesor_id,
             403
         );
 

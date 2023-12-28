@@ -24,6 +24,6 @@ use Illuminate\Support\Facades\Route;
 //     ->middleware(['auth'])
 //     ->name('profile');
 
-Route::get('/nilai-asesmen-mandiri/{mandiri}', NilaiAsesmenMandiri::class)->name('asesor.nilai-asesmen-mandiri');
+// Route::get('/nilai-asesmen-mandiri/{mandiri}', NilaiAsesmenMandiri::class)->name('asesor.nilai-asesmen-mandiri');
 
 // require __DIR__.'/auth.php';
