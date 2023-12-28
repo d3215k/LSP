@@ -27,7 +27,7 @@ class AsesmenMandiriComponent extends Component
         $this->asesmen->load(['skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kuk', 'buktiMandiri', 'mandiri']);
 
         $jawaban = JawabanMandiri::query()
-            ->where('asesmen_mandiri_id', $this->asesmen->mandiri->id)
+            ->where('asesmen_mandiri_id', $this->asesmen->mandiri?->id)
             ->get();
 
         $this->data['kompeten'] = $jawaban->pluck('kompeten', 'unit_id')->toArray();

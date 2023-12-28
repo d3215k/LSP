@@ -50,7 +50,6 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
                         'sertifikasi' => 'Sertifikasi',
                         'lainnya' => 'Lainnya',
                     ])
-                    ->default('sertifikasi')
                     ->inlineLabel()
                     ->required(),
             ])

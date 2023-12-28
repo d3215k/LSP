@@ -30,7 +30,7 @@ class Registrasi extends Page
         $this->asesmen = Asesmen::query()
             ->where('asesi_id', auth()->user()->asesi->id)
             ->where('status', AsesmenStatus::REGISTRASI)
-            ->first();
+            ->firstOrFail();
 
         if (! $this->asesmen) {
             return to_route('filament.app.pages.beranda');

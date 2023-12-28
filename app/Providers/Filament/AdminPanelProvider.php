@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->registration(Register::class)
             ->login()
+            ->profile()
             ->colors([
                 'primary' => Color::Cyan,
             ])

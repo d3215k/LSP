@@ -34,4 +34,9 @@ class Skema extends Model
     {
         return $this->belongsToMany(TempatUjiKompetensi::class);
     }
+
+    public function periode(): HasMany
+    {
+        return $this->hasMany(Periode::class);
+    }
 }

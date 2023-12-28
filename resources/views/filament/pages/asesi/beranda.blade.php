@@ -1,7 +1,7 @@
 <x-filament-panels::page>
 
     @if ($showDaftarAsesmen)
-        @livewire('asesi.daftar-asesmen-component')
+        @livewire('asesi.pendaftaran-asesmen-component')
     @endif
 
 </x-filament-panels::page>
