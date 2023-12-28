@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('asesmen_observasi_pendukung', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
+            $table->date('tanggal')->nullable();
             $table->timestamps();
         });
     }

@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('jawaban_observasi_pendukung', function (Blueprint $table) {
+        Schema::create('asesmen_tertulis_esai', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
+            $table->date('tanggal_asesmen');
+            $table->date('tanggal_periksa');
             $table->timestamps();
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('jawaban_observasi_pendukung');
+        Schema::dropIfExists('asesmen_tertulis_esai');
     }
 };

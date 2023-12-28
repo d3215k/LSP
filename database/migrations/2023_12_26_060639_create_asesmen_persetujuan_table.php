@@ -19,8 +19,8 @@ return new class extends Migration
             $table->boolean('hasil_tes_tulis')->default(false);
             $table->boolean('hasil_tes_lisan')->default(false);
             $table->boolean('hasil_wawancara')->default(false);
-            $table->date('tanggal')->nullable();
-            $table->foreignId('tuk_id')->nullable();
+            $table->dateTime('waktu')->nullable();
+            $table->foreignId('tempat_uji_kompetensi_id')->nullable()->constrained('tempat_uji_kompetensi')->nullOnDelete();
             $table->timestamps();
         });
     }

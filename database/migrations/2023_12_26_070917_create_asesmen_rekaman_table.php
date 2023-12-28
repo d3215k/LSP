@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('asesmen_rekaman', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
-            $table->date('tanggal_mulai')->nullable();
-            $table->date('tanggal_selesai')->nullable();
+            $table->dateTime('tanggal_mulai')->nullable();
+            $table->dateTime('tanggal_selesai')->nullable();
             $table->string('rekomendasi')->nullable();
             $table->text('tindak_lanjut')->nullable();
             $table->text('catatan')->nullable();

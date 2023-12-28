@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('hasil_observasi_aktivitas', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('asesmen_observasi_aktivitas_id')->constrained('asesmen_observasi_aktivitas')->cascadeOnDelete();
+            $table->foreignId('kriteria_unjuk_kerja_id')->constrained('kriteria_unjuk_kerja')->cascadeOnDelete();
+            $table->char('kompeten', 2);
             $table->timestamps();
         });
     }

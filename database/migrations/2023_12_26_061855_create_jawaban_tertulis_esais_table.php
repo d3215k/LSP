@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('jawaban_tertulis_esai', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pertanyaan_tertulis_esai_id')->constrained('pertanyaan_tertulis_esai')->cascadeOnDelete();
+            $table->char('kompeten', 2);
+            $table->text('tanggapan')->nullable();
             $table->timestamps();
         });
     }
