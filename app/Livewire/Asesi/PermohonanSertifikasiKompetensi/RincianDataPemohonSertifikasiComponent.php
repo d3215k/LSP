@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Asesi;
+namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
 use App\Models\Asesmen\RincianDataPemohon;
@@ -129,6 +129,6 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
 
     public function render()
     {
-        return view('livewire.asesi.rincian-data-pemohon-sertifikasi-component');
+        return view('livewire.asesi.registrasi.rincian-data-pemohon-sertifikasi-component');
     }
 }

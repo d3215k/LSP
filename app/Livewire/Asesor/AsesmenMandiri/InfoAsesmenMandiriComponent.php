@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Livewire\Asesor;
+namespace App\Livewire\Asesor\AsesmenMandiri;
 
 use App\Models\Asesmen\BuktiMandiri;
 use App\Models\Asesmen\JawabanMandiri;
 use App\Models\Asesmen\Mandiri;
 use Livewire\Component;
 
-class AsesmenMandiriComponent extends Component
+class InfoAsesmenMandiriComponent extends Component
 {
     public Mandiri $mandiri;
 
@@ -33,6 +33,6 @@ class AsesmenMandiriComponent extends Component
 
     public function render()
     {
-        return view('livewire.asesor.asesmen-mandiri-component');
+        return view('livewire.asesor.asesmen-mandiri.info-asesmen-mandiri-component');
     }
 }

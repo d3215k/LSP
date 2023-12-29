@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Asesi;
+namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
 use App\Models\Asesmen\BuktiPersyaratan;
@@ -87,6 +87,6 @@ class BuktiKelengkapanPemohonComponent extends Component implements HasForms, Ha
 
     public function render()
     {
-        return view('livewire.asesi.bukti-kelengkapan-pemohon-component');
+        return view('livewire.asesi.registrasi.bukti-kelengkapan-pemohon-component');
     }
 }

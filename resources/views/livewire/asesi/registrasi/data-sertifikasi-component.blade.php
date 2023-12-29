@@ -11,17 +11,12 @@
         {{ $this->form }}
     </form>
 
-    <x-filament::fieldset class="mt-4">
-
-    <x-slot name="label">
-        Daftar Unit Kompetensi
-    </x-slot>
-
-    <div>
+    <div class="mt-6">
+        <h5 class="mb-6 text-sm font-medium leading-6 text-gray-950 dark:text-white">
+            Daftar Unit Kompetensi
+        </h5>
         {{ $this->table }}
     </div>
-
-    </x-filament::fieldset>
 
     <div class="mt-2">
         <x-filament::button wire:click="handleSubmit" type="submit">

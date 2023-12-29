@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Livewire\Asesor;
+namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
-use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Infolists\Components\TextEntry;
@@ -19,20 +18,46 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
     use InteractsWithInfolists;
     use InteractsWithForms;
 
-    public Mandiri $mandiri;
+    public Asesmen $asesmen;
+
+    public $signature;
+
+    #[On('rincian-saved')]
+    public function refresh()
+    {
+        //
+    }
 
     public function asesiInfolist(Infolist $infolist): Infolist
     {
         return $infolist
-            ->record($this->mandiri->asesmen->rincianDataPemohon)
+            ->record($this->asesmen?->rincianDataPemohon)
             ->schema([
                 TextEntry::make('nama')->inlineLabel(),
                 TextEntry::make('tanggal_registrasi')->label('Tanggal')->inlineLabel(),
             ]);
     }
 
+    public function handleSubmit()
+    {
+        if ($this->asesmen->ttd_asesi) {
+            return;
+        }
+
+        try {
+            $ttd = uploadSignature('ttd/asesmen/asesi', $this->signature, $this->asesmen->id);
+            $this->asesmen->update(['ttd_asesi' => $ttd]);
+            $this->dispatch('rincian-saved');
+
+            // return to_route('filament.app.pages.beranda');
+        } catch (\Throwable $th) {
+            $th->getMessage();
+        }
+
+    }
+
     public function render()
     {
-        return view('livewire.asesor.pemohon-asesmen-component');
+        return view('livewire.asesi.registrasi.pemohon-asesmen-component');
     }
 }

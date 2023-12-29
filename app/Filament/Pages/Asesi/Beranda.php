@@ -11,7 +11,7 @@ class Beranda extends Page
 
     protected static string $view = 'filament.pages.asesi.beranda';
 
-    public $showDaftarAsesmen = false;
+    public $showPendaftaranAsesmenBaru = false;
 
     public static function shouldRegisterNavigation(): bool
     {
@@ -22,6 +22,13 @@ class Beranda extends Page
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
-        $this->showDaftarAsesmen = ! auth()->user()->asesi->asesmen()->whereIn('status', [AsesmenStatus::REGISTRASI, AsesmenStatus::ASESMEN_MANDIRI, AsesmenStatus::DITERIMA])->exists();
+        $this->showPendaftaranAsesmenBaru = auth()->user()->asesi->asesmen()
+            ->whereIn(
+                'status', [
+                    AsesmenStatus::DITOLAK,
+                    AsesmenStatus::SELESAI_KOMPETEN,
+                    AsesmenStatus::SELESAI_BELUM_KOMPETEN,
+                    AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
+                ])->exists();
     }
 }

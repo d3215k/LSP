@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Asesor;
+namespace App\Livewire\Asesor\AsesmenMandiri;
 
 use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
@@ -104,6 +104,6 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public function render()
     {
-        return view('livewire.asesor.penilaian-asesmen-mandiri-component');
+        return view('livewire.asesor.asesmen-mandiri.penilaian-asesmen-mandiri-component');
     }
 }

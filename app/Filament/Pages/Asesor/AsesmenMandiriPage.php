@@ -1,24 +1,46 @@
 <?php
 
-namespace App\Livewire\Asesor;
+namespace App\Filament\Pages\Asesor;
 
 use App\Enums\AsesmenStatus;
 use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
-use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
-use Illuminate\Contracts\View\View;
-use Livewire\Component;
+use Filament\Pages\Page;
 
-class ListAsesmenMandiriComponent extends Component implements HasForms, HasTable
+class AsesmenMandiriPage extends Page implements HasForms, HasTable
 {
     use InteractsWithTable;
     use InteractsWithForms;
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string $view = 'filament.pages.asesor.asesmen-mandiri-page';
+
+    protected static ?string $slug = 'asesor/asesmen-mandiri';
+
+    protected static ?string $title = 'Asesmen Mandiri';
+
+    protected static ?string $navigationGroup = 'Asesor';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return auth()->user()->isAsesor;
+    }
+
+    public function mount()
+    {
+        if (! auth()->user()->isAsesor) {
+            return to_route('filament.app.pages.beranda');
+        }
+    }
 
     public function table(Table $table): Table
     {
@@ -43,15 +65,10 @@ class ListAsesmenMandiriComponent extends Component implements HasForms, HasTabl
             ->actions([
                 Action::make('nilai')
                     ->button()
-                    ->url(fn (Mandiri $record): string => route('filament.app.pages.nilai-asesmen-mandiri.{mandiri}', $record))
+                    ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{mandiri}.penilaian', $record))
             ])
             ->bulkActions([
                 // ...
             ]);
-    }
-
-    public function render()
-    {
-        return view('livewire.asesor.list-asesmen-mandiri-component');
     }
 }

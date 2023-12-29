@@ -1,5 +1,5 @@
 <x-filament-panels::page>
 
-    <livewire:asesor.list-asesmen-mandiri-component />
+    {{ $this->table }}
 
 </x-filament-panels::page>

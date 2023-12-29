@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Filament\Pages\Asesor;
+namespace App\Filament\Pages\Asesor\AsesmenMandiri;
 
 use App\Models\Asesmen\Mandiri;
 use Filament\Pages\Page;
 
-class NilaiAsesmenMandiri extends Page
+class PenilaianAsesmenMandiri extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.asesor.nilai-asesmen-mandiri';
+    protected static string $view = 'filament.pages.asesor.asesmen-mandiri.penilaian-asesmen-mandiri';
 
-    protected static ?string $slug = 'nilai-asesmen-mandiri/{mandiri}';
+    protected static ?string $slug = 'asesmen-mandiri/{mandiri}/penilaian';
 
     protected static ?string $title = 'FR.APL.02';
 

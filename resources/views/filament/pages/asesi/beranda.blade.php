@@ -1,6 +1,6 @@
 <x-filament-panels::page>
 
-    @if ($showDaftarAsesmen)
+    @if ($showPendaftaranAsesmenBaru)
         @livewire('asesi.pendaftaran-asesmen-component')
     @endif
 

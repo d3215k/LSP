@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Asesor;
+namespace App\Filament\Pages\Asesor\PraAsesmen;
 
 use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
@@ -16,20 +16,39 @@ use Filament\Infolists\Infolist;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
-use Livewire\Component;
+use Filament\Pages\Page;
 
-class PersetujuanAsesmenDanKerahasiaanComponent extends Component implements HasForms, HasInfolists
+class PersetujuanAsesmenDanKerahasiaan extends Page implements HasForms, HasInfolists
 {
     use InteractsWithInfolists;
     use InteractsWithForms;
 
-    public Asesmen $asesmen;
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static string $view = 'filament.pages.asesor.pra-asesmen.persetujuan-asesmen-dan-kerahasiaan';
+
+    protected static ?string $slug = 'pra-asesmen/{record}/persetujuan-asesmen-dan-kerahasiaan';
+
+    protected static ?string $title = 'FR.AK.01';
+
+    protected ?string $subheading = 'Persetujuan Asesmen Dan Kerahasiaan';
+
+	protected static bool $shouldRegisterNavigation = false;
+
+    public Asesmen $record;
 
     public ?array $data = [];
 
-    public function mount(Asesmen $asesmen): void
+    public function mount(Asesmen $record): void
     {
-        $this->form->fill($asesmen->persetujuan?->toArray());
+        abort_unless(
+            auth()->user()->isAsesor && $record->asesor_id === auth()->user()->asesor_id,
+            403
+        );
+
+        $this->record = $record;
+
+        $this->form->fill($record->persetujuan?->toArray());
     }
 
     public function form(Form $form): Form
@@ -47,22 +66,22 @@ class PersetujuanAsesmenDanKerahasiaanComponent extends Component implements Has
                     ])->columns(2),
                 Forms\Components\DateTimePicker::make('waktu')->required()->native(false)->inlineLabel(),
                 forms\Components\Select::make('tempat_uji_kompetensi_id')->label('Tempat Uji Kompetensi')->inlineLabel()
-                    ->options($this->asesmen->skema->tempatUjiKompetensi->pluck('nama', 'id')?->toArray())
+                    ->options($this->record->skema->tempatUjiKompetensi->pluck('nama', 'id')?->toArray())
             ])
             ->statePath('data')
-            ->model($this->asesmen->persetujuan);
+            ->model($this->record->persetujuan);
     }
 
     public function handleSubmit()
     {
         Persetujuan::updateOrCreate(
             [
-                'asesmen_id' => $this->asesmen->id,
+                'asesmen_id' => $this->record->id,
             ],
             $this->form->getState()
         );
 
-        $this->asesmen->update(['status' => AsesmenStatus::DITERIMA]);
+        $this->record->update(['status' => AsesmenStatus::PERSETUJUAN]);
 
         Notification::make()->title('Persetujuan Tersimpan!')->success()->send();
     }
@@ -70,7 +89,7 @@ class PersetujuanAsesmenDanKerahasiaanComponent extends Component implements Has
     public function persetujuanInfolist(Infolist $infolist): Infolist
     {
         return $infolist
-            ->record($this->asesmen)
+            ->record($this->record)
             ->schema([
                 TextEntry::make('rincianDataPemohon.nama')
                     ->label('Asesi')
@@ -84,10 +103,5 @@ class PersetujuanAsesmenDanKerahasiaanComponent extends Component implements Has
                         TextEntry::make('kode')->label('Nomor')->inlineLabel()->columnSpanFull(),
                     ]),
             ]);
-    }
-
-    public function render()
-    {
-        return view('livewire.asesor.persetujuan-asesmen-dan-kerahasiaan-component');
     }
 }

@@ -1,4 +1,5 @@
-<div>
+<x-filament-panels::page>
+
     {{ $this->persetujuanInfolist }}
 
     <div class="mt-4">
@@ -13,4 +14,4 @@
         <x-filament-actions::modals />
     </div>
 
-</div>
+</x-filament-panels::page>

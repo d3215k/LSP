@@ -4,15 +4,15 @@ namespace App\Filament\Pages\Asesor;
 
 use Filament\Pages\Page;
 
-class AsesmenMandiri extends Page
+class LaporanAsesmenPage extends Page
 {
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.asesor.asesmen-mandiri';
+    protected static string $view = 'filament.pages.asesor.laporan-asesmen-page';
 
     protected static ?string $navigationGroup = 'Asesor';
 
-    protected static ?int $navigationSort = 1;
+    protected static ?int $navigationSort = 4;
 
     public static function shouldRegisterNavigation(): bool
     {

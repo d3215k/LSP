@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Asesi;
+namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
 use App\Models\Skema\Unit;
@@ -79,6 +79,6 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
 
     public function render()
     {
-        return view('livewire.asesi.data-sertifikasi-component');
+        return view('livewire.asesi.registrasi.data-sertifikasi-component');
     }
 }
