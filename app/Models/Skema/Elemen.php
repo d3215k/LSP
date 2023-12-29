@@ -18,7 +18,7 @@ class Elemen extends Model
         return $this->belongsTo(Unit::class);
     }
 
-    public function kuk(): HasMany
+    public function KriteriaUnjukKerja(): HasMany
     {
         return $this->hasMany(KriteriaUnjukKerja::class);
     }

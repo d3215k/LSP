@@ -20,7 +20,11 @@ class ElementsRelationManager extends RelationManager
             ->schema([
                 Forms\Components\TextInput::make('nama')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->columnSpanFull(),
+                Forms\Components\Textarea::make('benchmark')
+                    ->maxLength(255)
+                    ->columnSpanFull(),
             ]);
     }
 

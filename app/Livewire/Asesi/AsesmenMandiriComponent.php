@@ -24,7 +24,7 @@ class AsesmenMandiriComponent extends Component
     }
 
     public function mount() {
-        $this->asesmen->load(['skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kuk', 'buktiMandiri', 'mandiri']);
+        $this->asesmen->load(['skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kriteriaUnjukKerja', 'buktiMandiri', 'mandiri']);
 
         $jawaban = JawabanMandiri::query()
             ->where('asesmen_mandiri_id', $this->asesmen->mandiri?->id)

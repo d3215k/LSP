@@ -16,6 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_id')->constrained('unit', 'id')->cascadeOnDelete();
             $table->string('nama');
+            $table->string('benchmark')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
