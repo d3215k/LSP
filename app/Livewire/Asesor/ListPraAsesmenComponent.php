@@ -30,13 +30,16 @@ class ListPraAsesmenComponent extends Component implements HasForms, HasTable
                 ->where('asesor_id', auth()->user()->asesor_id)
                 ->whereHas('mandiri', function ($query) {
                     $query->where('rekomendasi', RekomendasiAsesmenMandiri::DILANJUTKAN);
-                })
+                })->orWhere('status', AsesmenStatus::DITERIMA),
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi'),
                 TextColumn::make('skema.nama')
                     ->label('Skema'),
+                TextColumn::make('status')
+                    ->badge()
+                    ->getStateUsing(fn (Asesmen $record): string => $record->persetujuan()->exists() ? 'Dijadwalkan' : 'Belum disetujui asesor'),
             ])
             ->filters([
                 // ...
