@@ -28,6 +28,8 @@ class AsesmenPage extends Page implements HasForms, HasTable
 
     protected static ?string $title = 'Asesmen';
 
+    protected static ?string $slug = 'asesor/asesmen';
+
     protected static ?string $navigationGroup = 'Asesor';
 
     protected static ?int $navigationSort = 3;
@@ -62,7 +64,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
             ->actions([
                 Action::make('persetujuan')
                     ->button()
-                    ->url(fn (Asesmen $record): string => route('filament.app.pages.persetujuan-asesmen-dan-kerahasiaan.{record}', $record))
+                    ->url(fn (Asesmen $record): string => route('filament.app.pages.pra-asesmen.{record}.persetujuan-asesmen-dan-kerahasiaan', $record))
             ])
             ->bulkActions([
                 // ...
