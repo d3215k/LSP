@@ -2,6 +2,7 @@
 
 namespace App\Models\Skema;
 
+use App\Models\Asesmen\PertanyaanObservasiPendukung;
 use App\Models\Skema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,11 @@ class Unit extends Model
     public function skema(): BelongsTo
     {
         return $this->belongsTo(Skema::class);
+    }
+
+    public function pertanyaanObservasiPendukung(): HasMany
+    {
+        return $this->hasMany(PertanyaanObservasiPendukung::class);
     }
 
 }

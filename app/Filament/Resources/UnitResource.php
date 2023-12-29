@@ -7,6 +7,7 @@ use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Skema\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -85,6 +86,7 @@ class UnitResource extends Resource
     {
         return [
             RelationManagers\ElementsRelationManager::class,
+            RelationManagers\PertanyaanObservasiPendukungRelationManager::class,
         ];
     }
 

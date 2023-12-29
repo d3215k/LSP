@@ -16,6 +16,7 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
+use Filament\Tables\Actions\ActionGroup;
 
 class AsesmenPage extends Page implements HasForms, HasTable
 {
@@ -50,21 +51,31 @@ class AsesmenPage extends Page implements HasForms, HasTable
     {
         return $table
             ->query(Asesmen::query()
-                ->where('status', AsesmenStatus::PERSETUJUAN)
+                ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS])
                 ->where('asesor_id', auth()->user()->asesor_id),
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi / Skema')
                     ->description(fn (Asesmen $record): string => $record->skema->nama),
+                TextColumn::make('status')
+                    ->badge(),
             ])
             ->filters([
                 // ...
             ])
             ->actions([
-                Action::make('persetujuan')
-                    ->button()
-                    ->url(fn (Asesmen $record): string => route('filament.app.pages.pra-asesmen.{record}.persetujuan-asesmen-dan-kerahasiaan', $record))
+                ActionGroup::make([
+                    Action::make('Observasi Aktivitas')
+                        ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.ceklis-observasi-aktivitas', $record))
+                        ->icon('heroicon-m-document-text'),
+                    Action::make('Pertanyaan Observasi Pendukung')
+                        ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $record))
+                        ->icon('heroicon-m-document-text')
+                ])
+                ->button()
+                ->icon('heroicon-m-document-text')
+                ->label('Penilaian')
             ])
             ->bulkActions([
                 // ...
