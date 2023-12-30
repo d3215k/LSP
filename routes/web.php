@@ -1,6 +1,7 @@
 <?php
 
 use App\Filament\Pages\Asesor\NilaiAsesmenMandiri;
+use App\Http\Controllers\GenerateSertifikatController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,5 +26,6 @@ use Illuminate\Support\Facades\Route;
 //     ->name('profile');
 
 // Route::get('/nilai-asesmen-mandiri/{mandiri}', NilaiAsesmenMandiri::class)->name('asesor.nilai-asesmen-mandiri');
+Route::get('/sertifikat/{record}/generate', GenerateSertifikatController::class)->name('generate.sertifikat');
 
 // require __DIR__.'/auth.php';

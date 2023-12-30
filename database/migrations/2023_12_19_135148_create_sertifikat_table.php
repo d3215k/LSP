@@ -14,11 +14,16 @@ return new class extends Migration
         Schema::create('sertifikat', function (Blueprint $table) {
             $table->id();
             $table->string('no_sertifikat');
-            $table->string('nama');
-            $table->string('skema');
-            $table->string('tempat');
-            $table->date('tanggal');
-            $table->string('masa_berlaku');
+            $table->string('pemilik');
+            $table->string('bidang')->nullable();
+            $table->string('kompetensi')->nullable();
+            $table->json('unit')->nullable();
+            $table->string('tempat_terbit')->nullable();
+            $table->date('tanggal_terbit')->nullable();
+            $table->string('masa_berlaku')->nullable();
+            $table->string('masa_berlaku_en')->nullable();
+            $table->string('ketua_lsp')->nullable();
+            $table->string('ketua_bidang_sertifikasi')->nullable();
             $table->timestamps();
         });
     }

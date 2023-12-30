@@ -31,26 +31,25 @@ class SertifikatResource extends Resource
         return $form
             ->schema([
                 Forms\Components\TextInput::make('no_sertifikat')
-                    ->default('LSP-' . random_int(100000, 999999))
-                    ->disabled()
+                    ->default('LSP01 199 69988521 ' . random_int(1111, 9999) . ' ' . date("Y"))
                     ->dehydrated()
                     ->required()
                     ->maxLength(32)
                     ->unique(Sertifikat::class, 'no_sertifikat', ignoreRecord: true),
-                Forms\Components\Select::make('nama')
+                Forms\Components\Select::make('pemilik')
                     ->label('Nama')
                     ->options(Asesi::all()->pluck('nama', 'nama'))
                     ->required()
                     ->searchable(),
-                Forms\Components\Select::make('skema')
-                    ->label('Skema')
-                    ->options(Skema::all()->pluck('nama', 'nama'))
-                    ->required()
-                    ->searchable(),
-                Forms\Components\TextInput::make('tempat')
+                // Forms\Components\Select::make('skema')
+                //     ->label('Skema')
+                //     ->options(Skema::all()->pluck('nama', 'nama'))
+                //     ->required()
+                //     ->searchable(),
+                Forms\Components\TextInput::make('tempat_terbit')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('tanggal')
+                Forms\Components\DatePicker::make('tanggal_terbit')
                     ->required(),
                 Forms\Components\TextInput::make('masa_berlaku')
                     ->required()
@@ -63,9 +62,8 @@ class SertifikatResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('no_sertifikat')
-                    ->searchable()
-                    ->description(fn (Sertifikat $record): string => $record->skema),
-                Tables\Columns\TextColumn::make('nama')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('pemilik')
                     ->searchable(),
             ])
             ->filters([
@@ -73,8 +71,10 @@ class SertifikatResource extends Resource
             ])
             ->actions([
                 Tables\Actions\Action::make('Cetak Sertifikat')
-                    ->iconButton()
-                    ->icon('heroicon-m-printer'),
+                    ->button()
+                    ->icon('heroicon-m-printer')
+                    ->url(fn (Sertifikat $record): string => route('generate.sertifikat', $record))
+                    ->openUrlInNewTab(),
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
