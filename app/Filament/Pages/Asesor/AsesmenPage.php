@@ -69,11 +69,14 @@ class AsesmenPage extends Page implements HasForms, HasTable
                     Action::make('Observasi Aktivitas')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.ceklis-observasi-aktivitas', $record))
                         ->icon('heroicon-m-document-text'),
-                    Action::make('Pertanyaan Observasi Pendukung')
+                    Action::make('Observasi Pendukung')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $record))
                         ->icon('heroicon-m-document-text'),
-                    Action::make('Pertanyaan Tertulis Esai')
+                    Action::make('Tertulis Esai')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $record))
+                        ->icon('heroicon-m-document-text'),
+                    Action::make('Rekaman')
+                        ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.rekaman', $record))
                         ->icon('heroicon-m-document-text'),
                 ])
                 ->button()

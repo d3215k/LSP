@@ -11,4 +11,9 @@ class HasilRekaman extends Model
 
     protected $table = 'hasil_rekaman';
 
+    protected $casts = [
+        'observasi_demonstrasi' => 'boolean',
+        'portofolio' => 'boolean',
+    ];
+
 }

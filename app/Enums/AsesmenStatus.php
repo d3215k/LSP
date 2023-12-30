@@ -31,7 +31,7 @@ enum AsesmenStatus: int implements HasLabel
             self::TERTULIS_ESAI => 'Pertanyaan Tertulis Esai',
             self::SELESAI_KOMPETEN => 'Kompeten',
             self::SELESAI_BELUM_KOMPETEN => 'Belum Kompeten',
-            self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Perlu Tindak Lanjut',
+            self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Belum Kompeten, Perlu Tindak Lanjut',
         };
     }
 }
