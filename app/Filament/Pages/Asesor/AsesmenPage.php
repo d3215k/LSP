@@ -51,7 +51,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
     {
         return $table
             ->query(Asesmen::query()
-                ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS])
+                ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::TERTULIS_ESAI])
                 ->where('asesor_id', auth()->user()->asesor_id),
             )
             ->columns([
@@ -71,7 +71,10 @@ class AsesmenPage extends Page implements HasForms, HasTable
                         ->icon('heroicon-m-document-text'),
                     Action::make('Pertanyaan Observasi Pendukung')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $record))
-                        ->icon('heroicon-m-document-text')
+                        ->icon('heroicon-m-document-text'),
+                    Action::make('Pertanyaan Tertulis Esai')
+                        ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $record))
+                        ->icon('heroicon-m-document-text'),
                 ])
                 ->button()
                 ->icon('heroicon-m-document-text')

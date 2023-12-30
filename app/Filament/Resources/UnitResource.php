@@ -87,6 +87,7 @@ class UnitResource extends Resource
         return [
             RelationManagers\ElementsRelationManager::class,
             RelationManagers\PertanyaanObservasiPendukungRelationManager::class,
+            RelationManagers\PertanyaanTertulisEsaiRelationManager::class,
         ];
     }
 

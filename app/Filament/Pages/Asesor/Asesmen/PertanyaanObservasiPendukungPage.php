@@ -5,7 +5,9 @@ namespace App\Filament\Pages\Asesor\Asesmen;
 use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\HasilObservasiAktivitas;
+use App\Models\Asesmen\HasilObservasiPendukung;
 use App\Models\Asesmen\ObservasiAktivitas;
+use App\Models\Asesmen\ObservasiPendukung;
 use App\Models\Asesmen\Persetujuan;
 use App\Models\TempatUjiKompetensi;
 use Filament\Forms;
@@ -21,14 +23,14 @@ use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
 
-class PertanyaanObservasiPendukung extends Page implements HasForms, HasInfolists
+class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfolists
 {
     use InteractsWithInfolists;
     use InteractsWithForms;
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static string $view = 'filament.pages.asesor.asesmen.pertanyaan-observasi-pendukung';
+    protected static string $view = 'filament.pages.asesor.asesmen.pertanyaan-observasi-pendukung-page';
 
     protected static ?string $slug = 'asesmen/{record}/pertanyaan-observasi-pendukung';
 
@@ -51,13 +53,14 @@ class PertanyaanObservasiPendukung extends Page implements HasForms, HasInfolist
 
         // dd($record->observasiAktivitas->id);
 
-        $hasil = HasilObservasiAktivitas::query()
-            ->where('asesmen_observasi_aktivitas_id', $record->observasiAktivitas->id)
+        $hasil = HasilObservasiPendukung::query()
+            ->where('asesmen_observasi_pendukung_id', $record->observasiPendukung->id)
             ->get();
 
         // dd($hasil);
 
-        $this->data['kompeten'] = $hasil->pluck('kompeten', 'kriteria_unjuk_kerja_id')->toArray();
+        $this->data['kompeten'] = $hasil->pluck('kompeten', 'pertanyaan_id')->toArray();
+        $this->data['tanggapan'] = $hasil->pluck('tanggapan', 'pertanyaan_id')->toArray();
 
     }
 
@@ -65,7 +68,7 @@ class PertanyaanObservasiPendukung extends Page implements HasForms, HasInfolist
     {
         try {
             DB::beginTransaction();
-            $observasi = ObservasiAktivitas::updateOrCreate(
+            $observasi = ObservasiPendukung::updateOrCreate(
                 [
                     'asesmen_id' => $this->record->id,
                 ],
@@ -76,32 +79,33 @@ class PertanyaanObservasiPendukung extends Page implements HasForms, HasInfolist
 
             $data = [];
 
-            foreach (array_keys($this->data['kompeten']) as $key) {
+            foreach (array_keys($this->data['kompeten'] + $this->data['tanggapan']) as $key) {
                 $data[$key] = [
                     "kompeten" => $this->data['kompeten'][$key] ?? null,
+                    "tanggapan" => $this->data['tanggapan'][$key] ?? null,
                 ];
             }
 
-            // dd($data, $observasi);
 
             foreach ($data as $key => $value) {
-                HasilObservasiAktivitas::updateOrCreate(
+                HasilObservasiPendukung::updateOrCreate(
                     [
-                        'asesmen_observasi_aktivitas_id' => $observasi->id,
-                        'kriteria_unjuk_kerja_id' => $key,
+                        'asesmen_observasi_pendukung_id' => $observasi->id,
+                        'pertanyaan_id' => $key,
                     ],
                     [
                         'kompeten' => $value['kompeten'],
+                        'tanggapan' => $value['tanggapan'],
                     ]
                 );
             }
 
             $this->record->update([
-                'status' => AsesmenStatus::OBSERVASI_AKTIVITAS
+                'status' => AsesmenStatus::OBSERVASI_PENDUKUNG
             ]);
 
             DB::commit();
-            Notification::make()->title('Asesmen Mandiri Tersimpan')->success()->send();
+            Notification::make()->title('Data Tersimpan')->success()->send();
 
         } catch (\Throwable $th) {
             $th->getMessage();

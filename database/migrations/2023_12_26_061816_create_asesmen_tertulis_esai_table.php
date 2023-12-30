@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asesmen_id')->constrained('asesmen')->cascadeOnDelete();
             $table->date('tanggal_asesmen');
-            $table->date('tanggal_periksa');
+            $table->date('tanggal_periksa')->nullable();
             $table->timestamps();
         });
     }

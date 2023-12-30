@@ -3,6 +3,7 @@
 namespace App\Models\Skema;
 
 use App\Models\Asesmen\PertanyaanObservasiPendukung;
+use App\Models\Asesmen\PertanyaanTertulisEsai;
 use App\Models\Skema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,6 +29,11 @@ class Unit extends Model
     public function pertanyaanObservasiPendukung(): HasMany
     {
         return $this->hasMany(PertanyaanObservasiPendukung::class);
+    }
+
+    public function pertanyaanTertulisEsai(): HasMany
+    {
+        return $this->hasMany(PertanyaanTertulisEsai::class);
     }
 
 }
