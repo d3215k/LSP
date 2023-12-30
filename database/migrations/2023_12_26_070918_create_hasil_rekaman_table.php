@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('unit_id')->constrained('unit')->cascadeOnDelete();
             $table->boolean('obervasi_demonstrasi')->default(false);
             $table->boolean('portofolio')->default(false);
-            $table->boolean('pernyataan_pihak_ketika_pertanyaan_wawancara')->default(false);
+            $table->boolean('pernyataan_pihak_ketiga_pertanyaan_wawancara')->default(false);
             $table->boolean('pertanyaan_lisan')->default(false);
             $table->boolean('pertanyaan_tertulis')->default(false);
             $table->boolean('proyek_kerja')->default(false);

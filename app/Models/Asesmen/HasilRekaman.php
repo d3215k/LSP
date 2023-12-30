@@ -14,6 +14,11 @@ class HasilRekaman extends Model
     protected $casts = [
         'observasi_demonstrasi' => 'boolean',
         'portofolio' => 'boolean',
+        'pernyataan_pihak_ketiga_pertanyaan_wawancara' => 'boolean',
+        'pertanyaan_lisan' => 'boolean',
+        'pertanyaan_tertulis' => 'boolean',
+        'proyek_kerja' => 'boolean',
+        'lainnya' => 'boolean',
     ];
 
 }

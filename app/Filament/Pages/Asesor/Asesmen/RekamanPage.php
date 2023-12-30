@@ -56,20 +56,19 @@ class RekamanPage extends Page implements HasForms, HasInfolists
     {
         abort_unless(auth()->user()->isAsesor, 403);
 
-        $this->form->fill($this->record->rekaman->toArray());
+        $this->form->fill($this->record->rekaman?->toArray());
 
         $hasil = HasilRekaman::query()
             ->where('asesmen_rekaman_id', $this->record->rekaman?->id)
             ->get();
 
-        // dd($hasil);
-
         $this->state['observasi_demonstrasi'] = $hasil->pluck('observasi_demonstrasi', 'unit_id')->toArray();
         $this->state['portofolio'] = $hasil->pluck('portofolio', 'unit_id')->toArray();
-
-        // dd($this->state);
-        $this->state['observasi_demonstrasi'][1] = true;
-
+        $this->state['pernyataan_pihak_ketiga_pertanyaan_wawancara'] = $hasil->pluck('pernyataan_pihak_ketiga_pertanyaan_wawancara', 'unit_id')->toArray();
+        $this->state['pertanyaan_lisan'] = $hasil->pluck('pertanyaan_lisan', 'unit_id')->toArray();
+        $this->state['pertanyaan_tertulis'] = $hasil->pluck('pertanyaan_tertulis', 'unit_id')->toArray();
+        $this->state['proyek_kerja'] = $hasil->pluck('proyek_kerja', 'unit_id')->toArray();
+        $this->state['lainnya'] = $hasil->pluck('lainnya', 'unit_id')->toArray();
     }
 
     public function form(Form $form): Form
@@ -101,10 +100,9 @@ class RekamanPage extends Page implements HasForms, HasInfolists
 
     public function handleSave()
     {
-        // dd($this->form->getState());
+        $data = $this->form->getState();
 
-        $state = $this->form->getState();
-
+        // dd($data, $this->state);
 
         try {
             DB::beginTransaction();
@@ -112,19 +110,34 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                 [
                     'asesmen_id' => $this->record->id,
                 ],
-                $state,
+                $data,
             );
 
-            $data = [];
+            $state = [];
 
-            foreach (array_keys($this->data['observasi_demonstrasi'] + $this->data['portofolio']) as $key) {
-                $data[$key] = [
-                    'observasi_demonstrasi' => $this->data['observasi_demonstrasi'][$key] ?? null,
-                    'portofolio' => $this->data['portofolio'][$key] ?? null,
+
+            foreach (
+                array_keys(
+                    $this->state['observasi_demonstrasi']
+                    + $this->state['portofolio']
+                    + $this->state['pernyataan_pihak_ketiga_pertanyaan_wawancara']
+                    + $this->state['pertanyaan_lisan']
+                    + $this->state['pertanyaan_tertulis']
+                    + $this->state['proyek_kerja']
+                    + $this->state['lainnya']
+                ) as $key) {
+                $state[$key] = [
+                    'observasi_demonstrasi' => $this->state['observasi_demonstrasi'][$key] ?? false,
+                    'portofolio' => $this->state['portofolio'][$key] ?? false,
+                    'pernyataan_pihak_ketiga_pertanyaan_wawancara' => $this->state['pernyataan_pihak_ketiga_pertanyaan_wawancara'][$key] ?? false,
+                    'pertanyaan_lisan' => $this->state['pertanyaan_lisan'][$key] ?? false,
+                    'pertanyaan_tertulis' => $this->state['pertanyaan_tertulis'][$key] ?? false,
+                    'proyek_kerja' => $this->state['proyek_kerja'][$key] ?? false,
+                    'lainnya' => $this->state['lainnya'][$key] ?? false,
                 ];
             }
 
-            foreach ($data as $key => $value) {
+            foreach ($state as $key => $value) {
                 HasilRekaman::updateOrCreate(
                     [
                         'asesmen_rekaman_id' => $esai->id,
@@ -133,21 +146,19 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                     [
                         'observasi_demonstrasi' => $value['observasi_demonstrasi'],
                         'portofolio' => $value['portofolio'],
-                        // 'pernyataan_pihak_ketiga_pertanyaan_wawancara' => $value['pernyataan_pihak_ketiga_pertanyaan_wawancara'],
-                        // 'pertanyaan_lisan' => $value['pertanyaan_lisan'],
-                        // 'pertanyaan_tertulis' => $value['pertanyaan_tertulis'],
-                        // 'proyek_kerja' => $value['proyek_kerja'],
-                        // 'lainnya' => $value['lainnya'],
+                        'pernyataan_pihak_ketiga_pertanyaan_wawancara' => $value['pernyataan_pihak_ketiga_pertanyaan_wawancara'],
+                        'pertanyaan_lisan' => $value['pertanyaan_lisan'],
+                        'pertanyaan_tertulis' => $value['pertanyaan_tertulis'],
+                        'proyek_kerja' => $value['proyek_kerja'],
+                        'lainnya' => $value['lainnya'],
                     ]
                 );
             }
 
-            // dd($state['rekomendasi'], RekomendasiRekamanAsesmen::KOMPETEN);
-
             $this->record->update([
-                'status' => $state['rekomendasi'] === RekomendasiRekamanAsesmen::KOMPETEN->value
+                'status' => $data['rekomendasi'] === RekomendasiRekamanAsesmen::KOMPETEN->value
                             ? AsesmenStatus::SELESAI_KOMPETEN
-                            : ($state['rekomendasi'] === RekomendasiRekamanAsesmen::BELUM_KOMPETEN->value && $state['tindak_lanjut']
+                            : ($data['rekomendasi'] === RekomendasiRekamanAsesmen::BELUM_KOMPETEN->value && $data['tindak_lanjut']
                                 ? AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
                                 : AsesmenStatus::SELESAI_BELUM_KOMPETEN),
             ]);

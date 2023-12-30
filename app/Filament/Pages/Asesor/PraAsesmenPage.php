@@ -28,6 +28,8 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
 
     protected static ?string $title = 'Pra Asesmen';
 
+    protected static ?string $slug = 'asesor/pra-asesmen';
+
     protected static ?string $navigationGroup = 'Asesor';
 
     protected static ?int $navigationSort = 2;
