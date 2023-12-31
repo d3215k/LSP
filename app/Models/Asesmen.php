@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AsesmenStatus;
+use App\Models\Asesmen\Banding;
 use App\Models\Asesmen\BuktiMandiri;
 use App\Models\Asesmen\BuktiPersyaratan;
 use App\Models\Asesmen\Mandiri;
@@ -97,6 +98,11 @@ class Asesmen extends Model
     public function umpanBalik(): HasOne
     {
         return $this->hasOne(UmpanBalik::class);
+    }
+
+    public function banding(): HasOne
+    {
+        return $this->hasOne(Banding::class);
     }
 
 }
