@@ -6,13 +6,13 @@
     <div class="relative flex flex-col mx-auto overflow-hidden bg-white xl:max-w-4xl ">
         <div class="w-full p-5 lg:p-6 grow print:p-0">
             <div class="mx-auto text-center lg:w-10/12 print:w-full">
-                <div class="space-y-8">
+                <div class="space-y-6 leading-5">
                     <div class="flex justify-center">
-                        <img width="150" src="{{ asset('images/logo.png') }}" />
+                        <img width="120" src="{{ asset('storage/'.$setting->logo) }}" />
                     </div>
-                    <div class="mt-6 text-2xl font-bold uppercase">
-                        <h1>Sertifikat Kompetensi</h1>
-                        <p class="italic">Certificate Of Competence</p>
+                    <div class="mt-6 font-bold uppercase">
+                        <h1 class="text-2xl">Sertifikat Kompetensi</h1>
+                        <p class="text-lg" class="italic">Certificate Of Competence</p>
                     </div>
                     <div class="font-bold">
                         NO. {{ $sertifikat->no_sertifikat }}
@@ -28,23 +28,33 @@
                     </div>
 
                     <div>
+                        <p>Telah kompeten pada bidang:</p>
+                        <p class="italic">Has been competence in the area of:</p>
+                    </div>
+
+                    <div class="font-bold">
+                        <p>Budidaya Ikan Air Tawar</p>
+                        <p class="italic">Freshwater Fish Cultivation</p>
+                    </div>
+
+                    <div>
                         <p>Dengan Kualifikasi/Kompetensi:</p>
                         <p class="italic">With Qualifications/Competency:</p>
                     </div>
 
                     <div class="font-bold">
-                        <p>Skema Sertifikasi KKNI Level III</p>
-                        <p class="italic">Certification of Scheme KKNI Level III</p>
+                        <p>KKNI Level II pada Kompetensi Keahlian</p>
+                        <p class="italic">KKNI Level II on Skills Competence of</p>
                     </div>
 
-                    <div class="font-bold">
-                        <p>AGROINDUSTRI</p>
-                        <p class="italic">AGROINDUSTRI</p>
+                    <div class="text-xl font-bold">
+                        <p>AGRIBISNIS PERIKANAN AIR TAWAR</p>
+                        <p class="italic">FRESHWATER FISHERIES AGRIBUSINESS</p>
                     </div>
 
                     <div>
-                        <p>Sertifikat ini berlaku untuk : 3 (tiga) Tahun</p>
-                        <p>This certificate is valid for : 3 (three) Years</p>
+                        <p>Sertifikat ini berlaku untuk : {{ $setting->masa_berlaku }}</p>
+                        <p class="italic">This certificate is valid for : {{ $setting->masa_berlaku_en }}</p>
                     </div>
 
                     <div>
@@ -52,12 +62,12 @@
                     </div>
 
                     <div>
-                        <p>Lembaga Sertifikasi Profesi SMKN 1 Cibadak</p>
-                        <p class="italic">Professional Certification Body of Vocational High School 1 Cibadak</p>
+                        <p>{{ $setting->nama_lembaga }}</p>
+                        <p class="italic">{{ $setting->nama_lembaga_en }}</p>
                     </div>
 
-                    <div class="font-bold">
-                        <p>Siti Maryam, S.Pt., M.P</p>
+                    <div class="pt-12 font-bold ">
+                        <p>{{ $setting->ketua_lsp }}</p>
                         <p>Ketua</p>
                         <p class="italic">Chairman</p>
                     </div>
@@ -65,10 +75,10 @@
 
                 <div class="pagebreak"> </div>
 
-                <div class="mr-12">
+                <div class="mr-12 text-sm">
                     <div class="text-xl font-bold">
                         <h1>Daftar Unit Kompetensi</h1>
-                        <p class="italic">List of Competency Units</p>
+                        <p class="italic text-md">List of Competency Units</p>
                     </div>
 
                     <div class="mt-12">
@@ -94,8 +104,8 @@
 
                     <div class="w-full mt-24 text-right">
                         <p>Cibadak, 5 Mei 2023</p>
-                        <p>Lembaga Sertifikasi Profesi SMKN 1 Cibadak</p>
-                        <p class="italic">Professional Certification Body of Vocational High School 1 Cibadak</p>
+                        <p>{{ $setting->nama_lembaga }}</p>
+                        <p class="italic">{{ $setting->nama_lembaga_en }}</p>
                     </div>
 
                     <div class="flex mt-32">
@@ -111,7 +121,7 @@
                             <p class="italic">Signature of holder</p>
                         </div>
                         <div class="flex-1 text-right">
-                            <p class="font-bold">Wulan Handayani, S.Kom</p>
+                            <p class="font-bold">{{ $setting->ketua_bidang_sertifikasi }}</p>
                             <p>Ketua Bidang Sertifikasi</p>
                             <p class="italic">Head of Certification</p>
                         </div>

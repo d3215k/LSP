@@ -17,6 +17,7 @@ return new class extends Migration
             $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
             $table->string('kode');
             $table->string('judul');
+            $table->string('judul_en')->nullable();
             $table->text('deskripsi')->nullable();
             $table->boolean('aktif')->default(true);
             $table->timestamps();

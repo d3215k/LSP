@@ -1,6 +1,7 @@
 <?php
 
 use App\Settings\GeneralSetting;
+use App\Settings\SertifikatSetting;
 
 return [
 
@@ -10,6 +11,7 @@ return [
      */
     'settings' => [
         GeneralSetting::class,
+        SertifikatSetting::class,
     ],
 
     /*
