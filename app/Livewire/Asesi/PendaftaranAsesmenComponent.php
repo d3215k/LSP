@@ -62,7 +62,7 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
 
         Asesmen::create($data);
 
-        return to_route('filament.app.pages.registrasi');
+        return to_route('filament.app.pages.permohonan-sertifikasi-kompetensi');
     }
 
     public function render()

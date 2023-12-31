@@ -35,7 +35,7 @@ class EditAsesmen extends EditRecord
 
                 })
                 ->requiresConfirmation()
-                ->hidden(fn (Asesmen $record) => $record->status === AsesmenStatus::ASESMEN_MANDIRI),
+                ->hidden(fn (Asesmen $record) => $record->status->value > AsesmenStatus::REGISTRASI->value),
             Actions\DeleteAction::make(),
         ];
     }

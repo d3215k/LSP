@@ -12,6 +12,8 @@ class PermohonanSertifikasiKompetensiPage extends Page
 
     protected static string $view = 'filament.pages.asesi.permohonan-sertifikasi-kompetensi-page';
 
+    protected static ?string $slug = 'permohonan-sertifikasi-kompetensi';
+
     protected static ?string $title = 'FR.APL.01';
 
     protected ?string $subheading = ' PERMOHONAN SERTIFIKASI KOMPETENSI';

@@ -33,12 +33,12 @@ class AsesmenResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('skema_id')
-                    ->relationship('skema', 'nama') // TODO
+                    ->relationship('skema', 'nama')
                     ->columnSpanFull()
                     ->required(),
                 Forms\Components\Select::make('periode_id')
                     ->relationship('periode', 'nama')
-                    ->options(Periode::all()->pluck('nama', 'id')) // TODO
+                    ->options(Periode::all()->pluck('nama', 'id'))
                     ->required(),
                 Forms\Components\Select::make('asesor_id')
                     ->relationship('asesor', 'nama')

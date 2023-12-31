@@ -22,8 +22,9 @@ class Beranda extends Page
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
-        $this->showPendaftaranAsesmenBaru = auth()->user()->asesi->asesmen()
-            ->whereIn(
+        $this->showPendaftaranAsesmenBaru =
+            ! auth()->user()->asesi->asesmen()->exists() OR
+            auth()->user()->asesi->asesmen()->whereIn(
                 'status', [
                     AsesmenStatus::DITOLAK,
                     AsesmenStatus::SELESAI_KOMPETEN,
