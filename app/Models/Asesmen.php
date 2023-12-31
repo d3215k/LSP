@@ -12,6 +12,7 @@ use App\Models\Asesmen\Persetujuan;
 use App\Models\Asesmen\Rekaman;
 use App\Models\Asesmen\RincianDataPemohon;
 use App\Models\Asesmen\TertulisEsai;
+use App\Models\Asesmen\UmpanBalik;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -91,6 +92,11 @@ class Asesmen extends Model
     public function observasiAktivitas(): HasOne
     {
         return $this->hasOne(ObservasiAktivitas::class);
+    }
+
+    public function umpanBalik(): HasOne
+    {
+        return $this->hasOne(UmpanBalik::class);
     }
 
 }
