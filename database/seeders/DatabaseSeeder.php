@@ -5,7 +5,6 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 use App\Enums\UserType;
-use App\Models\Periode;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -17,6 +16,7 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             KompetensiKeahlianSeeder::class,
+            KomponenUmpanBalikSeeder::class,
             SkemaSeeder::class,
             AsesiSeeder::class,
             AsesorSeeder::class,

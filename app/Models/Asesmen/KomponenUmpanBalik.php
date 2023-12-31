@@ -10,4 +10,6 @@ class KomponenUmpanBalik extends Model
     use HasFactory;
 
     protected $table = 'komponen_umpan_balik';
+
+    public $timestamps = false;
 }

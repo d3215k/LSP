@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('komponen_umpan_balik', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('asesmen_umpan_balik_id')->constrained('asesmen_umpan_balik')->cascadeOnDelete();
             $table->string('komponen');
-            $table->timestamps();
+            $table->boolean('aktif')->default(true);
         });
     }
 
