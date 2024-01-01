@@ -65,7 +65,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
         }
 
         $hasil = JawabanTertulisEsai::query()
-            ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai->id)
+            ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();
 
         // // dd($hasil);

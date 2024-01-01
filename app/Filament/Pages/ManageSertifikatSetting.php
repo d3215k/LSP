@@ -19,8 +19,6 @@ class ManageSertifikatSetting extends SettingsPage
 
     protected static ?int $navigationSort = 15;
 
-    protected static ?string $navigationParentItem = 'Profil LSP';
-
     public static function shouldRegisterNavigation(): bool
     {
         return auth()->user()->isAdmin;
@@ -59,6 +57,9 @@ class ManageSertifikatSetting extends SettingsPage
                 Forms\Components\FileUpload::make('logo')
                     ->label('logo')
                     ->directory('logo'),
+                Forms\Components\TextInput::make('kode')
+                    ->label('Kode')
+                    ->required()
             ]);
     }
 }

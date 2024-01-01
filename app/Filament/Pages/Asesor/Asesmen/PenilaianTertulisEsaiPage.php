@@ -53,7 +53,7 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
         abort_unless(auth()->user()->isAsesor, 403);
 
         $hasil = JawabanTertulisEsai::query()
-            ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai->id)
+            ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();
 
         $this->data['jawaban'] = $hasil->pluck('jawaban', 'pertanyaan_tertulis_esai_id')->toArray();

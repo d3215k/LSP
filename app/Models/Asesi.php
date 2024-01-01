@@ -14,6 +14,11 @@ class Asesi extends Model
 
     protected $table = 'asesi';
 
+    public function sekolah(): BelongsTo
+    {
+        return $this->belongsTo(Sekolah::class);
+    }
+
     public function kompetensiKeahlian(): BelongsTo
     {
         return $this->belongsTo(KompetensiKeahlian::class);

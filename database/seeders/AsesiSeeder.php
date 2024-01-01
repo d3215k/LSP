@@ -14,14 +14,30 @@ class AsesiSeeder extends Seeder
      */
     public function run(): void
     {
-        $asesi = Asesi::create([
+        $asesi1 = Asesi::create([
+            'sekolah_id' => 1,
             'kompetensi_keahlian_id' => 1,
             'nama' => 'Asesi 1',
+            'email' => 'asesi1@example.com',
         ]);
 
-        $asesi->user()->create([
+        $asesi1->user()->create([
             'name' => 'Asesi 1',
-            'email' => 'asesi@example.com',
+            'email' => 'asesi1@example.com',
+            'password' => bcrypt('password'),
+            'type' => UserType::ASESI,
+        ]);
+
+        $asesi2 = Asesi::create([
+            'sekolah_id' => 2,
+            'kompetensi_keahlian_id' => 1,
+            'nama' => 'Asesi 2',
+            'email' => 'asesi2@example.com',
+        ]);
+
+        $asesi2->user()->create([
+            'name' => 'Asesi 2',
+            'email' => 'asesi2@example.com',
             'password' => bcrypt('password'),
             'type' => UserType::ASESI,
         ]);

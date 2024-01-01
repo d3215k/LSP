@@ -72,8 +72,12 @@ class AsesiResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
+                    ->label('Nama / No. Reg')
+                    ->description(fn (Asesi $record): string => $record->no_reg ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('kompetensiKeahlian.nama')
+                    ->label('Kompetensi Keahlian / Sekolah')
+                    ->description(fn (Asesi $record): string => $record->sekolah->nama)
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),

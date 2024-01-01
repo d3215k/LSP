@@ -52,7 +52,7 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
         // dd($record->observasiAktivitas->id);
 
         $hasil = HasilObservasiAktivitas::query()
-            ->where('asesmen_observasi_aktivitas_id', $record->observasiAktivitas->id)
+            ->where('asesmen_observasi_aktivitas_id', $record->observasiAktivitas?->id)
             ->get();
 
         // dd($hasil);

@@ -94,11 +94,13 @@
                                     <p class="italic">Title of Competency Unit</p>
                                 </th>
                             </tr>
+                            @foreach (\App\Models\Skema::first()->unit as $unit)
                             <tr>
-                                <td class="border border-gray-600">1</td>
-                                <td class="border border-gray-600">J.630PROD.001.2</td>
-                                <td class="border border-gray-600">Menggunakan Perangkat Komputer</td>
+                                <td class="border border-gray-600">{{ $loop->iteration }}</td>
+                                <td class="border border-gray-600">{{ $unit->kode }}</td>
+                                <td class="border border-gray-600">{{ $unit->judul }}</td>
                             </tr>
+                            @endforeach
                         </table>
                     </div>
 

@@ -51,12 +51,14 @@ class SkemaSeeder extends Seeder
             'skema_id' => $skema->id,
             'kode' => 'S.1100000.018.01',
             'judul' => 'Judul Unit 1',
+            'judul_en' => 'Unit Title 1',
         ]);
 
         $unit2 = Unit::create([
             'skema_id' => $skema->id,
             'kode' => 'S.1100000.018.02',
             'judul' => 'Judul Unit 2',
+            'judul_en' => 'Unit Title 2',
         ]);
 
         $elemen1 = Elemen::create([

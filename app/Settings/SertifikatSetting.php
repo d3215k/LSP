@@ -7,6 +7,7 @@ use Spatie\LaravelSettings\Settings;
 class SertifikatSetting extends Settings
 {
     public string $logo;
+    public string $kode;
     public string $nama_lembaga;
     public string $nama_lembaga_en;
     public string $ketua_lsp;

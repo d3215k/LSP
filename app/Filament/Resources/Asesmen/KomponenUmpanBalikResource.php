@@ -19,7 +19,7 @@ class KomponenUmpanBalikResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-document-text';
 
-    protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationGroup = 'Sistem';
 
     protected static ?int $navigationSort = 10;
 

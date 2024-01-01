@@ -54,7 +54,7 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
         // dd($record->observasiAktivitas->id);
 
         $hasil = HasilObservasiPendukung::query()
-            ->where('asesmen_observasi_pendukung_id', $record->observasiPendukung->id)
+            ->where('asesmen_observasi_pendukung_id', $record->observasiPendukung?->id)
             ->get();
 
         // dd($hasil);

@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('kompetensi_keahlian', function (Blueprint $table) {
             $table->id();
+            $table->char('kode', 5);
+            $table->string('reg', 4);
             $table->string('nama');
+            $table->boolean('aktif')->default(true);
         });
     }
 

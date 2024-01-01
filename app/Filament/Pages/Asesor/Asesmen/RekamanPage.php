@@ -102,8 +102,6 @@ class RekamanPage extends Page implements HasForms, HasInfolists
     {
         $data = $this->form->getState();
 
-        // dd($data, $this->state);
-
         try {
             DB::beginTransaction();
             $esai = Rekaman::updateOrCreate(
@@ -114,7 +112,6 @@ class RekamanPage extends Page implements HasForms, HasInfolists
             );
 
             $state = [];
-
 
             foreach (
                 array_keys(

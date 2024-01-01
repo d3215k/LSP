@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('asesi', function (Blueprint $table) {
             $table->id();
+            $table->string('no_reg')->nullable();
             $table->foreignId('kompetensi_keahlian_id')->constrained('kompetensi_keahlian')->cascadeOnDelete();
+            $table->foreignId('sekolah_id')->constrained('sekolah')->cascadeOnDelete();
             $table->string('nama');
             $table->string('nisn')->nullable();
             $table->string('nik')->nullable();

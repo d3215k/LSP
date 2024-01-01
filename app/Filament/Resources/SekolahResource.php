@@ -2,9 +2,10 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\KompetensiKeahlianResource\Pages;
-use App\Filament\Resources\KompetensiKeahlianResource\RelationManagers;
-use App\Models\KompetensiKeahlian;
+use App\Enums\SekolahType;
+use App\Filament\Resources\SekolahResource\Pages;
+use App\Filament\Resources\SekolahResource\RelationManagers;
+use App\Models\Sekolah;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +14,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class KompetensiKeahlianResource extends Resource
+class SekolahResource extends Resource
 {
-    protected static ?string $model = KompetensiKeahlian::class;
+    protected static ?string $model = Sekolah::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -27,15 +28,15 @@ class KompetensiKeahlianResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('kode')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('reg')
-                    ->required()
-                    ->maxLength(255),
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Select::make('type')
+                    ->options(SekolahType::class)
+                    ->required(),
+                Forms\Components\Toggle::make('aktif')
+                    ->inline()
+                    ->required(),
             ]);
     }
 
@@ -43,10 +44,11 @@ class KompetensiKeahlianResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('kode')
-                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('type')
+                    ->badge(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //
@@ -64,16 +66,16 @@ class KompetensiKeahlianResource extends Resource
     public static function getRelations(): array
     {
         return [
-            RelationManagers\SekolahRelationManager::class,
+            RelationManagers\KompetensiKeahlianRelationManager::class
         ];
     }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListKompetensiKeahlians::route('/'),
-            'create' => Pages\CreateKompetensiKeahlian::route('/create'),
-            'edit' => Pages\EditKompetensiKeahlian::route('/{record}/edit'),
+            'index' => Pages\ListSekolahs::route('/'),
+            'create' => Pages\CreateSekolah::route('/create'),
+            'edit' => Pages\EditSekolah::route('/{record}/edit'),
         ];
     }
 }

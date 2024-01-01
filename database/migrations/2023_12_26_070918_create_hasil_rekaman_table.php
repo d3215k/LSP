@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('asesmen_rekaman_id')->constrained('asesmen_rekaman')->cascadeOnDelete();
             $table->foreignId('unit_id')->constrained('unit')->cascadeOnDelete();
-            $table->boolean('obervasi_demonstrasi')->default(false);
+            $table->boolean('observasi_demonstrasi')->default(false);
             $table->boolean('portofolio')->default(false);
             $table->boolean('pernyataan_pihak_ketiga_pertanyaan_wawancara')->default(false);
             $table->boolean('pertanyaan_lisan')->default(false);

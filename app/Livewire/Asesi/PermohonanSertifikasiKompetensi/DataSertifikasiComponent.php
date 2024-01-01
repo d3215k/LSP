@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
+use App\Enums\TujuanAsesmen;
 use App\Models\Asesmen;
 use App\Models\Skema\Unit;
 use Filament\Forms\Components\Fieldset;
@@ -46,10 +47,7 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
                             ->inlineLabel(),
                     ])->columns(1),
                 Select::make('tujuan')
-                    ->options([
-                        'sertifikasi' => 'Sertifikasi',
-                        'lainnya' => 'Lainnya',
-                    ])
+                    ->options(TujuanAsesmen::class)
                     ->inlineLabel()
                     ->required(),
             ])

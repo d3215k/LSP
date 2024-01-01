@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('ttd_asesor')->nullable();
             $table->foreignId('periode_id')->nullable(); // TODO
             $table->foreignId('skema_id')->constrained('skema', 'id')->cascadeOnDelete();
-            $table->string('tujuan')->nullable();
+            $table->unsignedTinyInteger('tujuan')->nullable();
             $table->unsignedTinyInteger('status')->default(AsesmenStatus::REGISTRASI);
             $table->timestamps();
         });

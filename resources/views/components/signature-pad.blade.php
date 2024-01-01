@@ -29,7 +29,7 @@
         }
     }" @resize.window="resizeCanvas">
 
-        <canvas x-ref="canvas" class="w-full h-full border-2 border-gray-300 border-dashed rounded-md "></canvas>
+        <canvas x-ref="canvas" class="w-full h-full bg-white border-2 border-gray-300 border-dashed rounded-md dark:border-transparent "></canvas>
 
         <div class="flex mt-2 space-x-2">
             <x-filament::button size="xs" color="danger" x-on:click.prevent="clear()" >

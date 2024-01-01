@@ -66,7 +66,7 @@
                                                             @php
                                                                 $no = $loop->iteration
                                                             @endphp
-                                                            @forelse ($elemen->kuk as $kuk)
+                                                            @forelse ($elemen->kriteriaUnjukKerja as $kuk)
                                                                 <li class="flex gap-1" wire:key="{{ $kuk->id }}">
                                                                     <div class="w-8 text-right">{{ $no }}.{{ $loop->iteration }}</div>
                                                                     <div class="flex-1">
