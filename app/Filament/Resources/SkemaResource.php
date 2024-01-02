@@ -55,7 +55,8 @@ class SkemaResource extends Resource
                                     ->maxLength(255),
                                 Forms\Components\FileUpload::make('file')
                                     ->directory('skema')
-                                    ->acceptedFileTypes(['application/pdf']),
+                                    ->acceptedFileTypes(['application/pdf'])
+                                    ->maxSize(1024),
                                 Forms\Components\Toggle::make('aktif')
                                     ->inline(false)
                                     ->default(true)

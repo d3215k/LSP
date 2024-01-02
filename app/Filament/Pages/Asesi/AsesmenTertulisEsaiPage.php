@@ -44,7 +44,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
 	public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI])->exists();
+        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI, AsesmenStatus::PERSETUJUAN])->exists();
     }
 
     public ?Asesmen $record;
@@ -57,7 +57,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
         $this->record = Asesmen::query()
             ->where('asesi_id', auth()->user()->asesi->id)
-            ->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI])
+            ->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI, AsesmenStatus::PERSETUJUAN])
             ->first() ;
 
         if (! $this->record) {

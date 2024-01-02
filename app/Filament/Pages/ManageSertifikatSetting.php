@@ -55,8 +55,10 @@ class ManageSertifikatSetting extends SettingsPage
                     ->label('Masa Berlaku Sertifikat (Bahasa Inggris)')
                     ->required(),
                 Forms\Components\FileUpload::make('logo')
+                    ->image()
                     ->label('logo')
-                    ->directory('logo'),
+                    ->directory('logo')
+                    ->maxSize(512),
                 Forms\Components\TextInput::make('kode')
                     ->label('Kode')
                     ->required()

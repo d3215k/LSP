@@ -52,7 +52,9 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                         TextInput::make('nama')
                             ->required()
                             ->maxLength(255),
-                        FileUpload::make('file'),
+                        FileUpload::make('file')
+                            ->acceptedFileTypes(['application/pdf'])
+                            ->maxSize(1024),
                     ])
                     ->after(fn (Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
 
