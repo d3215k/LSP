@@ -1,6 +1,29 @@
 <?php
 
+use App\Models\Asesi;
+use App\Settings\SertifikatSetting;
 use Illuminate\Support\Facades\File;
+
+if (!function_exists('generateNoReg')) {
+
+    function generateNoReg($kompetensiKeahlianReg = 'TIK')
+    {
+        $sertifikat = new SertifikatSetting;
+
+        $currentYear = date('Y');
+        $lastRegistration = Asesi::whereYear('created_at', $currentYear)
+            ->orderByDesc('created_at')
+            ->first();
+
+        $lastNumber = $lastRegistration ? intval(substr($lastRegistration->no_reg, -9, 4)) : 0;
+        $nextNumber = str_pad($lastNumber + 1, 5, '0', STR_PAD_LEFT);
+
+        $registrationNumber = "{$kompetensiKeahlianReg}.{$sertifikat->kode}.{$nextNumber} {$currentYear}";
+
+        return $registrationNumber;
+    }
+
+}
 
 if (!function_exists('uploadSignature')) {
 

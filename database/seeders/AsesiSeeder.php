@@ -19,6 +19,7 @@ class AsesiSeeder extends Seeder
             'kompetensi_keahlian_id' => 1,
             'nama' => 'Asesi 1',
             'email' => 'asesi1@example.com',
+            'no_reg' => generateNoReg('PRK')
         ]);
 
         $asesi1->user()->create([
@@ -28,11 +29,14 @@ class AsesiSeeder extends Seeder
             'type' => UserType::ASESI,
         ]);
 
+        sleep(1);
+
         $asesi2 = Asesi::create([
             'sekolah_id' => 2,
             'kompetensi_keahlian_id' => 1,
             'nama' => 'Asesi 2',
             'email' => 'asesi2@example.com',
+            'no_reg' => generateNoReg('PRK')
         ]);
 
         $asesi2->user()->create([

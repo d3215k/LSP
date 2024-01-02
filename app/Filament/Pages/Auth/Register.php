@@ -39,11 +39,14 @@ class Register extends BaseRegister
 
         $data = $this->form->getState();
 
+        $kode = KompetensiKeahlian::where('id', $data['kompetensi_keahlian_id'])->first()?->reg;
+
         $asesi = Asesi::create([
             'nama' => $data['name'],
             'email' => $data['email'],
             'sekolah_id' => $data['sekolah_id'],
             'kompetensi_keahlian_id' => $data['kompetensi_keahlian_id'],
+            'no_reg' => generateNoReg($kode)
         ]);
 
         unset($data['sekolah_id']);
