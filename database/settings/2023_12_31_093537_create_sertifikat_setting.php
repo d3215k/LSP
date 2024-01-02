@@ -14,5 +14,6 @@ return new class extends SettingsMigration
         $this->migrator->add('sertifikat.ketua_bidang_sertifikasi', 'Wulan Handayani, S.Kom.');
         $this->migrator->add('sertifikat.masa_berlaku', '3 (tiga) Tahun');
         $this->migrator->add('sertifikat.masa_berlaku_en', '3 (three) Years');
+        $this->migrator->add('sertifikat.tempat_terbit', 'Kab. Sukabumi');
     }
 };

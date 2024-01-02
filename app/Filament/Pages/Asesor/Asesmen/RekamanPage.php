@@ -14,7 +14,9 @@ use App\Models\Asesmen\ObservasiPendukung;
 use App\Models\Asesmen\Persetujuan;
 use App\Models\Asesmen\Rekaman;
 use App\Models\Asesmen\TertulisEsai;
+use App\Models\Sertifikat;
 use App\Models\TempatUjiKompetensi;
+use App\Settings\SertifikatSetting;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -159,6 +161,25 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                                 ? AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
                                 : AsesmenStatus::SELESAI_BELUM_KOMPETEN),
             ]);
+
+            if ($data['rekomendasi'] === RekomendasiRekamanAsesmen::KOMPETEN->value) {
+                $sertifikat = new SertifikatSetting;
+
+                Sertifikat::updateOrCreate(
+                    [
+                        'asesmen_id' => $this->record->id,
+                    ],
+                    [
+                        'no_sertifikat' => '71202 3111 2 0000001 2022',
+                        'pemilik' => $this->record->rincianDataPemohon->nama,
+                        'bidang' => $this->record->skema->bidang,
+                        'kompetensi' => $this->record->skema->nama,
+                        'unit' => $this->record->skema->unit->toJson(),
+                        'tanggal_terbit' => today(),
+
+                    ]
+                );
+            }
 
             DB::commit();
             Notification::make()->title('Data Tersimpan')->success()->send();

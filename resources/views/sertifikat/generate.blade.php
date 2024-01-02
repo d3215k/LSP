@@ -33,7 +33,7 @@
                     </div>
 
                     <div class="font-bold">
-                        <p>Budidaya Ikan Air Tawar</p>
+                        <p>{{ $sertifikat->bidang }}</p>
                         <p class="italic">Freshwater Fish Cultivation</p>
                     </div>
 
@@ -58,7 +58,7 @@
                     </div>
 
                     <div>
-                        <p>Cibadak, 5 Mei 2023</p>
+                        <p>{{ $setting->tempat_terbit }}, {{ $sertifikat->tanggal_terbit }}</p>
                     </div>
 
                     <div>
@@ -94,11 +94,14 @@
                                     <p class="italic">Title of Competency Unit</p>
                                 </th>
                             </tr>
-                            @foreach (\App\Models\Skema::first()->unit as $unit)
+                            @foreach (json_decode($sertifikat->unit) as $unit)
                             <tr>
                                 <td class="border border-gray-600">{{ $loop->iteration }}</td>
                                 <td class="border border-gray-600">{{ $unit->kode }}</td>
-                                <td class="border border-gray-600">{{ $unit->judul }}</td>
+                                <td class="border border-gray-600">
+                                    <p>{{ $unit->judul }}</p>
+                                    <p class="italic">{{ $unit->judul_en }}</p>
+                                </td>
                             </tr>
                             @endforeach
                         </table>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\UnitType;
 use App\Models\Skema;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -19,6 +20,7 @@ return new class extends Migration
             $table->string('judul');
             $table->string('judul_en')->nullable();
             $table->text('deskripsi')->nullable();
+            $table->unsignedTinyInteger('type')->default(UnitType::UMUM);
             $table->boolean('aktif')->default(true);
             $table->timestamps();
         });

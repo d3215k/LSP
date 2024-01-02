@@ -14,6 +14,7 @@ class SertifikatSetting extends Settings
     public string $ketua_bidang_sertifikasi;
     public string $masa_berlaku;
     public string $masa_berlaku_en;
+    public string $tempat_terbit;
 
     public static function group(): string
     {
