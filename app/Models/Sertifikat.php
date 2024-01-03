@@ -12,6 +12,10 @@ class Sertifikat extends Model
 
     protected $table = 'sertifikat';
 
+    protected $casts = [
+        'unit' => 'object',
+    ];
+
     public function skema(): BelongsTo
     {
         return $this->belongsTo(Skema::class);

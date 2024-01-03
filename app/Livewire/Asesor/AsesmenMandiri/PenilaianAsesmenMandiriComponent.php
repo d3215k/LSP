@@ -18,6 +18,7 @@ use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\File;
 use Livewire\Attributes\On;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
 
 class PenilaianAsesmenMandiriComponent extends Component implements HasForms, HasInfolists
@@ -27,6 +28,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public Mandiri $mandiri;
 
+    #[Validate('required')]
     public $signature;
 
     public ?array $data = [];
@@ -70,6 +72,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public function handleSubmit()
     {
+        $this->validate();
 
         try {
             if ($this->signature) {
@@ -91,13 +94,12 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
             $this->dispatch('saved');
 
-            Notification::make()
-                ->title('Penilaian Berhasil disimpan!')
-                ->success()->send();
+            Notification::make()->title('Penilaian Berhasil disimpan!')->success()->send();
 
             // return to_route('filament.app.pages.nilai-asesmen-mandiri');
         } catch (\Throwable $th) {
-            $th->getMessage();
+            report($th->getMessage());
+            Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
         }
 
     }

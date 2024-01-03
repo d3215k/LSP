@@ -80,6 +80,10 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
 
     public function handleSave()
     {
+        if (count($this->data['hasil']) !== count($this->komponen)) {
+            return Notification::make()->title('Whoops!')->body('Ada komponen yang belum dijawab')->danger()->send();
+        }
+
         try {
             DB::beginTransaction();
             $umpanBalik = UmpanBalik::updateOrCreate(
@@ -93,6 +97,7 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
             );
 
             $data = [];
+
 
             foreach (array_keys($this->data['hasil'] + $this->data['catatan']) as $key) {
                 $data[$key] = [
@@ -119,7 +124,7 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
             Notification::make()->title('Data Tersimpan')->success()->send();
 
         } catch (\Throwable $th) {
-            $th->getMessage();
+            report($th->getMessage());
             Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
             DB::rollBack();
         }

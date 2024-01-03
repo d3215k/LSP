@@ -36,6 +36,10 @@ class AsesmenMandiriComponent extends Component
 
     public function handleSave()
     {
+        if (count($this->data['kompeten']) !== count($this->asesmen->skema->unit)) {
+            return Notification::make()->title('Whoops!')->body('Ada Unit yang belum dijawab')->danger()->send();
+        }
+
         try {
             DB::beginTransaction();
             $mandiri = Mandiri::updateOrCreate(

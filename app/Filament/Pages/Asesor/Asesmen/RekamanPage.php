@@ -174,7 +174,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                         'pemilik' => $this->record->rincianDataPemohon->nama,
                         'bidang' => $this->record->skema->bidang,
                         'kompetensi' => $this->record->skema->nama,
-                        'unit' => $this->record->skema->unit->toJson(),
+                        'unit' => $this->record->skema->unit,
                         'tanggal_terbit' => today(),
 
                     ]

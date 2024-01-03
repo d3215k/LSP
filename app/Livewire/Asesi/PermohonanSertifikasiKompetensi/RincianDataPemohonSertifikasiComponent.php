@@ -108,6 +108,8 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
 
     public function save(): void
     {
+        $this->validate();
+
         $data = $this->form->getState();
 
         $data['tanggal_registrasi'] = today();

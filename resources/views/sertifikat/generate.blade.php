@@ -94,7 +94,7 @@
                                     <p class="italic">Title of Competency Unit</p>
                                 </th>
                             </tr>
-                            @foreach (json_decode($sertifikat->unit) as $unit)
+                            @foreach ($sertifikat->unit as $unit)
                             <tr>
                                 <td class="border border-gray-600">{{ $loop->iteration }}</td>
                                 <td class="border border-gray-600">{{ $unit->kode }}</td>
