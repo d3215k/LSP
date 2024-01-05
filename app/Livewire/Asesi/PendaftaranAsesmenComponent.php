@@ -56,6 +56,8 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
 
     public function handleSubmit()
     {
+        $this->validate();
+
         $data = $this->form->getState();
 
         $data['asesi_id'] = auth()->user()->asesi->id;

@@ -16,7 +16,7 @@ class KompetensiKeahlianSeeder extends Seeder
      */
     public function run(): void
     {
-        $ai = KompetensiKeahlian::create(['kode' => 'AGRIN', 'reg' => 'THP', 'nama' => 'Agroindustri']);
+        $ai = KompetensiKeahlian::create(['kode' => 'AGRIN', 'reg' => 'THP', 'sertifikat' => '10799 0751 2', 'nama' => 'Agroindustri']);
         $mm = KompetensiKeahlian::create(['kode' => 'MM', 'reg' => 'TIK', 'nama' => 'Multimedia']);
         $apat = KompetensiKeahlian::create(['kode' => 'APAT', 'reg' => 'PRK', 'nama' => 'Agribisnis Perikanan Air Tawar']);
         $atu = KompetensiKeahlian::create(['kode' => 'ATU', 'reg' => 'NAK', 'nama' => 'Agribisnis Ternak Unggas']);

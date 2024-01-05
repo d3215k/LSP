@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->char('kode', 5);
             $table->string('reg', 4);
+            $table->string('sertifikat', 16)->nullable();
             $table->string('nama');
             $table->boolean('aktif')->default(true);
         });

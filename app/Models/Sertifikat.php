@@ -14,6 +14,7 @@ class Sertifikat extends Model
 
     protected $casts = [
         'unit' => 'object',
+        'tanggal_terbit' => 'date',
     ];
 
     public function skema(): BelongsTo

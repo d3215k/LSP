@@ -24,7 +24,6 @@ class AsesmenSaya extends Component
 
     public function mount()
     {
-        $this->label = 'FR.APL.01';
         $this->route = route('filament.app.pages.permohonan-sertifikasi-kompetensi');
     }
 

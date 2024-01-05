@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\JenisSkema;
+use App\Enums\JenisTempatUjiKompetensi;
 use App\Models\Periode;
 use App\Models\Skema;
 use App\Models\Skema\Elemen;
@@ -19,24 +20,28 @@ class SkemaSeeder extends Seeder
     public function run(): void
     {
         $skema = Skema::create([
-            'mode' => 'Referensi BNSP',
+            // 'mode' => 'Referensi BNSP',
             'nama' => 'SKEMA SERTIFIKASI KKNI LEVEL III PADA KOMPETENSI KEAHLIAN  AGROINDUSTRI',
             'jenis' => JenisSkema::KKNI,
             'kode' => 'SKM/BNSP/00003/1/2020/98',
             // 'tanggal_penetapan' => '',
             'no_urut' => 8,
-            'no_penetapan' => 8,
+            // 'no_penetapan' => 8,
             // 'biaya_asesmen' => ,
-            'level_kkni' => 3,
-            'sub_sektor' => 'Industri Pengolahan',
-            'bidang' => 'Industri Makanan',
-            'sub_bidang' => 'Industri Minyak dan Lemak Nabati dan Hewani',
-            'sub_bidang_mea' => 'Produk Berbasis Agro',
-            'kbji' => 'Pekerja Pengolahan, Kerajinan',
-            'sub_kbji' => 'Pekerja Pengolahan Lainnya YTDL',
-            'sub_bidang_kbji' => 'Pekerja Pengolahan Lainnya YTDL Lainnya',
+            'kompetensi_keahlian' => 'Agroindustri',
+            'kompetensi_keahlian_en' => 'Agroindustry',
+            'level_kkni' => 'III',
+            'bidang' => 'Pekerjaan Pengolahan Makanan dan Minuman',
+            'bidang' => 'Pekerjaan Pengolahan Makanan dan Minuman',
+            'bidang_en' => 'Food and Beverage Processing Work',
             // 'cover' => '',
             // 'file' => 3,
+        ]);
+
+        $skema->tempatUjiKompetensi()->create([
+            'nama' => 'TUK 1',
+            'jenis' => JenisTempatUjiKompetensi::SEWAKTU,
+            'kode' => '0001',
         ]);
 
         Periode::create([

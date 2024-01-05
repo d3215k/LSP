@@ -163,20 +163,22 @@ class RekamanPage extends Page implements HasForms, HasInfolists
             ]);
 
             if ($data['rekomendasi'] === RekomendasiRekamanAsesmen::KOMPETEN->value) {
-                $sertifikat = new SertifikatSetting;
-
                 Sertifikat::updateOrCreate(
                     [
                         'asesmen_id' => $this->record->id,
                     ],
                     [
-                        'no_sertifikat' => '71202 3111 2 0000001 2022',
+                        'jenis' => $this->record->skema->jenis,
                         'pemilik' => $this->record->rincianDataPemohon->nama,
+                        'no_reg' => $this->record->asesi->no_reg,
+                        'no_sertifikat' => generateNoSertifikat(),
                         'bidang' => $this->record->skema->bidang,
-                        'kompetensi' => $this->record->skema->nama,
+                        'bidang_en' => $this->record->skema->bidang_en,
+                        'prefix_kompetensi' => $this->record->skema->level_kkni,
+                        'kompetensi' => $this->record->skema->kompetensi_keahlian,
+                        'kompetensi_en' => $this->record->skema->kompetensi_keahlian_en,
                         'unit' => $this->record->skema->unit,
                         'tanggal_terbit' => today(),
-
                     ]
                 );
             }

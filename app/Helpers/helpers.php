@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Asesi;
+use App\Models\Sertifikat;
 use App\Settings\SertifikatSetting;
 use Illuminate\Support\Facades\File;
 
@@ -21,6 +22,17 @@ if (!function_exists('generateNoReg')) {
         $registrationNumber = "{$kompetensiKeahlianReg}.{$sertifikat->kode}.{$nextNumber} {$currentYear}";
 
         return $registrationNumber;
+    }
+
+}
+
+if (!function_exists('generateNoSertifikat')) {
+
+    function generateNoSertifikat()
+    {
+        // TODO
+        $sertifikat = new SertifikatSetting;
+        return '71202 3111 2 0000001 2022';
     }
 
 }

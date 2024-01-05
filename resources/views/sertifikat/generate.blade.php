@@ -1,4 +1,4 @@
- <x-print-layout>
+<x-print-layout>
     <x-slot name="title">
         {{ $sertifikat->no_sertifikat . ' ' . $sertifikat->pemilik }}
     </x-slot>
@@ -7,9 +7,12 @@
         <div class="w-full p-5 lg:p-6 grow print:p-0">
             <div class="mx-auto text-center lg:w-10/12 print:w-full">
                 <div class="space-y-6 leading-5">
+                    @if ($setting->logo)
                     <div class="flex justify-center">
-                        <img width="120" src="{{ asset('storage/'.$setting->logo) }}" />
+                        <img width="120" src="{{ asset('storage/' . $setting->logo) }}" />
                     </div>
+                    @endif
+
                     <div class="mt-6 font-bold uppercase">
                         <h1 class="text-2xl">Sertifikat Kompetensi</h1>
                         <p class="text-lg" class="italic">Certificate Of Competence</p>
@@ -23,8 +26,9 @@
                         <p class="italic">This is to certify that,</p>
                     </div>
 
-                    <div class="text-xl font-bold">
-                        <p>{{ $sertifikat->pemilik }}</p>
+                    <div>
+                        <p class="text-xl font-bold">{{ $sertifikat->pemilik }}</p>
+                        <p>{{ $sertifikat->no_reg }}</p>
                     </div>
 
                     <div>
@@ -34,7 +38,7 @@
 
                     <div class="font-bold">
                         <p>{{ $sertifikat->bidang }}</p>
-                        <p class="italic">Freshwater Fish Cultivation</p>
+                        <p class="italic">{{ $sertifikat->bidang_en }}</p>
                     </div>
 
                     <div>
@@ -43,13 +47,13 @@
                     </div>
 
                     <div class="font-bold">
-                        <p>KKNI Level II pada Kompetensi Keahlian</p>
-                        <p class="italic">KKNI Level II on Skills Competence of</p>
+                        <p>KKNI Level {{ $sertifikat->prefix_kompetensi }} pada Kompetensi Keahlian</p>
+                        <p class="italic">KKNI Level {{ $sertifikat->prefix_kompetensi }} on Skills Competence of</p>
                     </div>
 
                     <div class="text-xl font-bold">
-                        <p>AGRIBISNIS PERIKANAN AIR TAWAR</p>
-                        <p class="italic">FRESHWATER FISHERIES AGRIBUSINESS</p>
+                        <p>{{ $sertifikat->kompetensi }}</p>
+                        <p class="italic">{{ $sertifikat->kompetensi_en }}</p>
                     </div>
 
                     <div>
@@ -58,7 +62,7 @@
                     </div>
 
                     <div>
-                        <p>{{ $setting->tempat_terbit }}, {{ $sertifikat->tanggal_terbit }}</p>
+                        <p>{{ $setting->tempat_terbit }}, {{ $sertifikat->tanggal_terbit?->isoFormat('D MMMM Y') }}</p>
                     </div>
 
                     <div>
@@ -73,7 +77,7 @@
                     </div>
                 </div>
 
-                <div class="pagebreak"> </div>
+                <div class="pagebreak"></div>
 
                 <div class="mr-12 text-sm">
                     <div class="text-xl font-bold">
@@ -95,20 +99,20 @@
                                 </th>
                             </tr>
                             @foreach ($sertifikat->unit as $unit)
-                            <tr>
-                                <td class="border border-gray-600">{{ $loop->iteration }}</td>
-                                <td class="border border-gray-600">{{ $unit->kode }}</td>
-                                <td class="border border-gray-600">
-                                    <p>{{ $unit->judul }}</p>
-                                    <p class="italic">{{ $unit->judul_en }}</p>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td class="border border-gray-600">{{ $loop->iteration }}</td>
+                                    <td class="border border-gray-600">{{ $unit->kode }}</td>
+                                    <td class="border border-gray-600">
+                                        <p>{{ $unit->judul }}</p>
+                                        <p class="italic">{{ $unit->judul_en }}</p>
+                                    </td>
+                                </tr>
                             @endforeach
                         </table>
                     </div>
 
                     <div class="w-full mt-24 text-right">
-                        <p>Cibadak, 5 Mei 2023</p>
+                        <p>{{ $setting->tempat_terbit }}, {{ $sertifikat->tanggal_terbit?->isoFormat('D MMMM Y') }}</p>
                         <p>{{ $setting->nama_lembaga }}</p>
                         <p class="italic">{{ $setting->nama_lembaga_en }}</p>
                     </div>

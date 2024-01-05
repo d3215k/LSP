@@ -6,8 +6,8 @@
         <livewire:asesi.pendaftaran-asesmen-component />
     @endif
 
-    @if (true)
-        {{-- <livewire:asesi.asesmen-saya /> --}}
+    @if ($showAsesmenSaya)
+        <livewire:asesi.asesmen-saya />
     @endif
 
 </x-filament-panels::page>
