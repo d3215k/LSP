@@ -28,11 +28,19 @@ if (!function_exists('generateNoReg')) {
 
 if (!function_exists('generateNoSertifikat')) {
 
-    function generateNoSertifikat()
+    function generateNoSertifikat($kode_sertifikat_kompetensi_keahlian = '')
     {
-        // TODO
-        $sertifikat = new SertifikatSetting;
-        return '71202 3111 2 0000001 2022';
+        $currentYear = date('Y');
+        $lastSertifikat = Sertifikat::whereYear('created_at', $currentYear)
+            ->orderByDesc('created_at')
+            ->first();
+
+        $lastNumber = $lastSertifikat ? intval(substr($lastSertifikat->no_sertifikat, -12, 7)) : 0;
+        $nextNumber = str_pad($lastNumber + 1, 7, '0', STR_PAD_LEFT);
+
+        $number = "{$kode_sertifikat_kompetensi_keahlian} {$nextNumber} {$currentYear}";
+
+        return $number;
     }
 
 }

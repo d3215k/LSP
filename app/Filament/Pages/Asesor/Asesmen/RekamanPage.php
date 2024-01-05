@@ -171,7 +171,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                         'jenis' => $this->record->skema->jenis,
                         'pemilik' => $this->record->rincianDataPemohon->nama,
                         'no_reg' => $this->record->asesi->no_reg,
-                        'no_sertifikat' => generateNoSertifikat(),
+                        'no_sertifikat' => generateNoSertifikat($this->record->asesi->kompetensiKeahlian->sertifikat),
                         'bidang' => $this->record->skema->bidang,
                         'bidang_en' => $this->record->skema->bidang_en,
                         'prefix_kompetensi' => $this->record->skema->level_kkni,
