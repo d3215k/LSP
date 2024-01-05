@@ -63,11 +63,14 @@ class SertifikatResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('no_sertifikat')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('kompetensi')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('pemilik')
                     ->searchable(),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('kompetensi')
+                    ->options(Sertifikat::distinct()->pluck('kompetensi', 'kompetensi'))
             ])
             ->actions([
                 Tables\Actions\Action::make('Cetak Sertifikat')
