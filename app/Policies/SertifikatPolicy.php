@@ -29,7 +29,8 @@ class SertifikatPolicy
      */
     public function create(User $user): bool
     {
-        return $user->isAdmin;
+        return false;
+        // return $user->isAdmin;
     }
 
     /**
