@@ -178,7 +178,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                         'kompetensi' => $this->record->skema->kompetensi_keahlian,
                         'kompetensi_en' => $this->record->skema->kompetensi_keahlian_en,
                         'unit' => $this->record->skema->unit,
-                        'tanggal_terbit' => today(),
+                        'tanggal_terbit' => $data['tanggal_selesai'],
                     ]
                 );
             }
