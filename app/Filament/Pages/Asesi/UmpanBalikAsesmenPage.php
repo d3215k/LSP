@@ -75,7 +75,7 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
     public function komponen()
     {
         return KomponenUmpanBalik::query()
-            ->where('aktif', true)->get();
+            ->get();
     }
 
     public function handleSave()

@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\JenisTempatUjiKompetensi;
 use App\Filament\Resources\TempatUjiKompetensiResource\Pages;
 use App\Filament\Resources\TempatUjiKompetensiResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\TempatUjiKompetensi;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -25,6 +27,11 @@ class TempatUjiKompetensiResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,8 +39,8 @@ class TempatUjiKompetensiResource extends Resource
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('jenis')
-                    ->required(),
+                Forms\Components\Select::make('jenis')
+                    ->options(JenisTempatUjiKompetensi::class),
                 Forms\Components\TextInput::make('kode')
                     ->required()
                     ->maxLength(255),
@@ -55,6 +62,9 @@ class TempatUjiKompetensiResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
@@ -70,6 +80,7 @@ class TempatUjiKompetensiResource extends Resource
                     ->badge(),
                 Tables\Columns\TextColumn::make('alamat')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

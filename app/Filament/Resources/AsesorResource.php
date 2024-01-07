@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\AsesorResource\Pages;
 use App\Filament\Resources\AsesorResource\RelationManagers;
 use App\Models\Asesor;
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,11 @@ class AsesorResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 5;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {

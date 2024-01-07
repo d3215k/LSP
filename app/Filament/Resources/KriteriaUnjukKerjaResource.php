@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\KriteriaUnjukKerjaResource\Pages;
 use App\Filament\Resources\KriteriaUnjukKerjaResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema\KriteriaUnjukKerja;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,6 +25,11 @@ class KriteriaUnjukKerjaResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 3;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {
@@ -48,6 +54,7 @@ class KriteriaUnjukKerjaResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\PeriodeResource\Pages;
 use App\Filament\Resources\PeriodeResource\RelationManagers;
 use App\Models\Periode;
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -19,9 +20,14 @@ class PeriodeResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-calendar-days';
 
-protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 3;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {
@@ -42,6 +48,9 @@ protected static ?string $navigationGroup = 'Admin';
                 Forms\Components\TextInput::make('lokasi')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('aktif')
+                    ->inline(false)
+                    ->default(true),
             ]);
     }
 

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UnitResource\RelationManagers;
 
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -22,15 +23,20 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScope(AktifScope::class))
             ->recordTitleAttribute('pertanyaan')
             ->columns([
                 Tables\Columns\TextColumn::make('pertanyaan'),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

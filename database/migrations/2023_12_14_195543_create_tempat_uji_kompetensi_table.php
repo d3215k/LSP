@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('no_hp')->nullable();
             $table->string('no_fax')->nullable();
             $table->string('email')->nullable();
+            $table->boolean('aktif')->default(false);
             $table->timestamps();
         });
 

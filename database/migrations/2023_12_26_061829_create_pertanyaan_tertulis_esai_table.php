@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_id')->constrained('unit')->cascadeOnDelete();
             $table->text('pertanyaan');
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

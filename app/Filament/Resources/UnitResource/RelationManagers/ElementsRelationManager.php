@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UnitResource\RelationManagers;
 
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -25,15 +26,20 @@ class ElementsRelationManager extends RelationManager
                 Forms\Components\Textarea::make('benchmark')
                     ->maxLength(255)
                     ->columnSpanFull(),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScope(AktifScope::class))
             ->recordTitleAttribute('nama')
             ->columns([
                 Tables\Columns\TextColumn::make('nama'),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

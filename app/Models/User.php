@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Enums\UserType;
+use App\Models\Scopes\AktifScope;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -44,8 +45,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'aktif' => 'boolean',
         'type' => UserType::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new AktifScope);
+    }
 
     public function getIsAdminAttribute(): bool
     {

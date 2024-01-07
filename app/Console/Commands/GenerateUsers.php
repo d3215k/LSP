@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Enums\UserType;
 use App\Models\Asesor;
+use App\Models\Scopes\AktifScope;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -34,6 +35,7 @@ class GenerateUsers extends Command
             $this->info('Generate Akun Asesor');
 
             $inactive = Asesor::query()
+                ->withoutGlobalScope(AktifScope::class)
                 ->where('aktif', false)
                 ->pluck('email');
 
@@ -42,7 +44,6 @@ class GenerateUsers extends Command
                 ->delete();
 
             $asesor = Asesor::query()
-                ->where('aktif', true)
                 ->select('id','nama', 'email')
                 ->whereNotIn('email', $usernames)
                 ->get();

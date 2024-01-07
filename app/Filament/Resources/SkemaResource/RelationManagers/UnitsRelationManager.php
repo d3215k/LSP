@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\SkemaResource\RelationManagers;
 
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
@@ -27,16 +28,21 @@ class UnitsRelationManager extends RelationManager
                 Forms\Components\Textarea::make('deskripsi')
                     ->required()
                     ->maxLength(512),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
     public function table(Table $table): Table
     {
         return $table
+            ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScope(AktifScope::class))
             ->recordTitleAttribute('judul')
             ->columns([
                 Tables\Columns\TextColumn::make('kode'),
                 Tables\Columns\TextColumn::make('judul'),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

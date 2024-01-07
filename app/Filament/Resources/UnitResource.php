@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -26,6 +27,11 @@ class UnitResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -44,7 +50,6 @@ class UnitResource extends Resource
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
-                    ->required()
                     ->default(true)
                     ->inline(false),
             ]);
@@ -61,6 +66,7 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('judul_en')
                     ->label('Judul (EN)')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

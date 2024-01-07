@@ -35,15 +35,14 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
                     ->label('Skema')
                     ->options(
                         Skema::whereHas('periode', function ($query) {
-                            $query->where('aktif', true)
-                                ->where('buka', '<=', today())
+                            $query->where('buka', '<=', today())
                                 ->where('tutup', '>=', today());
                         })->pluck('nama', 'id'),
                     )
                     ->searchable()->preload()->required()->reactive(),
                 Select::make('periode_id')
                     ->label('Periode')
-                    ->options(fn (Get $get): Collection => Periode::query()->where('aktif', true)
+                    ->options(fn (Get $get): Collection => Periode::query()
                         ->where('skema_id', $get('skema_id'))
                         ->where('buka', '<=', today())
                         ->where('tutup', '>=', today())->pluck('nama', 'id')

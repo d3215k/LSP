@@ -22,6 +22,9 @@ class PersyaratanRelationManager extends RelationManager
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
@@ -32,6 +35,7 @@ class PersyaratanRelationManager extends RelationManager
             ->recordTitleAttribute('nama')
             ->columns([
                 Tables\Columns\TextColumn::make('nama'),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

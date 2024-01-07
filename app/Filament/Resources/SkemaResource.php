@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\JenisSkema;
 use App\Filament\Resources\SkemaResource\Pages;
 use App\Filament\Resources\SkemaResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,6 +25,11 @@ class SkemaResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 9;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {

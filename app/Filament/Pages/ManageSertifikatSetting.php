@@ -11,7 +11,7 @@ class ManageSertifikatSetting extends SettingsPage
 {
     protected static ?string $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static ?string $navigationLabel = 'Sertifikat';
+    protected static ?string $title = 'Pengaturan Sertifikat';
 
     protected static ?string $navigationGroup = 'Sistem';
 

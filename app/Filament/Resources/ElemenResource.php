@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\ElemenResource\Pages;
 use App\Filament\Resources\ElemenResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema\Elemen;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -24,6 +25,11 @@ class ElemenResource extends Resource
     protected static ?string $navigationGroup = 'Admin';
 
     protected static ?int $navigationSort = 2;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {
@@ -53,6 +59,7 @@ class ElemenResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

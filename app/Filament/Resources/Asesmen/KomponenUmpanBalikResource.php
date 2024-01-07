@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Asesmen;
 use App\Filament\Resources\Asesmen\KomponenUmpanBalikResource\Pages;
 use App\Filament\Resources\Asesmen\KomponenUmpanBalikResource\RelationManagers;
 use App\Models\Asesmen\KomponenUmpanBalik;
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -23,6 +24,11 @@ class KomponenUmpanBalikResource extends Resource
 
     protected static ?int $navigationSort = 10;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -32,6 +38,7 @@ class KomponenUmpanBalikResource extends Resource
                     ->maxLength(255)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
+                    ->inline(false)
                     ->default(true),
             ]);
     }
@@ -42,6 +49,7 @@ class KomponenUmpanBalikResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('komponen')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

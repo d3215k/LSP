@@ -121,8 +121,9 @@ class AsesmenResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('rincianDataPemohon.nama')
-                    ->label('Asesi')
+                Tables\Columns\TextColumn::make('asesi.nama')
+                    ->label('Asesi  / No. Reg')
+                    ->description(fn (Asesmen $record): string => $record->asesi->no_reg ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('skema.nama')
                     ->label('Skema')

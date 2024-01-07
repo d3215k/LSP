@@ -90,7 +90,7 @@ class Register extends BaseRegister
     {
         return Select::make('sekolah_id')
             ->label('Asal Sekolah')
-            ->options(Sekolah::where('aktif', true)->pluck('nama', 'id'))
+            ->options(Sekolah::pluck('nama', 'id'))
             ->required()
             ->searchable()
             ->preload()

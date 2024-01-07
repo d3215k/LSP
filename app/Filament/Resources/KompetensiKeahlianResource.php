@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\KompetensiKeahlianResource\Pages;
 use App\Filament\Resources\KompetensiKeahlianResource\RelationManagers;
 use App\Models\KompetensiKeahlian;
+use App\Models\Scopes\AktifScope;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -22,6 +23,11 @@ class KompetensiKeahlianResource extends Resource
     protected static ?string $navigationGroup = 'Sistem';
 
     protected static ?int $navigationSort = 10;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {
@@ -41,6 +47,9 @@ class KompetensiKeahlianResource extends Resource
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
+                Forms\Components\Toggle::make('aktif')
+                    ->default(true)
+                    ->inline(false),
             ]);
     }
 
@@ -52,6 +61,7 @@ class KompetensiKeahlianResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //

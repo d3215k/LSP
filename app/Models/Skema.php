@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\JenisSkema;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema\Persyaratan;
 use App\Models\Skema\Unit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -19,6 +20,11 @@ class Skema extends Model
     protected $casts = [
         'jenis' => JenisSkema::class,
     ];
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new AktifScope);
+    }
 
     public function unit(): HasMany
     {

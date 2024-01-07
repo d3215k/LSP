@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\SekolahType;
 use App\Filament\Resources\SekolahResource\Pages;
 use App\Filament\Resources\SekolahResource\RelationManagers;
+use App\Models\Scopes\AktifScope;
 use App\Models\Sekolah;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -23,6 +24,11 @@ class SekolahResource extends Resource
     protected static ?string $navigationGroup = 'Sistem';
 
     protected static ?int $navigationSort = 10;
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+    }
 
     public static function form(Form $form): Form
     {
