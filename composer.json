@@ -18,6 +18,7 @@
         "livewire/livewire": "^3.0",
         "livewire/volt": "^1.0",
         "opcodesio/log-viewer": "^3.1",
+        "saade/filament-autograph": "^3.0",
         "spatie/laravel-settings": "^3.2"
     },
     "require-dev": {

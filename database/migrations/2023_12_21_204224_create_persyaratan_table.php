@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('skema_id')->constrained('skema')->cascadeOnDelete();
             $table->string('nama');
+            $table->boolean('aktif')->default(true);
             $table->timestamps();
         });
     }

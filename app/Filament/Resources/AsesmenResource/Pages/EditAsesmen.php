@@ -24,15 +24,11 @@ class EditAsesmen extends EditRecord
                 ->action(function (Asesmen $record) {
                     try {
                         $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
-
-                        Notification::make()
-                        ->title('Status diubah')
-                        ->success()
-                        ->send();
+                        Notification::make()->title('Pengajuan diterima!')->success()->send();
                     } catch (\Throwable $th) {
-                        //throw $th;
+                        Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
+                        report($th->getMessage());
                     }
-
                 })
                 ->requiresConfirmation()
                 ->hidden(fn (Asesmen $record) => $record->status->value > AsesmenStatus::REGISTRASI->value),

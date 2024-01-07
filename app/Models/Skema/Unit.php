@@ -4,6 +4,7 @@ namespace App\Models\Skema;
 
 use App\Models\Asesmen\PertanyaanObservasiPendukung;
 use App\Models\Asesmen\PertanyaanTertulisEsai;
+use App\Models\Scopes\AktifScope;
 use App\Models\Skema;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +16,11 @@ class Unit extends Model
     use HasFactory;
 
     protected $table = 'unit';
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new AktifScope);
+    }
 
     public function elemen(): HasMany
     {

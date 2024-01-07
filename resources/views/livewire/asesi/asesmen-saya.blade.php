@@ -3,12 +3,12 @@
         Asesmen Saya
     </x-slot>
 
-    <div class="flex flex-col md:flex-row gap-4">
+    <div class="flex flex-col gap-4 md:flex-row">
         <div class="aspect-video h-36">
             @if ($this->asesmen->skema->cover)
                 <img src="/storage/{{ $this->asesmen->skema->cover }}">
             @else
-                <div class="bg-gray-400 h-full font-semibold text-lg rounded-md flex items-center justify-center text-gray-200">
+                <div class="flex items-center justify-center h-full text-lg font-semibold text-gray-200 bg-gray-400 rounded-md">
                     {{ config('app.name') }}
                 </div>
             @endif
@@ -18,11 +18,11 @@
                 {{ $this->asesmen->skema->nama }}
             </div>
 
-            <div class="text-sm font-medium text-primary-600 dark:text-primary-400">
-                {{ $this->asesmen->status->getLabel() }}
+            <div class="text-sm">
+                Status : <span class="font-medium text-primary-600 dark:text-primary-400">{{ $this->asesmen->status->getLabel() }}</span>
             </div>
 
-            <a href="{{ $route }}" wire:navigate>
+            <a href="{{ $route }}" wire:navigate class="mt-4">
                 <x-filament::button>
                     Lanjutkan
                 </x-filament::button>

@@ -30,7 +30,7 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
 
     public function mount(): void
     {
-        $this->form->fill();
+        $this->form->fill($this->asesmen->toArray());
     }
 
     public function form(Form $form): Form
@@ -70,7 +70,8 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
         $this->asesmen->update($this->form->getState());
 
         Notification::make()
-            ->title('Data Sertifikasi Tersimpan!')
+            ->title('Berhasil disimpan!')
+            ->body('Bagian 2 : Data Sertifikasi')
             ->success()
             ->send();
     }

@@ -21,7 +21,7 @@
                     <div class="grid gap-y-2 sm:col-span-2">
                         <div class="flex overflow-hidden">
                             <div class="flex-1 min-w-0">
-                                <img width="300px" alt="{{ 'ttd of '.$mandiri->asesmen->rincianDataPemohon->nama }}" src="{{ asset('storage/'.$mandiri->asesmen->ttd_asesi) }}" />
+                                <img width="250px" alt="{{ 'ttd of '.$mandiri->asesmen->rincianDataPemohon?->nama }}" src="{{ asset('storage/'.$mandiri->asesmen->ttd_asesi) }}" />
                             </div>
                         </div>
                     </div>

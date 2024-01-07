@@ -16,10 +16,12 @@ use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Infolists\Infolist;
 use Filament\Notifications\Notification;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Livewire\Attributes\On;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Saade\FilamentAutograph\Forms\Components\SignaturePad;
 
 class PenilaianAsesmenMandiriComponent extends Component implements HasForms, HasInfolists
 {
@@ -28,8 +30,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public Mandiri $mandiri;
 
-    #[Validate('required')]
-    public $signature;
+    public $ttd_asesor;
 
     public ?array $data = [];
 
@@ -41,23 +42,44 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public function mount(): void
     {
-        $this->form->fill($this->mandiri->toArray());
+        $this->rekomendasiForm->fill($this->mandiri->toArray());
     }
 
-    public function form(Form $form): Form
+    protected function getForms(): array
+    {
+        return [
+            'rekomendasiForm',
+            'ttdAsesorForm',
+        ];
+    }
+
+    public function rekomendasiForm(Form $form): Form
     {
         return $form
             ->schema([
                 TextInput::make('catatan')
                     ->required()
-                    ->inlineLabel(),
+                    ->inlineLabel()
+                    ->columnSpanFull(),
                 Radio::make('rekomendasi')
                     ->options(RekomendasiAsesmenMandiri::class)
-                    ->inlineLabel()
-                    ->inline()
-                    ->required(),
+                    ->inline()->inlineLabel()
+                    ->required()
+                    ->columnSpanFull(),
             ])
-            ->statePath('data');
+            ->statePath('data')
+            ->columns(4);
+    }
+
+    public function ttdAsesorForm(Form $form): Form
+    {
+        return $form
+            ->schema([
+                SignaturePad::make('ttd_asesor')
+                    ->label('Tanda tangan asesor')
+                    ->columnSpan(1),
+            ])
+            ->columns(4);
     }
 
     public function asesorInfolist(Infolist $infolist): Infolist
@@ -75,16 +97,20 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
         $this->validate();
 
         try {
-            if ($this->signature) {
+            DB::beginTransaction();
+            if (empty($this->mandiri->asesmen->ttd_asesor) && empty($this->ttd_asesor) ) {
+                return Notification::make()->title('Whoops!')->body('Tanda tangan harus diisi')->danger()->send();
+            }
+
+            if ($this->ttd_asesor) {
                 if ($this->mandiri->asesmen->ttd_asesor) {
                     return;
                 }
-
-                $ttd = uploadSignature('ttd/asesmen/asesor', $this->signature, $this->mandiri->asesmen->id);
+                $ttd = uploadSignature('ttd/asesmen/asesor/', $this->ttd_asesor, $this->mandiri->asesmen->id);
                 $this->mandiri->asesmen->update(['ttd_asesor' => $ttd]);
             }
 
-            $data = $this->form->getState();
+            $data = $this->rekomendasiForm->getState();
 
             $this->mandiri->update([
                 'tanggal_ditinjau' => today(),
@@ -94,12 +120,15 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
             $this->dispatch('saved');
 
+            $this->reset('ttd_asesor');
+
+            DB::commit();
             Notification::make()->title('Penilaian Berhasil disimpan!')->success()->send();
 
-            // return to_route('filament.app.pages.nilai-asesmen-mandiri');
         } catch (\Throwable $th) {
             report($th->getMessage());
             Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
+            DB::rollBack();
         }
 
     }

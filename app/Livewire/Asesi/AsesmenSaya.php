@@ -24,7 +24,15 @@ class AsesmenSaya extends Component
 
     public function mount()
     {
-        $this->route = route('filament.app.pages.permohonan-sertifikasi-kompetensi');
+        $route = match ($this->asesmen->status->value) {
+            1 => route('filament.app.pages.permohonan-sertifikasi-kompetensi'),
+            2 => route('filament.app.pages.asesi.asesmen-mandiri'),
+            3,4,5,6 => route('filament.app.pages.asesmen-tertulis-esai'),
+            11 => route('filament.app.pages.umpan-balik'),
+            12,13 => route('filament.app.pages.banding-asesmen'),
+        };
+
+        $this->route = $route;
     }
 
     public function render()

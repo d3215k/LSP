@@ -71,14 +71,16 @@ class BuktiKelengkapanPemohonComponent extends Component implements HasForms, Ha
                             );
                             Notification::make()
                                 ->success()
-                                ->title('saved')
+                                ->title('Berhasil disimpan!')
+                                ->body('File ' . $record->nama . ' diunggah')
                                 ->send();
                         } catch (\Throwable $th) {
                             report($th->getMessage());
 
                             Notification::make()
                                 ->danger()
-                                ->title('saved')
+                                ->title('Whoops!')
+                                ->body('Ada yang salah')
                                 ->send();
                         }
                     })

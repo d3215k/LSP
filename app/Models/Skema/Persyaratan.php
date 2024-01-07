@@ -4,6 +4,7 @@ namespace App\Models\Skema;
 
 use App\Models\Skema;
 use App\Models\Asesmen\BuktiPersyaratan;
+use App\Models\Scopes\AktifScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,11 @@ class Persyaratan extends Model
     use HasFactory;
 
     protected $table = 'persyaratan';
+
+    protected static function booted(): void
+    {
+        static::addGlobalScope(new AktifScope);
+    }
 
     public function skema(): BelongsTo
     {

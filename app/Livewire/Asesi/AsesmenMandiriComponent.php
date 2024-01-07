@@ -83,6 +83,8 @@ class AsesmenMandiriComponent extends Component
 
         } catch (\Throwable $th) {
             DB::rollBack();
+            Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
+            report($th->getMessage());
         }
     }
 

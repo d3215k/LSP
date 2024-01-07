@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\TujuanAsesmen;
 use App\Filament\Resources\AsesmenResource\Pages;
 use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
@@ -43,8 +44,8 @@ class AsesmenResource extends Resource
                 Forms\Components\Select::make('asesor_id')
                     ->relationship('asesor', 'nama')
                     ->required(),
-                Forms\Components\TextInput::make('tujuan')
-                    ->maxLength(255),
+                Forms\Components\Select::make('tujuan')
+                    ->options(TujuanAsesmen::class),
                 Fieldset::make('A. Data Pribadi')
                     ->relationship('rincianDataPemohon')
                     ->schema([

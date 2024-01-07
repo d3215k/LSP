@@ -124,7 +124,8 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
         $this->dispatch('rincian-saved');
 
         Notification::make()
-            ->title('Rincian Data Pemohon Sertifikasi Tersimpan!')
+            ->title('Berhasil disimpan!')
+            ->body('Bagian 1 : Rincian Data Pemohon Sertifikasi')
             ->success()
             ->send();
     }
