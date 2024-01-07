@@ -39,7 +39,7 @@ class ManageSertifikatSetting extends SettingsPage
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('nama_lembaga_en')
-                    ->label('Nama Lembaga (Bahasa Inggris)')
+                    ->label('Nama Lembaga (EN)')
                     ->required()
                     ->columnSpanFull(),
                 Forms\Components\TextInput::make('ketua_lsp')
@@ -52,7 +52,7 @@ class ManageSertifikatSetting extends SettingsPage
                     ->label('Masa Berlaku Sertifikat')
                     ->required(),
                 Forms\Components\TextInput::make('masa_berlaku_en')
-                    ->label('Masa Berlaku Sertifikat (Bahasa Inggris)')
+                    ->label('Masa Berlaku Sertifikat (EN)')
                     ->required(),
                 Forms\Components\FileUpload::make('logo')
                     ->image()

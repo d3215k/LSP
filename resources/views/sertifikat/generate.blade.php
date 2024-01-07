@@ -101,10 +101,10 @@
                             @foreach ($sertifikat->unit as $unit)
                                 <tr>
                                     <td class="border border-gray-600">{{ $loop->iteration }}</td>
-                                    <td class="border border-gray-600">{{ $unit->kode }}</td>
+                                    <td class="border border-gray-600">{{ $unit['kode'] }}</td>
                                     <td class="border border-gray-600">
-                                        <p>{{ $unit->judul }}</p>
-                                        <p class="italic">{{ $unit->judul_en }}</p>
+                                        <p>{{ $unit['judul'] }}</p>
+                                        <p class="italic">{{ $unit['judul_en'] }}</p>
                                     </td>
                                 </tr>
                             @endforeach

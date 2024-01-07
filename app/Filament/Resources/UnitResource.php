@@ -58,16 +58,9 @@ class UnitResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('judul')
                     ->searchable(),
-                Tables\Columns\IconColumn::make('aktif')
-                    ->boolean(),
-                Tables\Columns\TextColumn::make('created_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                Tables\Columns\TextColumn::make('updated_at')
-                    ->dateTime()
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('judul_en')
+                    ->label('Judul (EN)')
+                    ->searchable(),
             ])
             ->filters([
                 //

@@ -30,30 +30,49 @@ class SertifikatResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('no_sertifikat')
-                    ->default('LSP01 199 69988521 ' . random_int(1111, 9999) . ' ' . date("Y"))
-                    ->dehydrated()
-                    ->required()
-                    ->maxLength(32)
-                    ->unique(Sertifikat::class, 'no_sertifikat', ignoreRecord: true),
                 Forms\Components\Select::make('pemilik')
                     ->label('Nama')
                     ->options(Asesi::all()->pluck('nama', 'nama'))
                     ->required()
                     ->searchable(),
-                // Forms\Components\Select::make('skema')
-                //     ->label('Skema')
-                //     ->options(Skema::all()->pluck('nama', 'nama'))
-                //     ->required()
-                //     ->searchable(),
-                Forms\Components\TextInput::make('tempat_terbit')
+                Forms\Components\TextInput::make('no_sertifikat')
                     ->required()
-                    ->maxLength(255),
+                    ->maxLength(32)
+                    ->unique(Sertifikat::class, 'no_sertifikat', ignoreRecord: true),
+                Forms\Components\TextInput::make('no_reg')
+                    ->required()
+                    ->maxLength(32),
+                Forms\Components\TextInput::make('no_blanko')
+                    ->maxLength(32),
+                Forms\Components\TextInput::make('bidang')
+                    ->required()
+                    ->maxLength(128),
+                Forms\Components\TextInput::make('bidang_en')
+                    ->label('Bidang (EN)')
+                    ->required()
+                    ->maxLength(128),
+                Forms\Components\TextInput::make('kompetensi')
+                    ->required()
+                    ->maxLength(128),
+                Forms\Components\TextInput::make('kompetensi_en')
+                    ->label('Kompetensi (EN)')
+                    ->required()
+                    ->maxLength(128),
                 Forms\Components\DatePicker::make('tanggal_terbit')
                     ->required(),
-                Forms\Components\TextInput::make('masa_berlaku')
-                    ->required()
-                    ->maxLength(255),
+                Forms\Components\Section::make('Daftar Unit')
+                    ->schema([
+                        Forms\Components\Repeater::make('unit')
+                            ->schema([
+                                Forms\Components\TextInput::make('kode')
+                                    ->required(),
+                                Forms\Components\TextInput::make('judul')
+                                    ->required(),
+                                Forms\Components\TextInput::make('judul_en')
+                                    ->label('Judul (EN)')
+                                    ->required(),
+                            ])->columnSpan(2),
+                    ])
             ]);
     }
 
@@ -81,17 +100,17 @@ class SertifikatResource extends Resource
                 Tables\Actions\ActionGroup::make([
                     Tables\Actions\ViewAction::make(),
                     Tables\Actions\EditAction::make(),
-                    Tables\Actions\DeleteAction::make(),
+                    // Tables\Actions\DeleteAction::make(),
                 ]),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('Cetak Sertifikat')
-                        ->requiresConfirmation()
-                        ->icon('heroicon-m-printer')
-                        ->action(fn (Collection $records) => $records->each->print())
-                    // Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\BulkAction::make('Cetak Sertifikat')
+                //         ->requiresConfirmation()
+                //         ->icon('heroicon-m-printer')
+                //         ->action(fn (Collection $records) => $records->each->print())
+                //     // Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 

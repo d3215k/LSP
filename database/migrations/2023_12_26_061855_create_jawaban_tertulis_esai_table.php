@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('asesmen_tertulis_esai_id')->constrained('asesmen_tertulis_esai')->cascadeOnDelete();
             $table->foreignId('pertanyaan_tertulis_esai_id')->constrained('pertanyaan_tertulis_esai')->cascadeOnDelete();
             $table->longText('jawaban')->nullable();
-            $table->char('kompeten', 2);
+            $table->char('kompeten', 2)->nullable();
             $table->timestamps();
         });
     }

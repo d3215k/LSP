@@ -13,7 +13,7 @@ class Sertifikat extends Model
     protected $table = 'sertifikat';
 
     protected $casts = [
-        'unit' => 'object',
+        'unit' => 'array',
         'tanggal_terbit' => 'date',
     ];
 

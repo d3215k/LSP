@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\JenisSkema;
 use App\Filament\Resources\SkemaResource\Pages;
 use App\Filament\Resources\SkemaResource\RelationManagers;
 use App\Models\Skema;
@@ -32,53 +33,72 @@ class SkemaResource extends Resource
                     ->tabs([
                         Forms\Components\Tabs\Tab::make('Detail Profile Skema')
                             ->schema([
-                                Forms\Components\TextInput::make('mode')
-                                    ->required()
-                                    ->maxLength(255),
+                                // Forms\Components\TextInput::make('mode')
+                                //     ->required()
+                                //     ->maxLength(255),
                                 Forms\Components\TextInput::make('nama')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\TextInput::make('jenis')
+                                Forms\Components\Select::make('jenis')
                                     ->required()
-                                    ->maxLength(255),
+                                    ->options(JenisSkema::class),
                                 Forms\Components\TextInput::make('kode')
                                     ->required()
                                     ->maxLength(255),
-                                Forms\Components\DatePicker::make('tanggal_penetapan'),
-                                Forms\Components\TextInput::make('no_urut')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('no_penetapan')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('biaya_assesmen')
-                                    ->numeric(),
+                                // Forms\Components\DatePicker::make('tanggal_penetapan'),
+                                // Forms\Components\TextInput::make('no_urut')
+                                //     ->maxLength(255),
+                                // Forms\Components\TextInput::make('no_penetapan')
+                                //     ->maxLength(255),
+                                // Forms\Components\TextInput::make('biaya_assesmen')
+                                //     ->numeric(),
+                                Forms\Components\TextInput::make('kompetensi_keahlian')
+                                    ->required()
+                                    ->maxLength(128),
+                                Forms\Components\TextInput::make('kompetensi_keahlian_en')
+                                    ->label('Kompetensi Keahlian (EN)')
+                                    ->required()
+                                    ->maxLength(128),
                                 Forms\Components\TextInput::make('level_kkni')
-                                    ->maxLength(255),
+                                    ->required()
+                                    ->maxLength(3),
+                                Forms\Components\TextInput::make('bidang')
+                                    ->required()
+                                    ->maxLength(128),
+                                Forms\Components\TextInput::make('bidang_en')
+                                    ->label('Bidang (EN)')
+                                    ->required()
+                                    ->maxLength(128),
                                 Forms\Components\FileUpload::make('file')
                                     ->directory('skema')
                                     ->acceptedFileTypes(['application/pdf'])
+                                    ->maxSize(1024),
+                                Forms\Components\FileUpload::make('cover')
+                                    ->directory('skema')
+                                    ->image()
                                     ->maxSize(1024),
                                 Forms\Components\Toggle::make('aktif')
                                     ->inline(false)
                                     ->default(true)
                                     ->required(),
                             ]),
-                        Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')
-                            ->schema([
-                                Forms\Components\TextInput::make('sub_sektor')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('bidang')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('sub_bidang')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('sub_bidang_mea')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('kbji')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('sub_kbji')
-                                    ->maxLength(255),
-                                Forms\Components\TextInput::make('sub_bidang_kbji')
-                                    ->maxLength(255),
-                            ]),
+                        // Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')
+                        //     ->schema([
+                        //         Forms\Components\TextInput::make('sub_sektor')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('bidang')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('sub_bidang')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('sub_bidang_mea')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('kbji')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('sub_kbji')
+                        //             ->maxLength(255),
+                        //         Forms\Components\TextInput::make('sub_bidang_kbji')
+                        //             ->maxLength(255),
+                        //     ]),
                     ])
                     ->columns(2)
                     ->columnSpanFull(),

@@ -17,7 +17,7 @@ class KompetensiKeahlianResource extends Resource
 {
     protected static ?string $model = KompetensiKeahlian::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-check-badge';
 
     protected static ?string $navigationGroup = 'Sistem';
 
@@ -31,6 +31,11 @@ class KompetensiKeahlianResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('reg')
+                    ->label('Kode di Registrasi')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('sertifikat')
+                    ->label('Kode di Sertifikat')
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama')

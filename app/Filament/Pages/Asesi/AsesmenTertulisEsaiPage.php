@@ -112,7 +112,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
             Notification::make()->title('Data Tersimpan')->success()->send();
 
         } catch (\Throwable $th) {
-            $th->getMessage();
+            report($th->getMessage());
             Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
             DB::rollBack();
         }
