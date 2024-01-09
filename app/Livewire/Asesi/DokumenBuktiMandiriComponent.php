@@ -56,7 +56,7 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(1024),
                     ])
-                    ->after(fn (Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
+                    ->after(fn (Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriSaved')),
 
             ])
             ->actions([
@@ -67,7 +67,7 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                     ->openUrlInNewTab(),
                 ActionGroup::make([
                     DeleteAction::make()
-                        ->after(fn(Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriMandiriSaved')),
+                        ->after(fn(Component $livewire) => $livewire->dispatch('dokumenBuktiMandiriSaved')),
                 ])
             ])
             ->paginated(false);

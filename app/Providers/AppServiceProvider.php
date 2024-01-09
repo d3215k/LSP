@@ -24,8 +24,8 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
-        FilamentAsset::register([
-            Js::make('signature-pad', 'https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js'),
-        ]);
+        // FilamentAsset::register([
+        //     Js::make('signature-pad', 'https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js'),
+        // ]);
     }
 }

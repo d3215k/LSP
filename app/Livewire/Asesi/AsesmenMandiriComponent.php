@@ -17,7 +17,7 @@ class AsesmenMandiriComponent extends Component
 
     public $data;
 
-    #[On('dokumenBuktiMandiriMandiriSaved')]
+    #[On('dokumenBuktiMandiriSaved')]
     public function refresh()
     {
         //

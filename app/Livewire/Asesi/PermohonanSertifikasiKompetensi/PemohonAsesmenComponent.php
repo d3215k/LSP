@@ -4,6 +4,7 @@ namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
 use App\Models\Skema\Persyaratan;
+use App\Support\Signature;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Infolists\Components\TextEntry;
@@ -100,7 +101,7 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
         }
 
         try {
-            $ttd = uploadSignature('ttd/asesmen/asesi/', $data['ttd_asesi'], $this->asesmen->id);
+            $ttd = Signature::upload('ttd/asesmen/asesi/', $data['ttd_asesi'], $this->asesmen->id);
             $this->asesmen->update(['ttd_asesi' => $ttd]);
             $this->dispatch('rincian-saved');
 

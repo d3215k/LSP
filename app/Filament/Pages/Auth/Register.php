@@ -5,6 +5,7 @@ namespace App\Filament\Pages\Auth;
 use App\Models\Asesi;
 use App\Models\KompetensiKeahlian;
 use App\Models\Sekolah;
+use App\Support\GenerateNumber;
 use DanHarrin\LivewireRateLimiting\Exceptions\TooManyRequestsException;
 use Filament\Facades\Filament;
 use Filament\Pages\Auth\Register as BaseRegister;
@@ -46,7 +47,7 @@ class Register extends BaseRegister
             'email' => $data['email'],
             'sekolah_id' => $data['sekolah_id'],
             'kompetensi_keahlian_id' => $data['kompetensi_keahlian_id'],
-            'no_reg' => generateNoReg($kode)
+            'no_reg' => GenerateNumber::registrasi($kode)
         ]);
 
         unset($data['sekolah_id']);

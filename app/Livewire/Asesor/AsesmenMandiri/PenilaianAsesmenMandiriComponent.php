@@ -6,6 +6,7 @@ use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
+use App\Support\Signature;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -106,7 +107,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
                 if ($this->mandiri->asesmen->ttd_asesor) {
                     return;
                 }
-                $ttd = uploadSignature('ttd/asesmen/asesor/', $this->ttd_asesor, $this->mandiri->asesmen->id);
+                $ttd = Signature::upload('ttd/asesmen/asesor/', $this->ttd_asesor, $this->mandiri->asesmen->id);
                 $this->mandiri->asesmen->update(['ttd_asesor' => $ttd]);
             }
 

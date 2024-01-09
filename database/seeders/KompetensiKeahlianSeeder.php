@@ -17,13 +17,13 @@ class KompetensiKeahlianSeeder extends Seeder
     public function run(): void
     {
         $ai = KompetensiKeahlian::create(['kode' => 'AGRIN', 'reg' => 'THP', 'sertifikat' => '10799 0751 2', 'nama' => 'Agroindustri']);
-        $mm = KompetensiKeahlian::create(['kode' => 'MM', 'reg' => 'TIK', 'nama' => 'Multimedia']);
-        $apat = KompetensiKeahlian::create(['kode' => 'APAT', 'reg' => 'PRK', 'nama' => 'Agribisnis Perikanan Air Tawar']);
-        $atu = KompetensiKeahlian::create(['kode' => 'ATU', 'reg' => 'NAK', 'nama' => 'Agribisnis Ternak Unggas']);
-        $atr = KompetensiKeahlian::create(['kode' => 'ATR', 'reg' => 'NAK', 'nama' => 'Agribisnis Ternak Ruminansia']);
-        $atph = KompetensiKeahlian::create(['kode' => 'ATPH', 'reg' => 'TAN', 'nama' => 'Agribisnis Tanaman Pangan dan Hortikultura']);
-        $aphp = KompetensiKeahlian::create(['kode' => 'APHP', 'reg' => 'THP', 'nama' => 'Agribisnis Pengolahan Hasil Pertanian']);
-        $pmhp = KompetensiKeahlian::create(['kode' => 'PMHP', 'reg' => 'M', 'nama' => 'Pengawasan Mutu Hasil Pertanian']);
+        $mm = KompetensiKeahlian::create(['kode' => 'MM', 'reg' => 'TIK', 'sertifikat' => '61929 2166 2', 'nama' => 'Multimedia']);
+        $apat = KompetensiKeahlian::create(['kode' => 'APAT', 'reg' => 'PRK', 'sertifikat' => '03220 6221 2', 'nama' => 'Agribisnis Perikanan Air Tawar']);
+        $atu = KompetensiKeahlian::create(['kode' => 'ATU', 'reg' => 'NAK', 'sertifikat' => '01460 5164 2', 'nama' => 'Agribisnis Ternak Unggas']);
+        $atr = KompetensiKeahlian::create(['kode' => 'ATR', 'reg' => 'NAK', 'sertifikat' => '01410 5164 2', 'nama' => 'Agribisnis Ternak Ruminansia']);
+        $atph = KompetensiKeahlian::create(['kode' => 'ATPH', 'reg' => 'TAN', 'sertifikat' => '01100 6111 2', 'nama' => 'Agribisnis Tanaman Pangan dan Hortikultura']);
+        $aphp = KompetensiKeahlian::create(['kode' => 'APHP', 'reg' => 'THP', 'sertifikat' => '10799 7512 2', 'nama' => 'Agribisnis Pengolahan Hasil Pertanian']);
+        $pmhp = KompetensiKeahlian::create(['kode' => 'PMHP', 'reg' => 'M', 'sertifikat' => '71202 3111 2', 'nama' => 'Pengawasan Mutu Hasil Pertanian']);
 
         $cibadak = Sekolah::create([
             'nama' => 'SMKN 1 Cibadak',

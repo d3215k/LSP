@@ -17,6 +17,7 @@ use App\Models\Asesmen\TertulisEsai;
 use App\Models\Sertifikat;
 use App\Models\TempatUjiKompetensi;
 use App\Settings\SertifikatSetting;
+use App\Support\GenerateNumber;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -171,7 +172,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
                         'jenis' => $this->record->skema->jenis,
                         'pemilik' => $this->record->rincianDataPemohon->nama,
                         'no_reg' => $this->record->asesi->no_reg,
-                        'no_sertifikat' => generateNoSertifikat($this->record->asesi->kompetensiKeahlian->sertifikat),
+                        'no_sertifikat' => GenerateNumber::sertifikat($this->record->asesi->kompetensiKeahlian->sertifikat),
                         'bidang' => $this->record->skema->bidang,
                         'bidang_en' => $this->record->skema->bidang_en,
                         'prefix_kompetensi' => $this->record->skema->level_kkni,
