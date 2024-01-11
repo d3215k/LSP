@@ -46,6 +46,11 @@ class UnitResource extends Resource
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
+                Forms\Components\TextInput::make('judul_en')
+                    ->label('Judul (EN)')
+                    ->required()
+                    ->maxLength(255)
+                    ->columnSpanFull(),
                 Forms\Components\Textarea::make('deskripsi')
                     ->maxLength(65535)
                     ->columnSpanFull(),

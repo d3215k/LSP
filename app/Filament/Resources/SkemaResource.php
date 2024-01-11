@@ -44,7 +44,8 @@ class SkemaResource extends Resource
                                 //     ->maxLength(255),
                                 Forms\Components\TextInput::make('nama')
                                     ->required()
-                                    ->maxLength(255),
+                                    ->maxLength(255)
+                                    ->columnSpanFull(),
                                 Forms\Components\Select::make('jenis')
                                     ->required()
                                     ->options(JenisSkema::class),

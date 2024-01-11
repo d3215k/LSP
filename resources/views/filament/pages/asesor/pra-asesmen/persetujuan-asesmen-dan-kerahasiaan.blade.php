@@ -7,7 +7,7 @@
             {{ $this->form }}
 
             <x-filament::button type="submit" class="mt-4">
-                Submit
+                Simpan
             </x-filament::button>
         </form>
 

@@ -25,8 +25,11 @@ class UnitsRelationManager extends RelationManager
                 Forms\Components\TextInput::make('judul')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Textarea::make('deskripsi')
+                Forms\Components\TextInput::make('judul_en')
+                    ->label('Judul (EN)')
                     ->required()
+                    ->maxLength(255),
+                Forms\Components\Textarea::make('deskripsi')
                     ->maxLength(512),
                 Forms\Components\Toggle::make('aktif')
                     ->default(true)
