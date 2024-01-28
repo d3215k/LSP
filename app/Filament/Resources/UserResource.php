@@ -44,8 +44,10 @@ class UserResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\Select::make('type')
-                    ->options(UserType::class),
+                    ->options(UserType::class)
+                    ->required(),
                 Forms\Components\Toggle::make('aktif')
+                    ->default(true)
                     ->required()
                     ->inline(false),
             ]);
@@ -70,9 +72,9 @@ class UserResource extends Resource
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                // Tables\Actions\BulkActionGroup::make([
+                //     Tables\Actions\DeleteBulkAction::make(),
+                // ]),
             ]);
     }
 
