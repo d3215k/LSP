@@ -16,6 +16,10 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\TernaryFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 class PraAsesmenPage extends Page implements HasForms, HasTable
 {
@@ -58,16 +62,23 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
-                    ->label('Asesi'),
+                    ->label('Asesi')
+                    ->searchable()
+                    ->sortable()
+                    ->description(fn (Asesmen $record): string => $record->asesi->no_reg ?? '-'),
                 TextColumn::make('skema.nama')
+                    ->wrap()
                     ->label('Skema'),
                 TextColumn::make('status')
                     ->badge()
-                    ->getStateUsing(fn (Asesmen $record): string => $record->persetujuan()->exists() ? 'Dijadwalkan' : 'Belum disetujui asesor'),
+                    ->getStateUsing(fn (Asesmen $record): string => $record->persetujuan()->exists() ? 'Dijadwalkan' : 'Belum Disetujui Asesor')
+                    ->sortable(),
             ])
             ->filters([
-                // ...
-            ])
+                Filter::make('persetujuan')
+                    ->label('Hanya yang belum disetujui')
+                    ->query(fn (Builder $query): Builder => $query->whereDoesntHave('persetujuan'))
+                ])
             ->actions([
                 Action::make('persetujuan')
                     ->button()

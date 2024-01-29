@@ -57,6 +57,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi / Skema')
+                    ->wrap()
                     ->description(fn (Asesmen $record): string => $record->skema->nama),
                 TextColumn::make('status')
                     ->badge(),

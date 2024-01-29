@@ -3,6 +3,7 @@
 namespace App\Filament\Pages\Asesor;
 
 use App\Enums\AsesmenStatus;
+use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen\Mandiri;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -12,6 +13,8 @@ use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Filament\Pages\Page;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Filters\TernaryFilter;
 
 class AsesmenMandiriPage extends Page implements HasForms, HasTable
 {
@@ -52,15 +55,27 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
             }))
             ->columns([
                 TextColumn::make('asesmen.rincianDataPemohon.nama')
-                    ->label('Asesi'),
+                    ->label('Asesi')
+                    ->searchable()
+                    ->description(fn (Mandiri $record): string => $record->asesmen->asesi->no_reg ?? '-')
+                    ->sortable(),
                 TextColumn::make('asesmen.skema.nama')
+                    ->wrap()
                     ->label('Skema'),
                 TextColumn::make('rekomendasi')
                     ->label('Rekomendasi')
-                    ->badge(),
+                    ->badge()
+                    ->sortable(),
             ])
             ->filters([
-                // ...
+                TernaryFilter::make('rekomendasi')
+                    ->placeholder('Semua')
+                    ->trueLabel('Sudah Direkomendasi')
+                    ->falseLabel('Belum Direkomendasi')
+                    ->nullable(),
+                SelectFilter::make('status')
+                    ->attribute('rekomendasi')
+                    ->options(RekomendasiAsesmenMandiri::class),
             ])
             ->actions([
                 Action::make('nilai')
