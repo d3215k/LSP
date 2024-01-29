@@ -35,7 +35,8 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
             ->modifyQueryUsing(fn (Builder $query) => $query->withoutGlobalScope(AktifScope::class))
             ->recordTitleAttribute('pertanyaan')
             ->columns([
-                Tables\Columns\TextColumn::make('pertanyaan'),
+                Tables\Columns\TextColumn::make('pertanyaan')
+                    ->wrap(),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([

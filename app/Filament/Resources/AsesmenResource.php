@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\AsesmenStatus;
 use App\Enums\TujuanAsesmen;
 use App\Filament\Resources\AsesmenResource\Pages;
 use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
+use App\Models\Asesor;
 use App\Models\Periode;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
@@ -13,10 +15,13 @@ use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
+use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class AsesmenResource extends Resource
@@ -122,24 +127,58 @@ class AsesmenResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('asesi.nama')
+                    ->sortable()
                     ->label('Asesi  / No. Reg')
                     ->description(fn (Asesmen $record): string => $record->asesi->no_reg ?? '-')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('skema.nama')
                     ->label('Skema')
-                    ->searchable(),
+                    ->sortable()
+                    ->wrap(),
+                Tables\Columns\TextColumn::make('asesor.nama')
+                    ->label('Asesor')
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('status')
+                    ->sortable()
                     ->badge(),
             ])
             ->filters([
-                //
+                SelectFilter::make('Status')
+                    ->options(AsesmenStatus::class),
+                SelectFilter::make('periode_id')
+                    ->label('Periode')
+                    ->options(Periode::query()->pluck('nama', 'id')),
+
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    // Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\BulkAction::make('Terima Pendaftaran')
+                        ->action(function (Collection $records, array $data): void {
+                            try {
+                                foreach ($records as $record) {
+                                    $record->asesor_id = $data['asesor_id'];
+                                    $record->save();
+                                    if ($record->status === AsesmenStatus::REGISTRASI) {
+                                        $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
+                                    }
+                                }
+                                Notification::make()->title('Pengajuan diterima!')->success()->send();
+                            } catch (\Throwable $th) {
+                                Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
+                                report($th->getMessage());
+                            }
+
+                        })
+                        ->form([
+                            Forms\Components\Select::make('asesor_id')
+                                ->label('Pilih Asesor')
+                                ->options(Asesor::query()->pluck('nama', 'id'))
+                                ->required(),
+                        ])
+                        ->deselectRecordsAfterCompletion(),
                 ]),
             ]);
     }

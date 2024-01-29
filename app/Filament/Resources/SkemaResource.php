@@ -119,6 +119,7 @@ class SkemaResource extends Resource
                 Tables\Columns\TextColumn::make('kode')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
+                    ->wrap()
                     ->searchable(),
             ])
             ->filters([

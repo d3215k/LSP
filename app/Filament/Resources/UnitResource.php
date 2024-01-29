@@ -67,8 +67,10 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('kode')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('judul')
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('judul_en')
+                    ->wrap()
                     ->label('Judul (EN)')
                     ->searchable(),
                 Tables\Columns\ToggleColumn::make('aktif'),
