@@ -86,10 +86,10 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
                 ->body('Bagian 2 : Data Sertifikasi belum diisi atau disimpan')->danger()->send();
         }
 
-        if ($this->asesmen->buktiPersyaratan()->count() !== Persyaratan::query()->where('skema_id', $this->asesmen->skema_id)->count()) {
-            return Notification::make()->title('Whoops!')
-                ->body('Bagian 3 : Bukti Kelengkapan Pemohon belum lengkap')->danger()->send();
-        }
+        // if ($this->asesmen->buktiPersyaratan()->count() !== Persyaratan::query()->where('skema_id', $this->asesmen->skema_id)->count()) {
+        //     return Notification::make()->title('Whoops!')
+        //         ->body('Bagian 3 : Bukti Kelengkapan Pemohon belum lengkap')->danger()->send();
+        // }
 
         if (empty($data['ttd_asesi'])) {
             return Notification::make()->title('Whoops!')
