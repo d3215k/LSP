@@ -37,7 +37,8 @@ class BuktiKelengkapanPemohonComponent extends Component implements HasForms, Ha
                 Persyaratan::query()->where('skema_id', $this->asesmen->skema_id)
             )
             ->columns([
-                TextColumn::make('nama'),
+                TextColumn::make('nama')
+                    ->wrap(),
             ])
             ->actions([
                 Action::make('Lihat dokumen')

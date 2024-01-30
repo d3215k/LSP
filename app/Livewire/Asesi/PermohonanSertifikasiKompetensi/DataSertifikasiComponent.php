@@ -60,7 +60,8 @@ class DataSertifikasiComponent extends Component implements HasForms, HasTable
             ->query(Unit::query()->where('skema_id', $this->asesmen->skema->id))
             ->columns([
                 TextColumn::make('kode'),
-                TextColumn::make('judul'),
+                TextColumn::make('judul')
+                    ->wrap(),
             ])
             ->paginated(false);
     }
