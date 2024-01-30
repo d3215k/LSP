@@ -5,16 +5,24 @@ namespace App\Filament\Pages\Asesor;
 use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen\Mandiri;
+use App\Support\Signature;
+use Filament\Forms\Components\Radio;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Filament\Pages\Page;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
+use Saade\FilamentAutograph\Forms\Components\SignaturePad;
 
 class AsesmenMandiriPage extends Page implements HasForms, HasTable
 {
@@ -83,7 +91,39 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                     ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{mandiri}.penilaian', $record))
             ])
             ->bulkActions([
-                // ...
+                BulkAction::make('nilai')
+                    ->Action(function (Collection $records, array $data): void {
+                        try {
+                            DB::beginTransaction();
+                            foreach ($records as $record) {
+                                $ttd = Signature::upload('ttd/asesmen/asesor/', $data['ttd_asesor'], $record->asesmen->id);
+                                $record->asesmen->update(['ttd_asesor' => $ttd]);
+                                $record->update([
+                                    'tanggal_ditinjau' => today(),
+                                    'rekomendasi' => $data['rekomendasi'],
+                                    'catatan' => $data['catatan'],
+                                ]);
+                            }
+                            DB::commit();
+                            Notification::make()->title('Penilaian Berhasil disimpan!')->success()->send();
+                        } catch (\Throwable $th) {
+                            report($th->getMessage());
+                            Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
+                            DB::rollBack();
+                        }
+                    })
+                    ->form([
+                        TextInput::make('catatan')
+                            ->inlineLabel(),
+                        Radio::make('rekomendasi')
+                            ->inline()
+                            ->options(RekomendasiAsesmenMandiri::class)
+                            ->required(),
+                        SignaturePad::make('ttd_asesor')
+                            ->inlineLabel()
+                            ->label('Tanda tangan Asesor'),
+                    ])
+                    ->deselectRecordsAfterCompletion()
             ]);
     }
 }
