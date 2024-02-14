@@ -26,7 +26,9 @@ class PeriodeResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+        return parent::getEloquentQuery()
+            ->withoutGlobalScope(AktifScope::class)
+            ->latest();
     }
 
     public static function form(Form $form): Form
@@ -69,15 +71,17 @@ class PeriodeResource extends Resource
                 Tables\Columns\TextColumn::make('tutup')
                     ->date()
                     ->sortable(),
-                Tables\Columns\TextColumn::make('lokasi')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('asesmen_count')
+                    ->label('Jumlah Asesmen Terdaftar')
+                    ->counts('asesmen'),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

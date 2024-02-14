@@ -34,6 +34,12 @@ class AsesmenResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->latest();
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -176,6 +182,8 @@ class AsesmenResource extends Resource
                             Forms\Components\Select::make('asesor_id')
                                 ->label('Pilih Asesor')
                                 ->options(Asesor::query()->pluck('nama', 'id'))
+                                ->searchable()
+                                ->preload()
                                 ->required(),
                         ])
                         ->deselectRecordsAfterCompletion(),

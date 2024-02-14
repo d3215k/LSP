@@ -23,6 +23,12 @@ class AsesiResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()
+            ->latest();
+    }
+
     public static function form(Form $form): Form
     {
         return $form

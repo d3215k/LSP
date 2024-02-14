@@ -16,12 +16,12 @@ class Asesi extends Model
 
     public function sekolah(): BelongsTo
     {
-        return $this->belongsTo(Sekolah::class);
+        return $this->belongsTo(Sekolah::class)->withoutGlobalScopes();
     }
 
     public function kompetensiKeahlian(): BelongsTo
     {
-        return $this->belongsTo(KompetensiKeahlian::class);
+        return $this->belongsTo(KompetensiKeahlian::class)->withoutGlobalScopes();
     }
 
     public function user(): HasOne

@@ -5,12 +5,14 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\UnitResource\Pages;
 use App\Filament\Resources\UnitResource\RelationManagers;
 use App\Models\Scopes\AktifScope;
+use App\Models\Skema;
 use App\Models\Skema\Unit;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -29,7 +31,9 @@ class UnitResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+        return parent::getEloquentQuery()
+            ->withoutGlobalScope(AktifScope::class)
+            ->latest();
     }
 
     public static function form(Form $form): Form
@@ -69,17 +73,32 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('judul')
                     ->wrap()
                     ->searchable(),
-                Tables\Columns\TextColumn::make('judul_en')
-                    ->wrap()
-                    ->label('Judul (EN)')
-                    ->searchable(),
+                Tables\Columns\TextColumn::make('skema.nama')
+                    ->label('Skema')
+                    ->wrap(),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
-                //
+                SelectFilter::make('skema')
+                    ->label('Skema')
+                    ->options(
+                        fn () => Skema::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'skema',
+                                fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                            );
+                        }
+                    })
+                    ->searchable()
+                    ->preload()
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

@@ -5,11 +5,13 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ElemenResource\Pages;
 use App\Filament\Resources\ElemenResource\RelationManagers;
 use App\Models\Scopes\AktifScope;
+use App\Models\Skema;
 use App\Models\Skema\Elemen;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -28,7 +30,9 @@ class ElemenResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+        return parent::getEloquentQuery()
+            ->withoutGlobalScope(AktifScope::class)
+            ->latest();
     }
 
     public static function form(Form $form): Form
@@ -58,14 +62,38 @@ class ElemenResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
+                    ->wrap()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('unit.skema.nama')
+                    ->label('Skema / Unit')
+                    ->description(fn (Elemen $record): string => $record->unit->judul ?? '-')
+                    ->wrap(),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
-                //
+                SelectFilter::make('skema')
+                    ->label('Skema')
+                    ->options(
+                        fn () => Skema::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'unit',
+                                fn (Builder $query) => $query->whereHas(
+                                    'skema',
+                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                )
+                            );
+                        }
+                    })
+                    ->searchable()
+                    ->preload()
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
