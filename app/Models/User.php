@@ -88,4 +88,10 @@ class User extends Authenticatable
             3 => route('filament.app.pages.beranda'),
         };
     }
+
+    public function resetPassword()
+    {
+        $this->password = bcrypt('smkn1cbd*');
+        $this->save();
+    }
 }

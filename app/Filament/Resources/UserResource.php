@@ -68,6 +68,16 @@ class UserResource extends Resource
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->iconButton(),
+                Tables\Actions\Action::make('reset')
+                    ->icon('heroicon-m-lock-open')
+                    ->color('danger')
+                    ->iconButton()
+                    ->requiresConfirmation()
+                    ->modalHeading(
+                        fn (User $record) => 'Reset Password ' . $record->name
+                    )
+                    ->modalDescription('Setelah direset, password menjadi smkn1cbd*')
+                    ->action(fn (User $record) => $record->resetPassword()),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
