@@ -12,6 +12,7 @@ class Beranda extends Page
     protected static string $view = 'filament.pages.asesi.beranda';
 
     public $showPendaftaranAsesmenBaru = false;
+
     public $showAsesmenSaya = false;
 
     public static function shouldRegisterNavigation(): bool

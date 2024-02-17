@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
+use App\Enums\JenisKelamin;
 use App\Models\Asesmen;
 use App\Models\Asesmen\RincianDataPemohon;
 use Filament\Forms\Components\DatePicker;
@@ -39,42 +40,49 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
                     ->schema([
                         TextInput::make('nama')
                             ->label('Nama Lengkap')
-                            ->required()
-                            ->default($this->asesmen->asesi->nama),
+                            ->default($this->asesmen->asesi->nama)
+                            ->required(),
                         TextInput::make('no_identitas')
                             ->label('No KTP/NIK/Paspor')
+                            ->default($this->asesmen->asesi->nik)
                             ->required(),
                         Radio::make('jk')
                             ->label('Jenis Kelamin')
-                            ->options([
-                                'L' => "Laki-laki",
-                                'P' => "Perempuan",
-                            ])
+                            ->default($this->asesmen->asesi->jk)
+                            ->options(JenisKelamin::class)
                             ->required()
                             ->columnSpanFull(),
                         TextInput::make('tempat_lahir')
+                            ->default($this->asesmen->asesi->tempat_lahir)
                             ->label('Tempat Lahir')
                             ->required(),
                         DatePicker::make('tanggal_lahir')
+                            ->default($this->asesmen->asesi->tanggal_lahir)
                             ->label('Tanggal Lahir')
                             ->required(),
                         TextInput::make('kebangsaan')
+                            ->default($this->asesmen->asesi->kewarganegaraan)
                             ->label('Kebangsaan')
                             ->required(),
                         TextInput::make('alamat_rumah')
+                            ->default($this->asesmen->asesi->alamat_rumah)
                             ->label('Alamat')
                             ->required(),
                         TextInput::make('kode_pos')
+                            ->default($this->asesmen->asesi->kode_pos)
                             ->label('Kode Pos')
                             ->required(),
                         TextInput::make('no_telepon_rumah')
+                            ->default($this->asesmen->asesi->no_telepon_rumah)
                             ->label('No Telepon (Rumah)')
                             ->required(),
                         TextInput::make('no_telepon_hp')
+                            ->default($this->asesmen->asesi->no_telepon_hp)
                             ->label('No Telepon (HP aktif WhatsApp)')
                             ->required(),
                         TextInput::make('kualifikasi_pendidikan')
                             ->label('Kualifikasi Pendidikan')
+                            ->default('SMK')
                             ->required(),
                     ])
                     ->columns(2),
@@ -82,23 +90,30 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
                     ->schema([
                         TextInput::make('nama_institusi')
                             ->label('Nama Institusi / Perusahaan')
+                            ->default($this->asesmen->asesi->sekolah->nama)
                             ->required(),
                         TextInput::make('jabatan')
+                            ->default('Siswa')
                             ->label('Jabatan')
                             ->required(),
                         TextInput::make('alamat_kantor')
+                            ->default($this->asesmen->asesi->sekolah->alamat)
                             ->label('Alamat Kantor')
                             ->required(),
                         TextInput::make('kode_pos_kantor')
+                            ->default($this->asesmen->asesi->sekolah->kode_pos)
                             ->label('Kode Pos Kantor')
                             ->required(),
                         TextInput::make('no_telepon_kantor')
+                            ->default($this->asesmen->asesi->sekolah->no_telepon)
                             ->label('No Telepon Kantor')
                             ->required(),
                         TextInput::make('no_fax_kantor')
+                            ->default($this->asesmen->asesi->sekolah->no_fax)
                             ->label('No Fax Kantor')
                             ->required(),
                         TextInput::make('email_kantor')
+                            ->default($this->asesmen->asesi->sekolah->email)
                             ->label('Email Kantor')
                             ->required(),
                     ]),

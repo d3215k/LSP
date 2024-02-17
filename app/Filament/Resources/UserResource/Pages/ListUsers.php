@@ -13,6 +13,13 @@ class ListUsers extends ListRecords
 {
     protected static string $resource = UserResource::class;
 
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            UserResource\Widgets\UserStatsOverview::class,
+        ];
+    }
+
     protected function getHeaderActions(): array
     {
         return [
@@ -23,7 +30,8 @@ class ListUsers extends ListRecords
                     Notification::make()->title('User berhasil di generate!')->success()->send();
                 })
                 ->requiresConfirmation(),
-            Actions\CreateAction::make(),
+            Actions\CreateAction::make()
+                ->label('Tambah Akun Admin'),
         ];
     }
 }

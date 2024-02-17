@@ -37,12 +37,26 @@ class SekolahResource extends Resource
                 Forms\Components\TextInput::make('nama')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('type')
+                Forms\Components\ToggleButtons::make('type')
+                    ->label('Jenis')
+                    ->inline()
                     ->options(SekolahType::class)
                     ->required(),
+                Forms\Components\TextInput::make('alamat')
+                    ->columnSpanFull()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('kode_pos')
+                    ->maxLength(10),
+                Forms\Components\TextInput::make('no_telepon')
+                    ->maxLength(16),
+                Forms\Components\TextInput::make('no_fax')
+                    ->maxLength(16),
+                Forms\Components\TextInput::make('email')
+                    ->email()
+                    ->maxLength(64),
                 Forms\Components\Toggle::make('aktif')
                     ->inline()
-                    ->required(),
+                    ->default(true),
             ]);
     }
 

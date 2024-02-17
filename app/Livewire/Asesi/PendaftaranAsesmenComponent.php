@@ -3,6 +3,7 @@
 namespace App\Livewire\Asesi;
 
 use App\Models\Asesmen;
+use App\Models\Asesor;
 use App\Models\Periode;
 use App\Models\Skema;
 use Filament\Forms\Components\TextInput;
@@ -45,7 +46,17 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
                     ->options(fn (Get $get): Collection => Periode::query()
                         ->where('skema_id', $get('skema_id'))
                         ->where('buka', '<=', today())
-                        ->where('tutup', '>=', today())->pluck('nama', 'id')
+                        ->where('tutup', '>=', today())
+                        ->pluck('nama', 'id')
+                    )
+                    ->required()->reactive()
+                    ->hidden(fn (Get $get): bool => ! $get('skema_id')),
+                Select::make('asesor_id')
+                    ->label('Asesor')
+                    ->options(fn (Get $get): Collection => Asesor::query()
+                        ->whereHas('skema',
+                            fn ($query) => $query->where('skema_id', $get('skema_id'))
+                        )->pluck('nama', 'id')
                     )
                     ->required()->reactive()
                     ->hidden(fn (Get $get): bool => ! $get('skema_id')),

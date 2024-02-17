@@ -6,6 +6,7 @@ use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\JawabanMandiri;
 use App\Models\Asesmen\Mandiri;
+use App\Models\Skema\Elemen;
 use Filament\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
@@ -30,14 +31,16 @@ class AsesmenMandiriComponent extends Component
             ->where('asesmen_mandiri_id', $this->asesmen->mandiri?->id)
             ->get();
 
-        $this->data['kompeten'] = $jawaban->pluck('kompeten', 'unit_id')->toArray();
-        $this->data['bukti'] = $jawaban->pluck('bukti_asesmen_mandiri_id', 'unit_id')->toArray();
+        $this->data['kompeten'] = $jawaban->pluck('kompeten', 'elemen_id')->toArray();
+        $this->data['bukti'] = $jawaban->pluck('bukti_asesmen_mandiri_id', 'elemen_id')->toArray();
     }
 
     public function handleSave()
     {
-        if (count($this->data['kompeten']) !== count($this->asesmen->skema->unit)) {
-            return Notification::make()->title('Whoops!')->body('Ada Unit yang belum dijawab')->danger()->send();
+        $elemen = Elemen::whereIn('unit_id', $this->asesmen->skema->unit->pluck('id'))->count();
+
+        if (count($this->data['kompeten']) !== $elemen) {
+            return Notification::make()->title('Whoops!')->body('Ada Elemen yang belum dijawab')->danger()->send();
         }
 
         try {
@@ -60,11 +63,11 @@ class AsesmenMandiriComponent extends Component
                 ];
             }
 
-            foreach ($data as $unit => $item) {
+            foreach ($data as $elemen => $item) {
                 JawabanMandiri::updateOrCreate(
                     [
                         'asesmen_mandiri_id' => $mandiri->id,
-                        'unit_id' => $unit,
+                        'elemen_id' => $elemen,
                     ],
                     [
                         'kompeten' => $item['kompeten'],

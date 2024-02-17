@@ -67,6 +67,7 @@ class SkemaResource extends Resource
                                     ->required()
                                     ->maxLength(128),
                                 Forms\Components\TextInput::make('level_kkni')
+                                    ->label('Level KKNI')
                                     ->required()
                                     ->maxLength(3),
                                 Forms\Components\TextInput::make('bidang')
@@ -142,6 +143,7 @@ class SkemaResource extends Resource
             RelationManagers\UnitsRelationManager::class,
             RelationManagers\PersyaratanRelationManager::class,
             RelationManagers\TempatUjiKompetensiRelationManager::class,
+            RelationManagers\AsesorRelationManager::class,
         ];
     }
 

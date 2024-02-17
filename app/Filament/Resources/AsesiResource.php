@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources;
 
+use App\Enums\JenisKelamin;
 use App\Filament\Resources\AsesiResource\Pages;
 use App\Filament\Resources\AsesiResource\RelationManagers;
 use App\Models\Asesi;
@@ -33,20 +34,36 @@ class AsesiResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('kompetensi')
+                Forms\Components\Select::make('kompetensi_keahlian_id')
                     ->relationship('kompetensiKeahlian', 'nama')
                     ->searchable()
                     ->preload()
                     ->required(),
+                Forms\Components\Select::make('sekolah_id')
+                    ->relationship(
+                        name: 'sekolah',
+                        titleAttribute: 'nama',
+                        modifyQueryUsing: fn ($query) => $query->withoutGlobalScopes()
+                    )
+                    ->searchable()
+                    ->preload()
+                    ->required(),
+                Forms\Components\TextInput::make('no_reg') // TODO : make me auto generate on create
+                    ->label('No. Registrasi')
+                    ->maxLength(255),
                 Forms\Components\TextInput::make('nisn')
+                    ->label('NISN')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nik')
+                    ->label('No. KTP/NIK/Paspor')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nama')
+                    ->label('Nama Lengkap')
                     ->maxLength(255)
                     ->required(),
-                Forms\Components\TextInput::make('jk')
-                    ->maxLength(1),
+                Forms\Components\ToggleButtons::make('jk')
+                    ->inline()
+                    ->options(JenisKelamin::class),
                 Forms\Components\TextInput::make('tempat_lahir')
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('tanggal_lahir'),

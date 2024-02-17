@@ -45,4 +45,9 @@ class Skema extends Model
     {
         return $this->hasMany(Periode::class);
     }
+
+    public function asesor(): BelongsToMany
+    {
+        return $this->belongsToMany(Asesor::class);
+    }
 }

@@ -41,11 +41,11 @@
                             </thead>
 
                             <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/5">
-                                <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
-                                    <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
-                                        <div class="fi-ta-col-wrp">
-                                            @forelse ($unit->elemen as $elemen)
-                                                <div wire:key="{{ $elemen->id }}" class="grid px-3 py-4 min-w-96 fi-ta-text gap-y-1">
+                                @foreach($unit->elemen as $elemen)
+                                    <tr wire:key="{{ $elemen->id }}" class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
+                                        <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                            <div class="fi-ta-col-wrp">
+                                                <div class="grid px-3 py-4 min-w-96 fi-ta-text gap-y-1">
                                                     <div class="text-sm fi-ta-text-item text-wrap text-gray-950 dark:text-white">
                                                         <p class="font-bold">
                                                             {{ $loop->iteration }}. Elemen : {{ $elemen->nama }}
@@ -58,7 +58,7 @@
                                                             @forelse ($elemen->kriteriaUnjukKerja as $kuk)
                                                                 <li class="flex gap-1" wire:key="{{ $kuk->id }}">
                                                                     <div class="w-10 text-right">{{ $no }}.{{ $loop->iteration }}</div>
-                                                                    <div class="flex-1">
+                                                                    <div class="flex-1 text-wrap">
                                                                         {{ $kuk->nama }}
                                                                     </div>
                                                                 </li>
@@ -69,42 +69,40 @@
                                                         </ol>
                                                     </div>
                                                 </div>
-                                            @empty
+                                            </div>
+                                        </td>
 
-                                            @endforelse
-                                        </div>
-                                    </td>
-
-                                    <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
-                                        <div class="fi-ta-col-wrp">
-                                            <div class="flex justify-center w-full disabled:pointer-events-none text-start">
-                                                <div class="fi-ta-text-item">
-                                                    <span @class([
-                                                        '',
-                                                        'text-success-600' => $data['kompeten'][$unit->id] === 'K',
-                                                        'text-danger-600' => $data['kompeten'][$unit->id] === 'BK'
-                                                    ])>
-                                                        {{ $data['kompeten'][$unit->id] === 'K' ? 'Kompeten' : 'Belum Kompeten' }}
-                                                    </span>
+                                        <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                            <div class="fi-ta-col-wrp">
+                                                <div class="flex justify-center px-2 w-full disabled:pointer-events-none text-start">
+                                                    <div class="fi-ta-text-item">
+                                                        <span @class([
+                                                            '',
+                                                            'text-success-600' => $data['kompeten'][$elemen->id] === 'K',
+                                                            'text-danger-600' => $data['kompeten'][$elemen->id] === 'BK'
+                                                        ])>
+                                                            {{ $data['kompeten'][$elemen->id] === 'K' ? 'Kompeten' : 'Belum Kompeten' }}
+                                                        </span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
 
-                                    <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
-                                        <div class="px-2 fi-ta-col-wrp">
-                                            <div class="flex justify-center w-full disabled:pointer-events-none text-start">
-                                                <div class="fi-ta-text-item">
-                                                    @if ($data['bukti'][$unit->id])
-                                                        <a target="_blank" href="{{ asset('storage/'.$data['bukti'][$unit->id]->file) }}" class="text-primary-600">
-                                                            {{ $data['bukti'][$unit->id]->nama }}
-                                                        </a>
-                                                    @endif
+                                        <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
+                                            <div class="px-2 fi-ta-col-wrp">
+                                                <div class="flex justify-center w-full disabled:pointer-events-none text-start">
+                                                    <div class="fi-ta-text-item">
+                                                        @if ($data['bukti'][$elemen->id])
+                                                            <a target="_blank" href="{{ asset('storage/'.$data['bukti'][$elemen->id]->file) }}" class="text-primary-600">
+                                                                {{ $data['bukti'][$elemen->id]->nama }}
+                                                            </a>
+                                                        @endif
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
+                                @endforeach
                             </tbody>
                         </table>
                     </div>

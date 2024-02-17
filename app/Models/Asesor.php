@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Scopes\AktifScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Asesor extends Model
@@ -21,5 +22,10 @@ class Asesor extends Model
     public function user(): HasOne
     {
         return $this->hasOne(User::class);
+    }
+
+    public function skema(): BelongsToMany
+    {
+        return $this->belongsToMany(Skema::class);
     }
 }

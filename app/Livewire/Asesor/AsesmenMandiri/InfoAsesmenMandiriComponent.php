@@ -23,10 +23,10 @@ class InfoAsesmenMandiriComponent extends Component
             ->whereIn('id', $jawaban->pluck('bukti_asesmen_mandiri_id'))
             ->get();
 
-        $this->data['kompeten'] = $jawaban->pluck('kompeten', 'unit_id')->toArray();
+        $this->data['kompeten'] = $jawaban->pluck('kompeten', 'elemen_id')->toArray();
 
         foreach ($jawaban as $item) {
-            $this->data['bukti'][$item->unit_id] = $bukti->where('id', $item->bukti_asesmen_mandiri_id)->first();
+            $this->data['bukti'][$item->elemen_id] = $bukti->where('id', $item->bukti_asesmen_mandiri_id)->first();
         }
 
     }

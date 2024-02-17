@@ -106,7 +106,7 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
             $this->dispatch('rincian-saved');
 
             // return to_route('filament.app.pages.beranda');
-            Notification::make()->title('Berhasil disimpan')->success()->send();
+            Notification::make()->title('Berhasil!')->body('Permohonan Sertifikasi Kompetensi Anda Sudah Terkirim')->success()->send();
         } catch (\Throwable $th) {
             Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
             report($th->getMessage());

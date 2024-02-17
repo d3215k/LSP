@@ -20,11 +20,11 @@ class EditAsesmen extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('Terima Pengajuan')
+            Action::make('Terima Pendaftaran')
                 ->action(function (Asesmen $record) {
                     try {
                         $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
-                        Notification::make()->title('Pengajuan diterima!')->success()->send();
+                        Notification::make()->title('Pendaftaran diterima!')->success()->send();
                     } catch (\Throwable $th) {
                         Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
                         report($th->getMessage());

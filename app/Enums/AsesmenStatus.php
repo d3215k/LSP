@@ -5,7 +5,7 @@ namespace App\Enums;
 use Filament\Support\Contracts\HasColor;
 use Filament\Support\Contracts\HasLabel;
 
-enum AsesmenStatus: int implements HasLabel
+enum AsesmenStatus: int implements HasLabel, HasColor
 {
     case DITOLAK = 0;
     case REGISTRASI = 1;
@@ -32,6 +32,22 @@ enum AsesmenStatus: int implements HasLabel
             self::SELESAI_KOMPETEN => 'Kompeten',
             self::SELESAI_BELUM_KOMPETEN => 'Belum Kompeten',
             self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Belum Kompeten, Perlu Tindak Lanjut',
+        };
+    }
+
+    public function getColor(): ?string
+    {
+        return match ($this) {
+            Self::DITOLAK => 'danger',
+            self::REGISTRASI => 'info',
+            self::ASESMEN_MANDIRI => 'primary',
+            self::PERSETUJUAN => 'primary',
+            self::OBSERVASI_AKTIVITAS => 'warning',
+            self::OBSERVASI_PENDUKUNG => 'warning',
+            self::TERTULIS_ESAI => 'warning',
+            self::SELESAI_KOMPETEN => 'success',
+            self::SELESAI_BELUM_KOMPETEN => 'danger',
+            self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'danger',
         };
     }
 }

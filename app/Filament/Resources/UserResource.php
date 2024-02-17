@@ -43,13 +43,6 @@ class UserResource extends Resource
                     ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('type')
-                    ->options(UserType::class)
-                    ->required(),
-                Forms\Components\Toggle::make('aktif')
-                    ->default(true)
-                    ->required()
-                    ->inline(false),
             ]);
     }
 
@@ -58,18 +51,23 @@ class UserResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('type')
-                    ->badge(),
+                Tables\Columns\SelectColumn::make('type')
+                    ->label('Role')
+                    ->options(UserType::class),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('type')
+                    ->label('Role')
+                    ->options(UserType::class),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
@@ -85,12 +83,19 @@ class UserResource extends Resource
         ];
     }
 
+    public static function getWidgets(): array
+    {
+        return [
+            UserResource\Widgets\UserStatsOverview::class,
+        ];
+    }
+
     public static function getPages(): array
     {
         return [
             'index' => Pages\ListUsers::route('/'),
             'create' => Pages\CreateUser::route('/create'),
-            'edit' => Pages\EditUser::route('/{record}/edit'),
+            // 'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
 }

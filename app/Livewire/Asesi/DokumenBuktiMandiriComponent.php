@@ -36,7 +36,10 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
     public function table(Table $table): Table
     {
         return $table
-            ->query(BuktiMandiri::query())
+            ->query(
+                BuktiMandiri::query()
+                    ->where('asesmen_id', $this->asesmen->id)
+            )
             ->columns([
                 TextColumn::make('nama'),
             ])
@@ -48,11 +51,14 @@ class DokumenBuktiMandiriComponent extends Component implements HasForms, HasTab
                         $data['asesmen_id'] = $this->asesmen->id;
                         return $data;
                     })
+                    ->modalHeading('Unggah File Dokumen')
                     ->form([
                         TextInput::make('nama')
+                            ->label('Nama Dokumen')
                             ->required()
                             ->maxLength(255),
                         FileUpload::make('file')
+                            ->required()
                             ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(1024),
                     ])

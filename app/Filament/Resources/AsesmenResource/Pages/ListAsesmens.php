@@ -16,4 +16,11 @@ class ListAsesmens extends ListRecords
             Actions\CreateAction::make(),
         ];
     }
+
+    protected function getHeaderWidgets(): array
+    {
+        return [
+            AsesmenResource\Widgets\AsesmenOverview::class,
+        ];
+    }
 }

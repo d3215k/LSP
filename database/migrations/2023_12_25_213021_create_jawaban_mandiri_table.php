@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('jawaban_mandiri', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asesmen_mandiri_id')->constrained('asesmen_mandiri')->cascadeOnDelete();
-            $table->foreignId('unit_id')->constrained('unit')->cascadeOnDelete();
             $table->char('kompeten', 2)->nullable();
             $table->foreignId('bukti_asesmen_mandiri_id')->nullable()->constrained('bukti_mandiri')->nullOnDelete();
             $table->timestamps();

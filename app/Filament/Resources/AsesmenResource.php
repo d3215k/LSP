@@ -153,25 +153,49 @@ class AsesmenResource extends Resource
                     ->options(AsesmenStatus::class),
                 SelectFilter::make('periode_id')
                     ->label('Periode')
+                    ->searchable()
+                    ->preload()
                     ->options(Periode::query()->pluck('nama', 'id')),
+                SelectFilter::make('asesor_id')
+                    ->label('Asesor')
+                    ->searchable()
+                    ->preload()
+                    ->options(Asesor::query()->pluck('nama', 'id')),
 
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->iconButton(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\BulkAction::make('Terima Pendaftaran')
-                        ->action(function (Collection $records, array $data): void {
+                        ->icon('heroicon-m-check-circle')
+                        ->requiresConfirmation()
+                        ->action(function (Collection $records): void {
                             try {
                                 foreach ($records as $record) {
-                                    $record->asesor_id = $data['asesor_id'];
-                                    $record->save();
                                     if ($record->status === AsesmenStatus::REGISTRASI) {
                                         $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
                                     }
                                 }
                                 Notification::make()->title('Pengajuan diterima!')->success()->send();
+                            } catch (\Throwable $th) {
+                                Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
+                                report($th->getMessage());
+                            }
+
+                        })
+                        ->deselectRecordsAfterCompletion(),
+                    Tables\Actions\BulkAction::make('Pilih Asesor')
+                        ->icon('heroicon-m-user')
+                        ->action(function (Collection $records, array $data): void {
+                            try {
+                                foreach ($records as $record) {
+                                    $record->asesor_id = $data['asesor_id'];
+                                    $record->save();
+                                }
+                                Notification::make()->title('Asesor Dipilih!')->success()->send();
                             } catch (\Throwable $th) {
                                 Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
                                 report($th->getMessage());
@@ -195,6 +219,13 @@ class AsesmenResource extends Resource
     {
         return [
             RelationManagers\BuktiRelationManager::class,
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            AsesmenResource\Widgets\AsesmenOverview::class,
         ];
     }
 
