@@ -30,6 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->path('/')
             ->spa()
             ->registration(Register::class)
+            ->databaseNotifications()
             ->login()
             ->profile()
             ->colors([

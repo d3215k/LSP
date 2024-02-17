@@ -48,8 +48,9 @@ class AsesiResource extends Resource
                     ->searchable()
                     ->preload()
                     ->required(),
-                Forms\Components\TextInput::make('no_reg') // TODO : make me auto generate on create
+                Forms\Components\TextInput::make('no_reg')
                     ->label('No. Registrasi')
+                    ->hiddenOn('create')
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nisn')
                     ->label('NISN')
@@ -62,6 +63,7 @@ class AsesiResource extends Resource
                     ->maxLength(255)
                     ->required(),
                 Forms\Components\ToggleButtons::make('jk')
+                    ->label('L/P')
                     ->inline()
                     ->options(JenisKelamin::class),
                 Forms\Components\TextInput::make('tempat_lahir')
@@ -104,6 +106,9 @@ class AsesiResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('email')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('asesmen_count')
+                    ->counts('asesmen')
+                    ->label('Asesmen'),
             ])
             ->filters([
                 //

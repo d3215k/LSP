@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Enums\AsesmenStatus;
 use App\Enums\TujuanAsesmen;
+use App\Filament\Exports\AsesmenExporter;
 use App\Filament\Resources\AsesmenResource\Pages;
 use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
@@ -18,6 +19,7 @@ use Filament\Forms\Form;
 use Filament\Notifications\Notification;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Actions\ExportAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -131,6 +133,11 @@ class AsesmenResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->headerActions([
+                ExportAction::make()
+                    ->exporter(AsesmenExporter::class)
+                    ->label('Export Data Asesmen')
+            ])
             ->columns([
                 Tables\Columns\TextColumn::make('asesi.nama')
                     ->sortable()

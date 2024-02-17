@@ -85,6 +85,9 @@ class AsesorResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('asesmen_count')
+                    ->counts('asesmen')
+                    ->label('Asesmen'),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([

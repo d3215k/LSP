@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\AsesmenStatus;
+use App\Enums\TujuanAsesmen;
 use App\Models\Asesmen\Banding;
 use App\Models\Asesmen\BuktiMandiri;
 use App\Models\Asesmen\BuktiPersyaratan;
@@ -31,6 +32,7 @@ class Asesmen extends Model
 
     protected $casts = [
         'status' => AsesmenStatus::class,
+        'tujuan' => TujuanAsesmen::class,
     ];
 
     protected $table = 'asesmen';
@@ -57,7 +59,7 @@ class Asesmen extends Model
 
     public function rincianDataPemohon(): HasOne
     {
-        return $this->hasOne(RincianDataPemohon::class);
+        return $this->hasOne(RincianDataPemohon::class)->orderBy('nama');
     }
 
     public function buktiPersyaratan(): HasMany
