@@ -50,15 +50,17 @@ class LaporanAsesmenPage extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Asesmen::query()
+            ->query(Asesmen::query()->latest()
                 ->whereIn('status', [AsesmenStatus::SELESAI_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT])
                 ->where('asesor_id', auth()->user()->asesor_id),
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
-                    ->wrap()
                     ->label('Asesi / Skema')
-                    ->description(fn (Asesmen $record): string => $record->skema->nama),
+                    ->description(fn (Asesmen $record): string => $record->asesi->no_reg),
+                TextColumn::make('skema.nama')
+                    ->wrap()
+                    ->label('Skema'),
                 TextColumn::make('rekaman.rekomendasi')
                     ->label('Rekomendasi')
                     ->badge(),

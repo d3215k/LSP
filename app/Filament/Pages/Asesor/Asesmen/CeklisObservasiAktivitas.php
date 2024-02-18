@@ -101,7 +101,7 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
             ]);
 
             DB::commit();
-            Notification::make()->title('Asesmen Mandiri Tersimpan')->success()->send();
+            Notification::make()->title('Data Tersimpan!')->success()->send();
 
         } catch (\Throwable $th) {
             $th->getMessage();

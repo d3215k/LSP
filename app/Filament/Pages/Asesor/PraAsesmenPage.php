@@ -54,6 +54,7 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
     {
         return $table
             ->query(Asesmen::query()
+                ->latest()
                 ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
                 ->where('asesor_id', auth()->user()->asesor_id)
                 ->whereHas('mandiri', function ($query) {

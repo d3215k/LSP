@@ -29,18 +29,18 @@ class Beranda extends Page
             auth()->user()->asesi->asesmen()?->whereIn(
                 'status', [
                     AsesmenStatus::DITOLAK,
-                    AsesmenStatus::SELESAI_KOMPETEN,
-                    AsesmenStatus::SELESAI_BELUM_KOMPETEN,
-                    AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
+                    // AsesmenStatus::SELESAI_KOMPETEN,
+                    // AsesmenStatus::SELESAI_BELUM_KOMPETEN,
+                    // AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
                 ])->exists();
 
         $this->showAsesmenSaya =
             auth()->user()->asesi->asesmen()?->whereNotIn(
                 'status', [
                     AsesmenStatus::DITOLAK,
-                    AsesmenStatus::SELESAI_KOMPETEN,
-                    AsesmenStatus::SELESAI_BELUM_KOMPETEN,
-                    AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
+                    // AsesmenStatus::SELESAI_KOMPETEN,
+                    // AsesmenStatus::SELESAI_BELUM_KOMPETEN,
+                    // AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
                 ])->exists();
 
     }

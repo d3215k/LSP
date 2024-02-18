@@ -3,6 +3,7 @@
 namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Enums\JenisKelamin;
+use App\Models\Asesi;
 use App\Models\Asesmen;
 use App\Models\Asesmen\RincianDataPemohon;
 use Filament\Forms\Components\DatePicker;
@@ -135,6 +136,18 @@ class RincianDataPemohonSertifikasiComponent extends Component implements HasFor
             ],
             $data,
         );
+
+        $this->asesmen->asesi()->update([
+            'nik' => $data['no_identitas'],
+            'jk' => $data['jk'],
+            'tempat_lahir' => $data['tempat_lahir'],
+            'tanggal_lahir' => $data['tanggal_lahir'],
+            'kewarganegaraan' => $data['kebangsaan'],
+            'alamat_rumah' => $data['alamat_rumah'],
+            'kode_pos' => $data['kode_pos'],
+            'no_telepon_rumah' => $data['no_telepon_rumah'],
+            'no_telepon_hp' => $data['no_telepon_hp'],
+        ]);
 
         $this->dispatch('rincian-saved');
 
