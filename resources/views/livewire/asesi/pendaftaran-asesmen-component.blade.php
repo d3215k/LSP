@@ -1,6 +1,6 @@
 <x-filament::section>
     <x-slot name="heading">
-        Pendaftaran Asesmen
+        Pendaftaran Asesmen Baru
     </x-slot>
 
     <form wire:submit="handleSubmit">

@@ -34,33 +34,26 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
 
     protected static string $view = 'filament.pages.asesi.umpan-balik-asesmen-page';
 
-    protected static ?string $slug = 'umpan-balik';
+    protected static ?string $slug = 'asesi/{record}/umpan-balik';
 
     protected static ?string $title = 'FR.AK.03';
 
     protected ?string $subheading = 'UMPAN BALIK DAN CATATAN ASESMEN';
 
-    public ?Asesmen $record;
+    public Asesmen $record;
 
     public ?array $data = [];
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->whereIn('status', [AsesmenStatus::SELESAI_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT, AsesmenStatus::SELESAI_BELUM_KOMPETEN])->exists();
+        return false;
     }
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
-
-        $this->record = Asesmen::query()
-            ->where('asesi_id', auth()->user()->asesi->id)
-            ->whereIn('status', [AsesmenStatus::SELESAI_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT, AsesmenStatus::SELESAI_BELUM_KOMPETEN])
-            ->first();
-
-        if (! $this->record) {
-            return to_route('filament.app.pages.beranda');
-        }
+        abort_unless(
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+        , 403);
 
         $hasil = HasilUmpanBalik::query()
             ->where('asesmen_umpan_balik_id', $this->record->umpanBalik?->id)

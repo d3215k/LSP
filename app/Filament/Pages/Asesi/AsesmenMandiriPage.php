@@ -14,31 +14,24 @@ class AsesmenMandiriPage extends Page
 
     protected static ?string $title = 'FR.APL.02';
 
-    protected ?string $subheading = 'ASESMEN MANDIRI';
+    protected ?string $subheading = ' ASESMEN MANDIRI';
 
-    protected static ?string $slug = 'asesi/asesmen-mandiri';
+    protected static ?string $slug = 'asesi/{record}/asesmen-mandiri';
 
     protected static ?int $navigationSort = 4;
 
-    public ?Asesmen $asesmen;
+    public Asesmen $record;
 
     public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->where('status', AsesmenStatus::ASESMEN_MANDIRI)->exists();
+        return false;
     }
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
-
-        $this->asesmen = Asesmen::query()
-            ->where('asesi_id', auth()->user()->asesi->id)
-            ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
-            ->first();
-
-        if (! $this->asesmen) {
-            return to_route('filament.app.pages.beranda');
-        }
+        abort_unless(
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+        , 403);
     }
 
 }

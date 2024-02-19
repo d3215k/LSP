@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Asesi;
 
+use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesor;
 use App\Models\Periode;
@@ -35,10 +36,19 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
                 Select::make('skema_id')
                     ->label('Skema')
                     ->options(
-                        Skema::whereHas('periode', function ($query) {
-                            $query->where('buka', '<=', today())
-                                ->where('tutup', '>=', today());
-                        })->pluck('nama', 'id'),
+                        function () {
+                            $registerd = Asesmen::query()
+                                ->where('asesi_id', auth()->user()->asesi->id)
+                                ->whereNotIn('status', [AsesmenStatus::DITOLAK])
+                                ->pluck('skema_id');
+
+                            return Skema::whereHas('periode', function ($query) use ($registerd) {
+                                $query
+                                    ->whereNotIn('id', $registerd)
+                                    ->where('buka', '<=', today())
+                                    ->where('tutup', '>=', today());
+                            })->pluck('nama', 'id');
+                        }
                     )
                     ->searchable()->preload()->required()->reactive(),
                 Select::make('periode_id')
@@ -49,7 +59,7 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
                         ->where('tutup', '>=', today())
                         ->pluck('nama', 'id')
                     )
-                    ->required()->reactive()
+                    ->required()
                     ->hidden(fn (Get $get): bool => ! $get('skema_id')),
                 Select::make('asesor_id')
                     ->label('Asesor')
@@ -58,7 +68,7 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
                             fn ($query) => $query->where('skema_id', $get('skema_id'))
                         )->pluck('nama', 'id')
                     )
-                    ->required()->reactive()
+                    ->required()
                     ->hidden(fn (Get $get): bool => ! $get('skema_id')),
             ])
             ->statePath('data');
@@ -72,9 +82,11 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
 
         $data['asesi_id'] = auth()->user()->asesi->id;
 
-        Asesmen::create($data);
+        $data['status'] = AsesmenStatus::REGISTRASI;
 
-        return to_route('filament.app.pages.permohonan-sertifikasi-kompetensi');
+        $asesmen = Asesmen::updateOrCreate($data);
+
+        return to_route('filament.app.pages.asesi.{record}.permohonan-sertifikasi-kompetensi', $asesmen->id);
     }
 
     public function render()

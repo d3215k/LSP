@@ -34,7 +34,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
     protected static string $view = 'filament.pages.asesi.asesmen-tertulis-esai-page';
 
-    protected static ?string $slug = 'asesmen-tertulis-esai';
+    protected static ?string $slug = 'asesi/{record}/asesmen-tertulis-esai';
 
     protected static ?string $title = 'FR.IA.06';
 
@@ -44,31 +44,22 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
 	public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI, AsesmenStatus::PERSETUJUAN])->exists();
+        return false;
     }
 
-    public ?Asesmen $record;
+    public Asesmen $record;
 
     public ?array $data = [];
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
-
-        $this->record = Asesmen::query()
-            ->where('asesi_id', auth()->user()->asesi->id)
-            ->whereIn('status', [AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::TERTULIS_ESAI, AsesmenStatus::PERSETUJUAN])
-            ->first() ;
-
-        if (! $this->record) {
-            return to_route('filament.app.pages.beranda');
-        }
+        abort_unless(
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+        , 403);
 
         $hasil = JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();
-
-        // // dd($hasil);
 
         $this->data['jawaban'] = $hasil->pluck('jawaban', 'pertanyaan_tertulis_esai_id')->toArray();
 

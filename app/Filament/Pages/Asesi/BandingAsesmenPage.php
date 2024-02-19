@@ -35,7 +35,7 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
 
     protected static string $view = 'filament.pages.asesi.banding-asesmen-page';
 
-    protected static ?string $slug = 'banding-asesmen';
+    protected static ?string $slug = 'asesi/{record}/banding-asesmen';
 
     protected static ?string $title = 'FR.AK.04';
 
@@ -45,25 +45,18 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
 
 	public static function shouldRegisterNavigation(): bool
     {
-        return auth()->user()->isAsesi && auth()->user()->asesi?->asesmen()->whereIn('status', [AsesmenStatus::SELESAI_BELUM_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT])->exists();
+        return false;
     }
 
-    public ?Asesmen $record;
+    public Asesmen $record;
 
     public ?array $data = [];
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
-
-        $this->record = Asesmen::query()
-            ->where('asesi_id', auth()->user()->asesi->id)
-            ->whereIn('status', [AsesmenStatus::SELESAI_BELUM_KOMPETEN, AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT])
-            ->first();
-
-        if (! $this->record) {
-            return to_route('filament.app.pages.beranda');
-        }
+        abort_unless(
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+        , 403);
 
         $this->form->fill($this->record->banding?->toArray());
 

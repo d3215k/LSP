@@ -17,22 +17,23 @@ class AsesmenSaya extends Component
     {
         return Asesmen::query()
             ->where('asesi_id', auth()->user()->asesi->id)
-            ->whereNotIn('status', [AsesmenStatus::DITOLAK])
+            // ->whereNotIn('status', [AsesmenStatus::DITOLAK])
             ->with('skema:id,nama,cover')
-            ->first();
+            ->latest()
+            ->get();
     }
 
     public function mount()
     {
-        $route = match ($this->asesmen->status->value) {
-            1 => route('filament.app.pages.permohonan-sertifikasi-kompetensi'),
-            2 => route('filament.app.pages.asesi.asesmen-mandiri'),
-            3,4,5,6 => route('filament.app.pages.asesmen-tertulis-esai'),
-            11 => route('filament.app.pages.umpan-balik'),
-            12,13 => route('filament.app.pages.banding-asesmen'),
-        };
+        // $route = match ($this->asesmen->status->value) {
+        //     1 => route('filament.app.pages.permohonan-sertifikasi-kompetensi'),
+        //     2 => route('filament.app.pages.asesi.asesmen-mandiri'),
+        //     3,4,5,6 => route('filament.app.pages.asesmen-tertulis-esai'),
+        //     11 => route('filament.app.pages.umpan-balik'),
+        //     12,13 => route('filament.app.pages.banding-asesmen'),
+        // };
 
-        $this->route = $route;
+        // $this->route = $route;
     }
 
     public function render()

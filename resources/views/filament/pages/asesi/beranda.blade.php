@@ -6,8 +6,6 @@
         <livewire:asesi.asesmen-saya />
     @endif
 
-    @if ($showPendaftaranAsesmenBaru)
-        <livewire:asesi.pendaftaran-asesmen-component />
-    @endif
+    <livewire:asesi.pendaftaran-asesmen-component />
 
 </x-filament-panels::page>

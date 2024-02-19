@@ -54,6 +54,7 @@ class BuktiKelengkapanPemohonComponent extends Component implements HasForms, Ha
                 Action::make('Unggah')
                     ->form([
                         FileUpload::make('file')
+                            ->required()
                             // ->acceptedFileTypes(['application/pdf'])
                             ->maxSize(20000),
                     ])
