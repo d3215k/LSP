@@ -76,6 +76,7 @@
                                             <div class="fi-ta-col-wrp">
                                                 <div class="flex justify-center px-2 w-full disabled:pointer-events-none text-start">
                                                     <div class="fi-ta-text-item">
+                                                        @if (isset($data['kompeten'][$elemen->id]))
                                                         <span @class([
                                                             '',
                                                             'text-success-600' => $data['kompeten'][$elemen->id] === 'K',
@@ -83,6 +84,7 @@
                                                         ])>
                                                             {{ $data['kompeten'][$elemen->id] === 'K' ? 'Kompeten' : 'Belum Kompeten' }}
                                                         </span>
+                                                        @endif
                                                     </div>
                                                 </div>
                                             </div>
@@ -92,7 +94,7 @@
                                             <div class="px-2 fi-ta-col-wrp">
                                                 <div class="flex justify-center w-full disabled:pointer-events-none text-start">
                                                     <div class="fi-ta-text-item">
-                                                        @if ($data['bukti'][$elemen->id])
+                                                        @if (isset($data['bukti'][$elemen->id]))
                                                             <a target="_blank" href="{{ asset('storage/'.$data['bukti'][$elemen->id]->file) }}" class="text-primary-600">
                                                                 {{ $data['bukti'][$elemen->id]->nama }}
                                                             </a>

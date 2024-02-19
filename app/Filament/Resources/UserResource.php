@@ -14,6 +14,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use STS\FilamentImpersonate\Tables\Actions\Impersonate;
 
 class UserResource extends Resource
 {
@@ -66,6 +67,7 @@ class UserResource extends Resource
                     ->options(UserType::class),
             ])
             ->actions([
+                Impersonate::make(),
                 Tables\Actions\EditAction::make()
                     ->iconButton(),
                 Tables\Actions\Action::make('reset')

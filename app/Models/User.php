@@ -75,6 +75,11 @@ class User extends Authenticatable
         return true;
     }
 
+    public function canImpersonate()
+    {
+        return $this->type === UserType::ADMIN;
+    }
+
     public function asesi(): BelongsTo
     {
         return $this->belongsTo(Asesi::class);

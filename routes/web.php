@@ -15,5 +15,5 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/sertifikat/{record}/generate', GenerateSertifikatController::class)->name('generate.sertifikat');
-
+Route::redirect('/laravel/login', '/login')->name('login');
 // require __DIR__.'/auth.php';
