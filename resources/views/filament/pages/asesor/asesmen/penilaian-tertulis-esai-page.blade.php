@@ -176,9 +176,11 @@
                                     <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
                                         <td colspan="2" class="p-4 fi-ta-cell">
                                             <div class="fi-ta-col-wrp">
-                                                <p>
-                                                    {{ $data['jawaban'][$pertanyaan->id] }}
-                                                </p>
+                                                @if (isset($data['jawaban'][$pertanyaan->id]))
+                                                    <p>
+                                                        {{ $data['jawaban'][$pertanyaan->id] }}
+                                                    </p>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -191,9 +193,13 @@
         @endforeach
     </div>
 
-    <div class="mt-4">
-        <x-filament::button wire:click="handleSave">
-            simpan
-        </x-filament::button>
+    <div class="mt-12"></div>
+
+    <div class="flex justify-end w-full fixed bottom-0 bg-gray-100 border-t border-gray-200 right-0">
+        <div class="py-4 px-8">
+            <x-filament::button wire:click="handleSave">
+                Simpan
+            </x-filament::button>
+        </div>
     </div>
 </x-filament-panels::page>

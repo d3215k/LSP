@@ -201,9 +201,13 @@
         @endforeach
     </div>
 
-    <div class="mt-4">
-        <x-filament::button wire:click="handleSave">
-            simpan
-        </x-filament::button>
+    <div class="mt-12"></div>
+
+    <div class="flex justify-end w-full fixed bottom-0 bg-gray-100 border-t border-gray-200 right-0">
+        <div class="py-4 px-8">
+            <x-filament::button wire:click="handleSave">
+                Simpan
+            </x-filament::button>
+        </div>
     </div>
 </x-filament-panels::page>

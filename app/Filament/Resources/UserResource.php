@@ -80,6 +80,8 @@ class UserResource extends Resource
                     )
                     ->modalDescription('Setelah direset, password menjadi smkn1cbd*')
                     ->action(fn (User $record) => $record->resetPassword()),
+                Tables\Actions\DeleteAction::make()
+                        ->iconButton()
             ])
             ->bulkActions([
                 // Tables\Actions\BulkActionGroup::make([
