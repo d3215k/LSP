@@ -55,7 +55,7 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
     public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+            auth()->user()->isAsesi
         , 403);
 
         $this->form->fill($this->record->banding?->toArray());

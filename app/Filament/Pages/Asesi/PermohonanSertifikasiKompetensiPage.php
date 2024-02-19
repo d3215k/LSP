@@ -30,7 +30,7 @@ class PermohonanSertifikasiKompetensiPage extends Page
     public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi->id
+            auth()->user()->isAsesi
         , 403);
     }
 }
