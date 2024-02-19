@@ -45,7 +45,7 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
     public function mount(Asesmen $record): void
     {
         abort_unless(
-            auth()->user()->isAsesor && $record->asesor_id === auth()->user()->asesor_id,
+            auth()->user()->isAsesor  ,
             403
         );
 
