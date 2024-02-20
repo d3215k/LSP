@@ -61,6 +61,9 @@ class ElemenResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->wrap()
                     ->searchable(),

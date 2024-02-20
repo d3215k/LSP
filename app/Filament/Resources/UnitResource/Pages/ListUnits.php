@@ -2,8 +2,10 @@
 
 namespace App\Filament\Resources\UnitResource\Pages;
 
+use App\Filament\Imports\Skema\UnitImporter;
 use App\Filament\Resources\UnitResource;
 use Filament\Actions;
+use Filament\Actions\ImportAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListUnits extends ListRecords
@@ -14,6 +16,8 @@ class ListUnits extends ListRecords
     {
         return [
             Actions\CreateAction::make(),
+            ImportAction::make()
+                ->importer(UnitImporter::class)
         ];
     }
 }

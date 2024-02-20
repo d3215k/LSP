@@ -45,6 +45,8 @@ class KukRelationManager extends RelationManager
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->defaultSort('sort')
+            ->reorderable('sort');
     }
 }

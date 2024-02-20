@@ -3,6 +3,7 @@
 namespace App\Models\Asesmen;
 
 use App\Models\Scopes\AktifScope;
+use App\Models\Scopes\SortScope;
 use App\Models\Skema\Unit;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -17,6 +18,7 @@ class PertanyaanObservasiPendukung extends Model
     protected static function booted(): void
     {
         static::addGlobalScope(new AktifScope);
+        static::addGlobalScope(new SortScope);
     }
 
     public function unit(): BelongsTo

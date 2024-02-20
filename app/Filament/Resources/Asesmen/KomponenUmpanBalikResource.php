@@ -62,7 +62,9 @@ class KomponenUmpanBalikResource extends Resource
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
-            ]);
+            ])
+            ->defaultSort('sort')
+            ->reorderable('sort');
     }
 
     public static function getPages(): array

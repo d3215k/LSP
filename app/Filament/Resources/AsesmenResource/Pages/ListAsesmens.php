@@ -2,8 +2,9 @@
 
 namespace App\Filament\Resources\AsesmenResource\Pages;
 
+use App\Filament\Exports\AsesmenExporter;
 use App\Filament\Resources\AsesmenResource;
-use Filament\Actions;
+use Filament\Actions\ExportAction;
 use Filament\Resources\Pages\ListRecords;
 
 class ListAsesmens extends ListRecords
@@ -13,7 +14,9 @@ class ListAsesmens extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            ExportAction::make()
+                ->exporter(AsesmenExporter::class)
+                ->label('Export Data Asesmen')
         ];
     }
 

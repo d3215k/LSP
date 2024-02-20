@@ -28,7 +28,9 @@ class SkemaResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->withoutGlobalScope(AktifScope::class);
+        return parent::getEloquentQuery()
+            ->latest()
+            ->withoutGlobalScope(AktifScope::class);
     }
 
     public static function form(Form $form): Form
@@ -117,6 +119,9 @@ class SkemaResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('id')
+                    ->label('ID')
+                    ->searchable(),
                 Tables\Columns\TextColumn::make('kode')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
