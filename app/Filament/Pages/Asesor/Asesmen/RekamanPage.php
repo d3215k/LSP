@@ -18,6 +18,8 @@ use App\Models\Sertifikat;
 use App\Models\TempatUjiKompetensi;
 use App\Settings\SertifikatSetting;
 use App\Support\GenerateNumber;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -53,6 +55,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
     public ?Asesmen $record;
 
     public ?array $data = [];
+
     public ?array $state = [];
 
     public function mount()
@@ -72,6 +75,31 @@ class RekamanPage extends Page implements HasForms, HasInfolists
         $this->state['pertanyaan_tertulis'] = $hasil->pluck('pertanyaan_tertulis', 'unit_id')->toArray();
         $this->state['proyek_kerja'] = $hasil->pluck('proyek_kerja', 'unit_id')->toArray();
         $this->state['lainnya'] = $hasil->pluck('lainnya', 'unit_id')->toArray();
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ActionGroup::make([
+                Action::make('Observasi Aktivitas')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.ceklis-observasi-aktivitas', $this->record))
+                    ->icon('heroicon-m-document-text'),
+                Action::make('Observasi Pendukung')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $this->record))
+                    ->icon('heroicon-m-document-text'),
+                Action::make('Tertulis Esai')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
+                    ->icon('heroicon-m-document-text')
+                    ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),
+                Action::make('Rekaman')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.rekaman', $this->record))
+                    ->icon('heroicon-m-document-text')
+                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists() || !$this->record->tertulisEsai()->exists()),
+            ])
+            ->button()
+            ->icon('heroicon-m-document-text')
+            ->label('Penilaian')
+        ];
     }
 
     public function form(Form $form): Form

@@ -112,7 +112,7 @@
 
                             <tbody class="divide-y divide-gray-200 dark:divide-white/5">
                                 @foreach ($unit->pertanyaanTertulisEsai as $pertanyaan)
-                                    <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
+                                    <tr wire:key="pertanyaan-tertulis-esai-{{ $pertanyaan->id }}" class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
                                         <td class="p-0 fi-ta-cell">
                                             <div class="text-center fi-ta-col-wrp">
                                                 {{ $loop->iteration; }}
@@ -173,17 +173,36 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
-                                        <td colspan="2" class="p-4 fi-ta-cell">
-                                            <div class="fi-ta-col-wrp">
-                                                @if (isset($data['jawaban'][$pertanyaan->id]))
-                                                    <p>
-                                                        {{ $data['jawaban'][$pertanyaan->id] }}
-                                                    </p>
-                                                @endif
-                                            </div>
-                                        </td>
-                                    </tr>
+
+                                    @if (isset($data['jawaban'][$pertanyaan->id]))
+                                        <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
+                                            <td x-data="{ open: true }" colspan="4" class="fi-ta-cell">
+                                                <div class="fi-ta-col-wrp">
+                                                    <button class="bg-success-100 dark:bg-success-800 py-2 px-4 w-full text-left font-medium text-sm" x-on:click="open = ! open">
+                                                        Jawaban Asesi No. {{ $loop->iteration }}
+                                                    </button>
+                                                    <div x-show="open" class="max-w-screen-lg p-4 prose dark:prose-invert bg-white dark:bg-gray-900">
+                                                        {!! $data['jawaban'][$pertanyaan->id] !!}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endif
+
+                                    @isset($pertanyaan->jawaban)
+                                        <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
+                                            <td x-data="{ open: false }" colspan="4" class="fi-ta-cell">
+                                                <div class="fi-ta-col-wrp">
+                                                    <button class="bg-primary-100 dark:bg-primary-800 py-2 px-4 w-full text-left font-medium text-sm" x-on:click="open = ! open">
+                                                        Kunci Jawaban No. {{ $loop->iteration }}
+                                                    </button>
+                                                    <div x-show="open" class="max-w-screen-lg p-4 prose dark:prose-invert bg-white dark:bg-gray-900">
+                                                        {!! $pertanyaan->jawaban !!}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    @endisset
                                 @endforeach
                             </tbody>
                         </table>

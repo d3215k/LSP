@@ -10,6 +10,8 @@ use App\Models\Asesmen\ObservasiAktivitas;
 use App\Models\Asesmen\ObservasiPendukung;
 use App\Models\Asesmen\Persetujuan;
 use App\Models\TempatUjiKompetensi;
+use Filament\Actions\Action;
+use Filament\Actions\ActionGroup;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -51,17 +53,38 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
             403
         );
 
-        // dd($record->observasiAktivitas->id);
-
         $hasil = HasilObservasiPendukung::query()
             ->where('asesmen_observasi_pendukung_id', $record->observasiPendukung?->id)
             ->get();
 
-        // dd($hasil);
-
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'pertanyaan_id')->toArray();
         $this->data['tanggapan'] = $hasil->pluck('tanggapan', 'pertanyaan_id')->toArray();
 
+    }
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            ActionGroup::make([
+                Action::make('Observasi Aktivitas')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.ceklis-observasi-aktivitas', $this->record))
+                    ->icon('heroicon-m-document-text'),
+                Action::make('Observasi Pendukung')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $this->record))
+                    ->icon('heroicon-m-document-text'),
+                Action::make('Tertulis Esai')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
+                    ->icon('heroicon-m-document-text')
+                    ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),
+                Action::make('Rekaman')
+                    ->url(fn (): string => route('filament.app.pages.asesmen.{record}.rekaman', $this->record))
+                    ->icon('heroicon-m-document-text')
+                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists() || !$this->record->tertulisEsai()->exists()),
+            ])
+            ->button()
+            ->icon('heroicon-m-document-text')
+            ->label('Penilaian')
+        ];
     }
 
     public function handleSave()
