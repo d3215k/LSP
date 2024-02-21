@@ -71,6 +71,9 @@ class ElemenResource extends Resource
                     ->label('Skema / Unit')
                     ->description(fn (Elemen $record): string => $record->unit->judul ?? '-')
                     ->wrap(),
+                Tables\Columns\TextColumn::make('kuk_count')
+                    ->label('KUK')
+                    ->counts('kuk'),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([

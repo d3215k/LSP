@@ -18,8 +18,9 @@ class KukRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nama')
+                Forms\Components\Textarea::make('nama')
                     ->required()
+                    ->columnSpanFull()
                     ->maxLength(255),
             ]);
     }

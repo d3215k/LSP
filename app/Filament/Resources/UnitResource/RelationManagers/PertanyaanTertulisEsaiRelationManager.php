@@ -23,6 +23,9 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                     ->required()
                     ->maxLength(255)
                     ->columnSpanFull(),
+                Forms\Components\RichEditor::make('jawaban')
+                    ->required()
+                    ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
                     ->default(true)
                     ->inline(false),

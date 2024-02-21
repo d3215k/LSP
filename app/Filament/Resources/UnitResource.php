@@ -79,6 +79,12 @@ class UnitResource extends Resource
                 Tables\Columns\TextColumn::make('skema.nama')
                     ->label('Skema')
                     ->wrap(),
+                Tables\Columns\TextColumn::make('elemen_count')
+                    ->label('Elemen')
+                    ->counts('elemen'),
+                Tables\Columns\TextColumn::make('kuk_count')
+                    ->label('KUK')
+                    ->counts('kuk'),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([

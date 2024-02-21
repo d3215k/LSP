@@ -31,4 +31,9 @@ class Elemen extends Model
         return $this->hasMany(KriteriaUnjukKerja::class);
     }
 
+    public function kuk(): HasMany
+    {
+        return $this->hasMany(KriteriaUnjukKerja::class);
+    }
+
 }

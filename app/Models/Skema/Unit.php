@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Unit extends Model
 {
@@ -27,6 +28,11 @@ class Unit extends Model
     public function elemen(): HasMany
     {
         return $this->hasMany(Elemen::class);
+    }
+
+    public function kuk(): HasManyThrough
+    {
+        return $this->hasManyThrough(KriteriaUnjukKerja::class, Elemen::class);
     }
 
     public function skema(): BelongsTo

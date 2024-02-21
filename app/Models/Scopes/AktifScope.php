@@ -13,6 +13,6 @@ class AktifScope implements Scope
      */
     public function apply(Builder $builder, Model $model): void
     {
-        $builder->where('aktif', true);
+        $builder->where($model->getTable().'.aktif', true);
     }
 }

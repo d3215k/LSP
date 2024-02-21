@@ -127,6 +127,12 @@ class SkemaResource extends Resource
                 Tables\Columns\TextColumn::make('nama')
                     ->wrap()
                     ->searchable(),
+                Tables\Columns\TextColumn::make('unit_count')
+                    ->label('Unit')
+                    ->counts('unit'),
+                Tables\Columns\TextColumn::make('elemen_count')
+                    ->label('Elemen')
+                    ->counts('elemen'),
             ])
             ->filters([
                 //

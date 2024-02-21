@@ -2,31 +2,26 @@
 
 namespace App\Filament\Pages\Asesi;
 
-use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
-use App\Models\Asesmen\HasilObservasiAktivitas;
-use App\Models\Asesmen\HasilObservasiPendukung;
 use App\Models\Asesmen\JawabanTertulisEsai;
-use App\Models\Asesmen\ObservasiAktivitas;
-use App\Models\Asesmen\ObservasiPendukung;
-use App\Models\Asesmen\Persetujuan;
 use App\Models\Asesmen\TertulisEsai;
-use App\Models\TempatUjiKompetensi;
 use Filament\Forms;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Fieldset;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
 
-class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
+class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithInfolists;
     use InteractsWithForms;
 
@@ -51,61 +46,69 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
     public ?array $data = [];
 
+    public ?TertulisEsai $tertulisEsai;
+
     public function mount()
     {
         abort_unless(
             auth()->user()->isAsesi
         , 403);
 
+        $this->tertulisEsai = TertulisEsai::firstOrCreate(
+            [
+                'asesmen_id' => $this->record->id,
+            ],
+            [
+                'tanggal_asesmen' => today(),
+            ]
+        );
+    }
+
+    protected function getViewData(): array
+    {
         $hasil = JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();
 
-        $this->data['jawaban'] = $hasil->pluck('jawaban', 'pertanyaan_tertulis_esai_id')->toArray();
-
+        return [
+            'jawaban' => $hasil->pluck('jawaban', 'pertanyaan_tertulis_esai_id')->toArray(),
+        ];
     }
 
-    public function handleSave()
+    public function jawabAction(): Action
     {
-        try {
-            DB::beginTransaction();
-            $esai = TertulisEsai::updateOrCreate(
-                [
-                    'asesmen_id' => $this->record->id,
-                ],
-                [
-                    'tanggal_asesmen' => today(),
-                ]
-            );
-
-            $data = [];
-
-            foreach (array_keys($this->data['jawaban']) as $key) {
-                $data[$key] = [
-                    "jawaban" => $this->data['jawaban'][$key] ?? null,
+        return Action::make('jawab')
+            ->label('Jawab')
+            ->form(function (array $arguments) {
+                return [
+                    RichEditor::make('jawaban')
+                        ->default($arguments['jawaban'])
+                        ->required(),
                 ];
-            }
+            })
+            ->closeModalByClickingAway(false)
+            ->modalHeading('Pertanyaan')
+            ->modalDescription(fn (array $arguments) => $arguments['pertanyaan'])
+            ->action(function (array $data, array $arguments) {
+                try {
+                    DB::beginTransaction();
+                    JawabanTertulisEsai::updateOrCreate(
+                        [
+                            'asesmen_tertulis_esai_id' => $this->tertulisEsai->id,
+                            'pertanyaan_tertulis_esai_id' => $arguments['pertanyaanId'],
+                        ],
+                        [
+                            'jawaban' => $data['jawaban'],
+                        ],
+                    );
+                    DB::commit();
+                    Notification::make()->title('Jawaban Tersimpan')->success()->send();
 
-
-            foreach ($data as $key => $value) {
-                JawabanTertulisEsai::updateOrCreate(
-                    [
-                        'asesmen_tertulis_esai_id' => $esai->id,
-                        'pertanyaan_tertulis_esai_id' => $key,
-                    ],
-                    [
-                        'jawaban' => $value['jawaban'],
-                    ]
-                );
-            }
-
-            DB::commit();
-            Notification::make()->title('Data Tersimpan')->success()->send();
-
-        } catch (\Throwable $th) {
-            report($th->getMessage());
-            Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
-            DB::rollBack();
-        }
+                } catch (\Throwable $th) {
+                    report($th->getMessage());
+                    Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
+                    DB::rollBack();
+                }
+            });
     }
 }
