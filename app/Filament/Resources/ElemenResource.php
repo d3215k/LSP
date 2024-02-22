@@ -31,8 +31,7 @@ class ElemenResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
-            ->withoutGlobalScope(AktifScope::class)
-            ->latest();
+            ->withoutGlobalScope(AktifScope::class);
     }
 
     public static function form(Form $form): Form
@@ -60,9 +59,11 @@ class ElemenResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'DESC')
             ->columns([
                 Tables\Columns\TextColumn::make('id')
                     ->label('ID')
+                    ->sortable()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('nama')
                     ->wrap()
