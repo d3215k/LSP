@@ -103,11 +103,11 @@
                                                     {{ $loop->iteration; }}
                                                 </div>
                                             </td>
-                                            <td class="p-4 border-l border-gray-200 text-wrap fi-ta-cell">
+                                            <td class="border-l border-gray-200 text-wrap fi-ta-cell">
                                                 <div class="text-wrap">
-                                                    <span>
-                                                        {{ $pertanyaan->pertanyaan }}
-                                                    </span>
+                                                    <div class="fi-ta-col-wrp max-w-screen-lg p-4 prose dark:prose-invert bg-white dark:bg-gray-900">
+                                                        {!! $pertanyaan->pertanyaan !!}
+                                                    </div>
                                                 </div>
                                             </td>
                                             <td class="p-4 border-l border-gray-200 text-wrap fi-ta-cell">

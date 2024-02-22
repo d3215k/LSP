@@ -19,9 +19,8 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\Textarea::make('pertanyaan')
+                Forms\Components\RichEditor::make('pertanyaan')
                     ->required()
-                    ->maxLength(255)
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('jawaban')
                     ->required()
@@ -39,7 +38,7 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
             ->recordTitleAttribute('pertanyaan')
             ->columns([
                 Tables\Columns\TextColumn::make('pertanyaan')
-                    ->wrap(),
+                    ->html(),
                 Tables\Columns\ToggleColumn::make('aktif'),
             ])
             ->filters([
@@ -49,7 +48,8 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                 Tables\Actions\CreateAction::make(),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                Tables\Actions\EditAction::make()
+                    ->modalHeading('Edit'),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
