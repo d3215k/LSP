@@ -17,7 +17,9 @@ use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
+use Illuminate\Contracts\Support\Htmlable;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\HtmlString;
 
 class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists, HasActions
 {
@@ -88,7 +90,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists, Ha
             })
             ->closeModalByClickingAway(false)
             ->modalHeading('Pertanyaan')
-            ->modalDescription(fn (array $arguments) => $arguments['pertanyaan'])
+            ->modalDescription(fn (array $arguments): string | Htmlable => new HtmlString( '<div class="max-w-screen-md p-4 prose dark:prose-invert bg-white dark:bg-gray-900">'.$arguments['pertanyaan'].'</div>'))
             ->action(function (array $data, array $arguments) {
                 try {
                     DB::beginTransaction();
