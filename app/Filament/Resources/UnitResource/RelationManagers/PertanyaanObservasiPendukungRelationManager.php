@@ -21,7 +21,7 @@ class PertanyaanObservasiPendukungRelationManager extends RelationManager
             ->schema([
                 Forms\Components\Textarea::make('pertanyaan')
                     ->required()
-                    ->maxLength(255)
+                    ->maxLength(500)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
                     ->default(true)
