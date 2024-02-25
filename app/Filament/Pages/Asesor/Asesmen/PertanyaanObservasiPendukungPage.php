@@ -36,15 +36,18 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
 
     protected static ?string $slug = 'asesmen/{record}/pertanyaan-observasi-pendukung';
 
-    protected static ?string $title = 'FR.IA.03';
-
-    protected ?string $subheading = 'PERTANYAAN OBSERVASI PENDUKUNG';
+    protected ?string $subheading = 'FR.IA.03 PERTANYAAN OBSERVASI PENDUKUNG';
 
 	protected static bool $shouldRegisterNavigation = false;
 
     public Asesmen $record;
 
     public ?array $data = [];
+
+    public function getHeading(): string
+    {
+        return $this->record->asesi->nama;
+    }
 
     public function mount(Asesmen $record): void
     {
@@ -72,7 +75,7 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
                 Action::make('Observasi Pendukung')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $this->record))
                     ->icon('heroicon-m-document-text'),
-                Action::make('Tertulis Esai')
+                 Action::make('Tertulis')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
                     ->icon('heroicon-m-document-text')
                     ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),

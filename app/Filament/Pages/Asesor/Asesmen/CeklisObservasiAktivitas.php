@@ -29,15 +29,18 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
 
     protected static ?string $slug = 'asesmen/{record}/ceklis-observasi-aktivitas';
 
-    protected static ?string $title = 'FR.IA.01';
-
-    protected ?string $subheading = 'CEKLIS OBSERVASI AKTIVITAS DI TEMPAT KERJA ATAU TEMPAT KERJA SIMULASI';
+    protected ?string $subheading = 'FR.IA.01 CEKLIS OBSERVASI AKTIVITAS DI TEMPAT KERJA ATAU TEMPAT KERJA SIMULASI';
 
 	protected static bool $shouldRegisterNavigation = false;
 
     public Asesmen $record;
 
     public ?array $data = [];
+
+    public function getHeading(): string
+    {
+        return $this->record->asesi->nama;
+    }
 
     public function mount(Asesmen $record): void
     {
@@ -63,7 +66,7 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
                 Action::make('Observasi Pendukung')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $this->record))
                     ->icon('heroicon-m-document-text'),
-                Action::make('Tertulis Esai')
+                 Action::make('Tertulis')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
                     ->icon('heroicon-m-document-text')
                     ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),

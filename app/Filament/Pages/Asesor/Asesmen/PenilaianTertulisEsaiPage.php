@@ -64,7 +64,7 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
                 Action::make('Observasi Pendukung')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.pertanyaan-observasi-pendukung', $this->record))
                     ->icon('heroicon-m-document-text'),
-                Action::make('Tertulis Esai')
+                 Action::make('Tertulis')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
                     ->icon('heroicon-m-document-text')
                     ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),

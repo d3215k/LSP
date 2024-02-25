@@ -15,6 +15,8 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
 {
     protected static string $relationship = 'pertanyaanTertulisEsai';
 
+    protected static ?string $title = 'Pertanyaan Tertulis';
+
     public function form(Form $form): Form
     {
         return $form
@@ -45,7 +47,8 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->modalHeading('Buat Pertanyaan Tertulis'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

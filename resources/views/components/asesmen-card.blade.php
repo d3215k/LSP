@@ -30,7 +30,7 @@
             $label = match ($asesmen->status->value) {
                 1 => 'FR.APL.01 PERMOHONAN SERTIFIKASI KOMPETENSI',
                 2 => 'FR.APL.02 ASESMEN MANDIRI',
-                3,4,5,6 => 'FR.IA.06 PERTANYAAN TERTULIS ESAI',
+                3,4,5,6 => 'FR.IA.06 PERTANYAAN TERTULIS', // TODO : PG atau ESAI
                 11 => 'FR.AK.03 UMPAN BALIK DAN CATATAN ASESMEN',
                 12,13 => 'FR.AK.04 BANDING ASESMEN',
             };
