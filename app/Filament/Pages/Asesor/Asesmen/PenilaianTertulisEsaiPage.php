@@ -29,9 +29,7 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
     protected static ?string $slug = 'asesmen/{record}/penilaian-asesmen-tertulis-esai';
 
-    protected static ?string $title = 'FR.IA.06';
-
-    protected ?string $subheading = 'PERTANYAAN TERTULIS ESAI';
+    protected ?string $subheading = 'FR.IA.06 PERTANYAAN TERTULIS';
 
     protected static ?int $navigationSort = 4;
 
@@ -40,6 +38,11 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
     public ?Asesmen $record;
 
     public ?array $data = [];
+
+    public function getHeading(): string
+    {
+        return $this->record->asesi->nama;
+    }
 
     public function mount()
     {
