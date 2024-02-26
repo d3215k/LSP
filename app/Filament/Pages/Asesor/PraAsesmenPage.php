@@ -53,13 +53,14 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
     public function table(Table $table): Table
     {
         return $table
-            ->query(Asesmen::query()
-                ->latest()
-                ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
-                ->where('asesor_id', auth()->user()->asesor_id)
-                ->whereHas('mandiri', function ($query) {
-                    $query->where('rekomendasi', RekomendasiAsesmenMandiri::DILANJUTKAN);
-                })->orWhere('status', AsesmenStatus::PERSETUJUAN),
+            ->query(
+                Asesmen::query()->latest()
+                    ->whereIn('status', [
+                        AsesmenStatus::ASESMEN_MANDIRI,
+                        AsesmenStatus::PERSETUJUAN
+                    ])
+                    ->where('asesor_id', auth()->user()->asesor_id)
+                    ->whereHas('mandiri', fn ($query) => $query->where('rekomendasi', RekomendasiAsesmenMandiri::DILANJUTKAN))
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')

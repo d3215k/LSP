@@ -57,13 +57,12 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
     {
         return $table
             ->query(
-                Mandiri::query()
-                    ->latest()
+                Mandiri::query()->latest()
                     ->whereHas('asesmen', function ($query) {
-                    $query
-                        ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
-                        ->where('asesor_id', auth()->user()->asesor_id);
-                })
+                        $query
+                            ->where('status', AsesmenStatus::ASESMEN_MANDIRI)
+                            ->where('asesor_id', auth()->user()->asesor_id);
+                    })
             )
             ->columns([
                 TextColumn::make('asesmen.rincianDataPemohon.nama')
