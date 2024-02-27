@@ -84,7 +84,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
                     Action::make('Rekaman')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.rekaman', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => !$record->observasiAktivitas()->exists() || !$record->observasiPendukung()->exists() || !$record->tertulisEsai()->exists()),
+                        ->hidden(fn (Asesmen $record): bool => !$record->observasiAktivitas()->exists() || !$record->observasiPendukung()->exists()),
                 ])
                 ->button()
                 ->icon('heroicon-m-document-text')

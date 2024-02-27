@@ -82,7 +82,7 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
                 Action::make('Rekaman')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.rekaman', $this->record))
                     ->icon('heroicon-m-document-text')
-                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists() || !$this->record->tertulisEsai()->exists()),
+                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists()),
             ])
             ->button()
             ->icon('heroicon-m-document-text')
