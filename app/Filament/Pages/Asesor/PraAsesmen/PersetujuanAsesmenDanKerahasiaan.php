@@ -103,6 +103,9 @@ class PersetujuanAsesmenDanKerahasiaan extends Page implements HasForms, HasInfo
                     ->inlineLabel(),
                 TextEntry::make('asesor.nama')
                     ->inlineLabel(),
+                TextEntry::make('asesor.nomor_registrasi')
+                    ->label('No. Reg')
+                    ->inlineLabel(),
                 Fieldset::make('Skema Sertifikasi')
                     ->relationship('skema')
                     ->schema([
