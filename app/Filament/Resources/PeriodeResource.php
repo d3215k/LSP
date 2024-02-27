@@ -61,6 +61,7 @@ class PeriodeResource extends Resource
         return $table
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
+                    ->wrap()
                     ->searchable(),
                 Tables\Columns\TextColumn::make('skema.nama')
                     ->wrap()

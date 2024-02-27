@@ -23,6 +23,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\DB;
 
 class AsesmenResource extends Resource
 {
@@ -174,15 +175,18 @@ class AsesmenResource extends Resource
                         ->requiresConfirmation()
                         ->action(function (Collection $records): void {
                             try {
+                                DB::beginTransaction();
                                 foreach ($records as $record) {
                                     if ($record->status === AsesmenStatus::REGISTRASI) {
                                         $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
                                     }
                                 }
+                                DB::commit();
                                 Notification::make()->title('Pengajuan diterima!')->success()->send();
                             } catch (\Throwable $th) {
                                 Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
                                 report($th->getMessage());
+                                DB::rollBack();
                             }
 
                         })

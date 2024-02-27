@@ -28,7 +28,7 @@ enum AsesmenStatus: int implements HasLabel, HasColor
             self::PERSETUJUAN => 'Diterima dan Dijadwalkan',
             self::OBSERVASI_AKTIVITAS => 'Observasi Aktivitas',
             self::OBSERVASI_PENDUKUNG => 'Pertanyaan Pendukung Observasi',
-            self::TERTULIS_ESAI => 'Pertanyaan Tertulis Esai',
+            self::TERTULIS_ESAI => 'Pertanyaan Tertulis',
             self::SELESAI_KOMPETEN => 'Kompeten',
             self::SELESAI_BELUM_KOMPETEN => 'Belum Kompeten',
             self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Belum Kompeten, Perlu Tindak Lanjut',

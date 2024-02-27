@@ -6,8 +6,13 @@ use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
+use App\Models\Asesmen\Persetujuan;
+use App\Models\TempatUjiKompetensi;
+use App\Support\Signature;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
+use Filament\Forms;
+use Filament\Notifications\Notification;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Actions\EditAction;
 use Filament\Tables\Columns\TextColumn;
@@ -16,10 +21,11 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
-use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\Filter;
-use Filament\Tables\Filters\TernaryFilter;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class PraAsesmenPage extends Page implements HasForms, HasTable
 {
@@ -87,7 +93,52 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                     ->url(fn (Asesmen $record): string => route('filament.app.pages.pra-asesmen.{record}.persetujuan-asesmen-dan-kerahasiaan', $record))
             ])
             ->bulkActions([
-                // ...
+                BulkAction::make('persetujuan')
+                    ->Action(function (Collection $records, array $data): void {
+                        try {
+                            DB::beginTransaction();
+                            foreach ($records as $record) {
+                                Persetujuan::updateOrCreate(
+                                    [
+                                        'asesmen_id' => $record->id,
+                                    ],
+                                    $data
+                                );
+                                if ($record->status = AsesmenStatus::ASESMEN_MANDIRI) {
+                                    $record->update(['status' => AsesmenStatus::PERSETUJUAN]);
+                                }
+                            }
+                            DB::commit();
+                            Notification::make()->title('Penilaian Berhasil disimpan!')->success()->send();
+                        } catch (\Throwable $th) {
+                            report($th->getMessage());
+                            Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
+                            DB::rollBack();
+                        }
+                    })
+                    ->form([
+                        Forms\Components\Fieldset::make('bukti')
+                            ->label('Bukti yang akan dikumpulkan')
+                            ->schema([
+                                Forms\Components\Checkbox::make('verifikasi_portofolio'),
+                                Forms\Components\Checkbox::make('observasi_langsung'),
+                                Forms\Components\Checkbox::make('hasil_tes_tulis')->columnSpanFull(),
+                                Forms\Components\Checkbox::make('hasil_tes_lisan')->columnSpanFull(),
+                                Forms\Components\Checkbox::make('hasil_wawancara')->columnSpanFull(),
+                            ])->columns(2),
+                        Forms\Components\DateTimePicker::make('waktu')
+                            ->required()
+                            ->inlineLabel(),
+                        forms\Components\Select::make('tempat_uji_kompetensi_id')
+                            ->label('Tempat Uji Kompetensi')->inlineLabel()
+                            ->required()
+                            ->options(
+                                TempatUjiKompetensi::query()->pluck('nama', 'id')?->toArray()
+                            )
+                            ->searchable()
+                            ->preload()
+                    ])
+                    ->deselectRecordsAfterCompletion()
             ]);
     }
 }

@@ -15,31 +15,50 @@
         </div>
 
         <div class="text-sm">
-            Status : <span class="font-medium text-primary-600 dark:text-primary-400">{{ $asesmen->status === \App\Enums\AsesmenStatus::REGISTRASI ? 'Submit / Menunggu Verifikasi Admin' : $asesmen->status->getLabel() }}</span>
+            Status : <span class="font-medium text-primary-600 dark:text-primary-400">
+                {{ $asesmen->status === \App\Enums\AsesmenStatus::REGISTRASI
+                    ? 'Submit / Menunggu Verifikasi Admin'
+                    : ( $asesmen->status === \App\Enums\AsesmenStatus::SELESAI_KOMPETEN ||
+                        $asesmen->status === \App\Enums\AsesmenStatus::SELESAI_BELUM_KOMPETEN ||
+                        $asesmen->status === \App\Enums\AsesmenStatus::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT
+                        ? 'Selesai'
+                        : $asesmen->status->getLabel()
+                    )
+                }}
+            </span>
         </div>
 
         @php
-            $route = match ($asesmen->status->value) {
+            $route = match($asesmen->status->value) {
                 1 => route('filament.app.pages.asesi.{record}.permohonan-sertifikasi-kompetensi', $asesmen->id),
                 2 => route('filament.app.pages.asesi.{record}.asesmen-mandiri', $asesmen->id),
                 3,4,5,6 => route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id),
-                11 => route('filament.app.pages.asesi.{record}.umpan-balik', $asesmen->id),
-                12,13 => route('filament.app.pages.asesi.{record}.banding-asesmen', $asesmen->id),
+                11,12,13 => route('filament.app.pages.asesi.{record}.umpan-balik', $asesmen->id),
+                // 12,13 => route('filament.app.pages.asesi.{record}.banding-asesmen', $asesmen->id),
             };
 
-            $label = match ($asesmen->status->value) {
+            $label = match($asesmen->status->value) {
                 1 => 'FR.APL.01 PERMOHONAN SERTIFIKASI KOMPETENSI',
                 2 => 'FR.APL.02 ASESMEN MANDIRI',
                 3,4,5,6 => 'FR.IA.06 PERTANYAAN TERTULIS', // TODO : PG atau ESAI
-                11 => 'FR.AK.03 UMPAN BALIK DAN CATATAN ASESMEN',
-                12,13 => 'FR.AK.04 BANDING ASESMEN',
+                11,12,13 => 'FR.AK.03 UMPAN BALIK DAN CATATAN ASESMEN',
+                // 12,13 => 'FR.AK.04 BANDING ASESMEN',
             };
         @endphp
 
-        <a href="{{ $route }}" wire:navigate class="mt-4">
-            <x-filament::button>
-                {{ $label }}
-            </x-filament::button>
-        </a>
+        <div class="flex flex-col md:flex-row gap-4 mt-4">
+            <a href="{{ $route }}" wire:navigate>
+                <x-filament::button>
+                    {{ $label }}
+                </x-filament::button>
+            </a>
+            @if ($asesmen->status->value >= 11 )
+            <a href="{{ route('filament.app.pages.asesi.{record}.banding-asesmen', $asesmen->id) }}" wire:navigate>
+                <x-filament::button>
+                    FR.AK.04 BANDING ASESMEN
+                </x-filament::button>
+            </a>
+            @endif
+        </div>
     </div>
 </div>
