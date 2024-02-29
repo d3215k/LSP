@@ -37,9 +37,10 @@ class UnitImporter extends Importer
 
     public function resolveRecord(): ?Unit
     {
-        return Unit::firstOrNew([
-            'kode' => $this->data['kode'],
-        ]);
+        return new Unit();
+        // return Unit::firstOrNew([
+        //     'kode' => $this->data['kode'],
+        // ]);
 
     }
 
