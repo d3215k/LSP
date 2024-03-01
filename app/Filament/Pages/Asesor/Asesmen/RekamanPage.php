@@ -44,9 +44,7 @@ class RekamanPage extends Page implements HasForms, HasInfolists
 
     protected static ?string $slug = 'asesmen/{record}/rekaman';
 
-    protected static ?string $title = 'FR.AK.02';
-
-    protected ?string $subheading = 'REKAMAN ASESMEN KOMPETENSI';
+    protected ?string $subheading = 'FR.AK.02 REKAMAN ASESMEN KOMPETENSI';
 
     protected static ?int $navigationSort = 4;
 
@@ -57,6 +55,11 @@ class RekamanPage extends Page implements HasForms, HasInfolists
     public ?array $data = [];
 
     public ?array $state = [];
+
+    public function getHeading(): string
+    {
+        return $this->record->asesi->nama;
+    }
 
     public function mount()
     {

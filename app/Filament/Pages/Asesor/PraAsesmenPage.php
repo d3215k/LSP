@@ -7,6 +7,7 @@ use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Asesmen\Persetujuan;
+use App\Models\Sekolah;
 use App\Models\TempatUjiKompetensi;
 use App\Support\Signature;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -23,6 +24,7 @@ use Illuminate\Contracts\View\View;
 use Filament\Pages\Page;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\Filter;
+use Filament\Tables\Filters\SelectFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -74,6 +76,13 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                     ->searchable()
                     ->sortable()
                     ->description(fn (Asesmen $record): string => $record->asesi->no_reg ?? '-'),
+                TextColumn::make('asesi.sekolah.nama')
+                    ->label('Asal Sekolah')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: false,
+                    )
+                    ->sortable(),
                 TextColumn::make('skema.nama')
                     ->wrap()
                     ->label('Skema'),
@@ -83,6 +92,22 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                     ->sortable(),
             ])
             ->filters([
+                SelectFilter::make('Asal Sekolah')
+                    ->options(
+                        fn() => Sekolah::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'asesi',
+                                fn (Builder $query) => $query->whereHas(
+                                    'sekolah',
+                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                )
+                            );
+                        }
+                    }),
                 Filter::make('persetujuan')
                     ->label('Hanya yang belum disetujui')
                     ->query(fn (Builder $query): Builder => $query->whereDoesntHave('persetujuan'))

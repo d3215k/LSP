@@ -9,6 +9,7 @@ use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
 use App\Models\Asesor;
 use App\Models\Periode;
+use App\Models\Sekolah;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
@@ -138,20 +139,52 @@ class AsesmenResource extends Resource
                     ->label('Asesi  / No. Reg')
                     ->description(fn (Asesmen $record): string => $record->asesi->no_reg ?? '-')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('asesi.sekolah.nama')
+                    ->label('Asal Sekolah')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: true,
+                    )
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('skema.nama')
                     ->label('Skema')
                     ->sortable()
                     ->wrap(),
                 Tables\Columns\TextColumn::make('asesor.nama')
                     ->label('Asesor')
-                    ->sortable(),
+                    ->sortable()
+                    ->description(fn (Asesmen $record): string => $record->asesor->nomor_registrasi ?? '-')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: false,
+                    ),
                 Tables\Columns\TextColumn::make('status')
                     ->sortable()
-                    ->badge(),
+                    ->badge()
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: false,
+                    ),
             ])
             ->filters([
-                SelectFilter::make('Status')
+                SelectFilter::make('status')
                     ->options(AsesmenStatus::class),
+                SelectFilter::make('Asal Sekolah')
+                    ->options(
+                        fn() => Sekolah::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'asesi',
+                                fn (Builder $query) => $query->whereHas(
+                                    'sekolah',
+                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                )
+                            );
+                        }
+                    }),
                 SelectFilter::make('periode_id')
                     ->label('Periode')
                     ->searchable()

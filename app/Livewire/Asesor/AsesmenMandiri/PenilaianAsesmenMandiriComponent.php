@@ -89,6 +89,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
             ->record($this->mandiri->asesmen->asesor)
             ->schema([
                 TextEntry::make('nama')->inlineLabel(),
+                TextEntry::make('nomor_registrasi')->label('No. Reg')->inlineLabel(),
                 // TextEntry::make('tanggal_registrasi')->label('Tanggal')->inlineLabel(),
             ]);
     }

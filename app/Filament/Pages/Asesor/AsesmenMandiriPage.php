@@ -5,6 +5,7 @@ namespace App\Filament\Pages\Asesor;
 use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen\Mandiri;
+use App\Models\Sekolah;
 use App\Support\Signature;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
@@ -20,6 +21,7 @@ use Filament\Pages\Page;
 use Filament\Tables\Actions\BulkAction;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TernaryFilter;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
 use Saade\FilamentAutograph\Forms\Components\SignaturePad;
@@ -70,6 +72,13 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                     ->searchable()
                     ->description(fn (Mandiri $record): string => $record->asesmen->asesi->no_reg ?? '-')
                     ->sortable(),
+                TextColumn::make('asesmen.asesi.sekolah.nama')
+                    ->label('Asal Sekolah')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: false,
+                    )
+                    ->sortable(),
                 TextColumn::make('asesmen.skema.nama')
                     ->wrap()
                     ->label('Skema'),
@@ -79,6 +88,25 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                     ->sortable(),
             ])
             ->filters([
+                SelectFilter::make('Asal Sekolah')
+                    ->options(
+                        fn() => Sekolah::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'asesmen',
+                                fn (Builder $query) => $query->whereHas(
+                                    'asesi',
+                                    fn (Builder $query) => $query->whereHas(
+                                        'sekolah',
+                                        fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                    )
+                                )
+                            );
+                        }
+                    }),
                 TernaryFilter::make('rekomendasi')
                     ->placeholder('Semua')
                     ->trueLabel('Sudah Direkomendasi')

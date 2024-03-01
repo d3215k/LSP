@@ -8,6 +8,7 @@ use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
+use App\Models\Sekolah;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
@@ -18,6 +19,9 @@ use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Table;
 use Illuminate\Contracts\View\View;
 use Filament\Tables\Actions\ActionGroup;
+use Filament\Tables\Filters\SelectFilter;
+use Illuminate\Database\Eloquent\Builder;
+
 class LaporanAsesmenPage extends Page implements HasForms, HasTable
 {
     use InteractsWithTable;
@@ -58,6 +62,13 @@ class LaporanAsesmenPage extends Page implements HasForms, HasTable
                 TextColumn::make('rincianDataPemohon.nama')
                     ->label('Asesi / Skema')
                     ->description(fn (Asesmen $record): string => $record->asesi->no_reg),
+                TextColumn::make('asesi.sekolah.nama')
+                    ->label('Asal Sekolah')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: false,
+                    )
+                    ->sortable(),
                 TextColumn::make('skema.nama')
                     ->wrap()
                     ->label('Skema'),
@@ -66,7 +77,22 @@ class LaporanAsesmenPage extends Page implements HasForms, HasTable
                     ->badge(),
             ])
             ->filters([
-                // ...
+                SelectFilter::make('Asal Sekolah')
+                    ->options(
+                        fn() => Sekolah::query()->pluck('nama', 'id')->toArray(),
+                    )
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'asesi',
+                                fn (Builder $query) => $query->whereHas(
+                                    'sekolah',
+                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                )
+                            );
+                        }
+                    }),
             ])
             ->actions([
                 //
