@@ -151,17 +151,23 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                                 Forms\Components\Checkbox::make('hasil_tes_lisan')->columnSpanFull(),
                                 Forms\Components\Checkbox::make('hasil_wawancara')->columnSpanFull(),
                             ])->columns(2),
-                        Forms\Components\DateTimePicker::make('waktu')
-                            ->required()
-                            ->inlineLabel(),
-                        forms\Components\Select::make('tempat_uji_kompetensi_id')
-                            ->label('Tempat Uji Kompetensi')->inlineLabel()
-                            ->required()
-                            ->options(
-                                TempatUjiKompetensi::query()->pluck('nama', 'id')?->toArray()
-                            )
-                            ->searchable()
-                            ->preload()
+                        Forms\Components\Fieldset::make('pelaksanaan')
+                            ->label('Pelaksanaan asesmen disepakati pada')
+                            ->schema([
+                                Forms\Components\DateTimePicker::make('waktu')
+                                    ->required()
+                                    ->inlineLabel()
+                                    ->columnSpanFull(),
+                                forms\Components\Select::make('tempat_uji_kompetensi_id')
+                                    ->label('Tempat Uji Kompetensi')->inlineLabel()
+                                    ->required()
+                                    ->options(
+                                        TempatUjiKompetensi::query()->pluck('nama', 'id')?->toArray()
+                                    )
+                                    ->searchable()
+                                    ->preload()
+                                    ->columnSpanFull()
+                            ])
                     ])
                     ->deselectRecordsAfterCompletion()
             ]);

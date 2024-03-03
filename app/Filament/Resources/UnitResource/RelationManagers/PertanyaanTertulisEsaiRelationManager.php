@@ -40,8 +40,11 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
             ->recordTitleAttribute('pertanyaan')
             ->columns([
                 Tables\Columns\TextColumn::make('pertanyaan')
-                    ->html(),
-                Tables\Columns\ToggleColumn::make('aktif'),
+                    ->html()
+                    ->wrap()
+                    ,
+                Tables\Columns\ToggleColumn::make('aktif')
+                    ->sortable(),
             ])
             ->filters([
                 //

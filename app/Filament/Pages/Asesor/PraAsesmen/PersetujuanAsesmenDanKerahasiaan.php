@@ -64,16 +64,22 @@ class PersetujuanAsesmenDanKerahasiaan extends Page implements HasForms, HasInfo
                         Forms\Components\Checkbox::make('hasil_tes_lisan')->columnSpanFull(),
                         Forms\Components\Checkbox::make('hasil_wawancara')->columnSpanFull(),
                     ])->columns(2),
-                Forms\Components\DateTimePicker::make('waktu')
-                    ->required()
-                    ->inlineLabel(),
-                forms\Components\Select::make('tempat_uji_kompetensi_id')
-                    ->label('Tempat Uji Kompetensi')
-                    ->inlineLabel()
-                    ->required()
-                    ->options(
-                        $this->record->skema->tempatUjiKompetensi->pluck('nama', 'id')?->toArray()
-                    )
+                Forms\Components\Fieldset::make('pelaksanaan')
+                    ->label('Pelaksanaan asesmen disepakati pada')
+                    ->schema([
+                        Forms\Components\DateTimePicker::make('waktu')
+                            ->required()
+                            ->inlineLabel()
+                            ->columnSpanFull(),
+                        forms\Components\Select::make('tempat_uji_kompetensi_id')
+                            ->label('Tempat Uji Kompetensi')
+                            ->inlineLabel()
+                            ->required()
+                            ->options(
+                                $this->record->skema->tempatUjiKompetensi->pluck('nama', 'id')?->toArray()
+                            )
+                            ->columnSpanFull(),
+                    ]),
             ])
             ->statePath('data')
             ->model($this->record->persetujuan);
