@@ -31,6 +31,7 @@ class AdminPanelProvider extends PanelProvider
             ->spa()
             ->registration(Register::class)
             ->databaseNotifications()
+            ->databaseNotificationsPolling(null)
             ->login()
             ->profile()
             ->colors([

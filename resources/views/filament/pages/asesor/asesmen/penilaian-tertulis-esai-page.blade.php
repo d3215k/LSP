@@ -2,6 +2,7 @@
 
     <div class="space-y-6">
         @foreach ($record->skema->unit as $unit)
+            @if ($unit->pertanyaanTertulisEsai->count() > 0)
             <div class="space-y-4 fi-ta" wire:key="{{ $unit->id }}">
                 <div class="overflow-hidden bg-white divide-y divide-gray-200 shadow-sm fi-ta-ctn ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
                     <div class="overflow-x-auto divide-y divide-gray-200 fi-ta-content dark:divide-white/10 dark:border-t-white/10">
@@ -191,7 +192,7 @@
 
                                     @isset($pertanyaan->jawaban)
                                         <tr class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
-                                            <td x-data="{ open: false }" colspan="4" class="fi-ta-cell">
+                                            <td x-data="{ open: true }" colspan="4" class="fi-ta-cell">
                                                 <div class="fi-ta-col-wrp">
                                                     <button class="bg-primary-100 dark:bg-primary-800 py-2 px-4 w-full text-left font-medium text-sm" x-on:click="open = ! open">
                                                         Kunci Jawaban No. {{ $loop->iteration }}
@@ -209,6 +210,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         @endforeach
     </div>
 

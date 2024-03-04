@@ -133,7 +133,7 @@
 
                                         <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">
                                             <div class="px-2 fi-ta-col-wrp">
-                                                @if ($asesmen->buktiMandiri()->exists())
+                                                @if ($asesmen->buktiMandiri)
                                                     <x-filament::input.wrapper>
                                                         <x-filament::input.select wire:model="data.bukti.{{ $elemen->id }}">
                                                                 <option value="">-- Pilih salah satu</option>

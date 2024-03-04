@@ -68,6 +68,8 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists, Ha
 
     protected function getViewData(): array
     {
+        $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanTertulisEsai');
+
         $hasil = JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();

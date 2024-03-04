@@ -48,6 +48,12 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
     {
         abort_unless(auth()->user()->isAsesor, 403);
 
+    }
+
+    protected function getViewData(): array
+    {
+        $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanTertulisEsai');
+
         $hasil = JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)
             ->get();
@@ -55,6 +61,7 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
         $this->data['jawaban'] = $hasil->pluck('jawaban', 'pertanyaan_tertulis_esai_id')->toArray();
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'pertanyaan_tertulis_esai_id')->toArray();
 
+        return [];
     }
 
     protected function getHeaderActions(): array
