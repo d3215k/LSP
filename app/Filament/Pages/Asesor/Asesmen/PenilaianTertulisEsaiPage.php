@@ -46,7 +46,9 @@ class PenilaianTertulisEsaiPage extends Page implements HasForms, HasInfolists
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesor, 403);
+        abort_unless(
+            auth()->user()->isAsesor && $this->record->asesor_id === auth()->user()->asesor_id
+        , 403);
 
     }
 

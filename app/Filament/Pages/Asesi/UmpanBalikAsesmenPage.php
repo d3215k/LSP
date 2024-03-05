@@ -52,7 +52,7 @@ class UmpanBalikAsesmenPage extends Page implements HasForms, HasInfolists
     public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesi
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi_id
         , 403);
 
         $hasil = HasilUmpanBalik::query()

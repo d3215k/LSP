@@ -49,15 +49,15 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
         return $this->record->asesi->nama;
     }
 
-    public function mount(Asesmen $record): void
+    public function mount(): void
     {
         abort_unless(
-            auth()->user()->isAsesor  ,
+            auth()->user()->isAsesor && $this->record->asesor_id === auth()->user()->asesor_id ,
             403
         );
 
         $hasil = HasilObservasiPendukung::query()
-            ->where('asesmen_observasi_pendukung_id', $record->observasiPendukung?->id)
+            ->where('asesmen_observasi_pendukung_id', $this->record->observasiPendukung?->id)
             ->get();
 
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'pertanyaan_id')->toArray();

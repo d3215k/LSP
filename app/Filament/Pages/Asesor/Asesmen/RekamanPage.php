@@ -5,18 +5,9 @@ namespace App\Filament\Pages\Asesor\Asesmen;
 use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiRekamanAsesmen;
 use App\Models\Asesmen;
-use App\Models\Asesmen\HasilObservasiAktivitas;
-use App\Models\Asesmen\HasilObservasiPendukung;
 use App\Models\Asesmen\HasilRekaman;
-use App\Models\Asesmen\JawabanTertulisEsai;
-use App\Models\Asesmen\ObservasiAktivitas;
-use App\Models\Asesmen\ObservasiPendukung;
-use App\Models\Asesmen\Persetujuan;
 use App\Models\Asesmen\Rekaman;
-use App\Models\Asesmen\TertulisEsai;
 use App\Models\Sertifikat;
-use App\Models\TempatUjiKompetensi;
-use App\Settings\SertifikatSetting;
 use App\Support\GenerateNumber;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
@@ -63,7 +54,9 @@ class RekamanPage extends Page implements HasForms, HasInfolists
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesor, 403);
+        abort_unless(
+            auth()->user()->isAsesor && $this->record->asesor_id === auth()->user()->asesor_id
+        , 403);
 
         $this->form->fill($this->record->rekaman?->toArray());
 

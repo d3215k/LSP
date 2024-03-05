@@ -2,24 +2,12 @@
 
 namespace App\Filament\Pages\Asesi;
 
-use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Banding;
-use App\Models\Asesmen\HasilObservasiAktivitas;
-use App\Models\Asesmen\HasilObservasiPendukung;
-use App\Models\Asesmen\JawabanTertulisEsai;
-use App\Models\Asesmen\ObservasiAktivitas;
-use App\Models\Asesmen\ObservasiPendukung;
-use App\Models\Asesmen\Persetujuan;
-use App\Models\Asesmen\TertulisEsai;
-use App\Models\TempatUjiKompetensi;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
-use Filament\Infolists\Components\Fieldset;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Infolists\Infolist;
 use Filament\Infolists\Concerns\InteractsWithInfolists;
 use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
@@ -55,7 +43,7 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
     public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesi
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi_id
         , 403);
 
         $this->form->fill($this->record->banding?->toArray());
