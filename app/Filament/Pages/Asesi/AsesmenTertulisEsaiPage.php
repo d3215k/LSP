@@ -53,7 +53,7 @@ class AsesmenTertulisEsaiPage extends Page implements HasForms, HasInfolists, Ha
     public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesi
+            auth()->user()->isAsesi && $this->record->asesi_id === auth()->user()->asesi_id
         , 403);
 
         $this->tertulisEsai = TertulisEsai::firstOrCreate(
