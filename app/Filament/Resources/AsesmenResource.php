@@ -134,13 +134,11 @@ class AsesmenResource extends Resource
                             ->label('Asesi')
                             ->directory('ttd/asesmen/asesi')
                             ->image()
-                            ->imageEditor()
                             ->maxSize(1024),
                         FileUpload::make('ttd_asesor')
                             ->label('Asesor')
                             ->directory('ttd/asesmen/asesor')
                             ->image()
-                            ->imageEditor()
                             ->maxSize(1024),
                     ])
             ]);

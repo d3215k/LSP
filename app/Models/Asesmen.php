@@ -25,10 +25,10 @@ class Asesmen extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'ttd_asesi',
-        'ttd_asesor',
-    ];
+    // protected $hidden = [
+    //     'ttd_asesi',
+    //     'ttd_asesor',
+    // ];
 
     protected $casts = [
         'status' => AsesmenStatus::class,
