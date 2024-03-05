@@ -13,6 +13,7 @@ use App\Models\Sekolah;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
+use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -127,6 +128,25 @@ class AsesmenResource extends Resource
                             ->label('Email Kantor')
                             ->required(),
                     ]),
+                Fieldset::make('Tanda tangan')
+                    ->schema([
+                        FileUpload::make('ttd_asesi')
+                            ->label('Asesi')
+                            ->directory('ttd/asesmen/asesi')
+                            // ->preserveFilenames()
+                            ->image()
+                            ->imageEditor()
+                            ->nullable()
+                            ->maxSize(1024),
+                        FileUpload::make('ttd_asesor')
+                            ->label('Asesor')
+                            ->directory('ttd/asesmen/asesor')
+                            // ->preserveFilenames()
+                            ->image()
+                            ->imageEditor()
+                            ->nullable()
+                            ->maxSize(1024),
+                    ])
             ]);
     }
 

@@ -60,6 +60,13 @@ class UserResource extends Resource
                     ->label('Role')
                     ->options(UserType::class),
                 Tables\Columns\ToggleColumn::make('aktif'),
+                Tables\Columns\TextColumn::make('last_login')
+                    ->label('Login Terakhir')
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: true,
+                    )
+                    ->sortable()
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('type')
@@ -87,7 +94,8 @@ class UserResource extends Resource
                 // Tables\Actions\BulkActionGroup::make([
                 //     Tables\Actions\DeleteBulkAction::make(),
                 // ]),
-            ]);
+            ])
+            ->defaultSort('last_login', 'desc');
     }
 
     public static function getRelations(): array

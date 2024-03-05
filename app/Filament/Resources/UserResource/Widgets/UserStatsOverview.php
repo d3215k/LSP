@@ -12,6 +12,7 @@ class UserStatsOverview extends BaseWidget
     protected function getStats(): array
     {
         return [
+            Stat::make('User Sedang Login', User::where('last_login', '<=', now()->subMinutes(5))->count()),
             Stat::make('Admin', User::query()->where('type', UserType::ADMIN)->count()),
             Stat::make('Asesor', User::query()->where('type', UserType::ASESOR)->count()),
             Stat::make('Asesi', User::query()->where('type', UserType::ASESI)->count()),
