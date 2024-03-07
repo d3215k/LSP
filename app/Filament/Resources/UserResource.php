@@ -62,10 +62,7 @@ class UserResource extends Resource
                 Tables\Columns\ToggleColumn::make('aktif'),
                 Tables\Columns\TextColumn::make('last_login')
                     ->label('Login Terakhir')
-                    ->toggleable(
-                        condition: true,
-                        isToggledHiddenByDefault: true,
-                    )
+                    ->toggleable()
                     ->sortable()
             ])
             ->filters([
