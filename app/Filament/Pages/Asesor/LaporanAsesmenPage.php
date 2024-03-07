@@ -9,6 +9,7 @@ use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Sekolah;
+use App\Models\Skema;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
@@ -91,6 +92,23 @@ class LaporanAsesmenPage extends Page implements HasForms, HasTable
                                     fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
                                 )
                             );
+                        }
+                    }),
+                SelectFilter::make('Skema')
+                    ->options(
+                        fn() => Skema::query()
+                            ->whereHas(
+                                'asesor',
+                                fn (Builder $query) => $query->where('asesor_id', auth()->user()->asesor_id)
+                            )
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->where('skema_id', '=', (int) $data['value']);
                         }
                     }),
             ])

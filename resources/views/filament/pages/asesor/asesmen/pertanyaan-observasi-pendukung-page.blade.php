@@ -2,7 +2,7 @@
 
     <div class="space-y-6">
         @foreach ($record->skema->unit as $unit)
-            @if ($unit->pertanyaanObservasiPendukung()->count() > 0)
+            @if ($unit->pertanyaanObservasiPendukung->count() > 0)
                 <div class="space-y-4 fi-ta" wire:key="{{ $unit->id }}">
                     <div class="overflow-hidden bg-white divide-y divide-gray-200 shadow-sm fi-ta-ctn ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
                         <div class="overflow-x-auto divide-y divide-gray-200 fi-ta-content dark:divide-white/10 dark:border-t-white/10">

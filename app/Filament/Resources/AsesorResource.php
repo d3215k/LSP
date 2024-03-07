@@ -43,11 +43,13 @@ class AsesorResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Forms\Components\TextInput::make('nik')
+                    ->label('NIK')
                     ->maxLength(32),
                 Forms\Components\TextInput::make('tempat_lahir')
                     ->maxLength(255),
                 Forms\Components\DatePicker::make('tanggal_lahir'),
                 Forms\Components\TextInput::make('jk')
+                    ->label('L/P')
                     ->maxLength(1),
                 Forms\Components\TextInput::make('pendidikan')
                     ->maxLength(255),
@@ -106,7 +108,7 @@ class AsesorResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\SkemaRelationManager::class
         ];
     }
 

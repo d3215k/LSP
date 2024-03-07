@@ -8,6 +8,7 @@ use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Asesmen\Persetujuan;
 use App\Models\Sekolah;
+use App\Models\Skema;
 use App\Models\TempatUjiKompetensi;
 use App\Support\Signature;
 use Filament\Forms\Concerns\InteractsWithForms;
@@ -67,6 +68,7 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                         AsesmenStatus::ASESMEN_MANDIRI,
                         AsesmenStatus::PERSETUJUAN
                     ])
+                    ->with(['persetujuan'])
                     ->where('asesor_id', auth()->user()->asesor_id)
                     ->whereHas('mandiri', fn ($query) => $query->where('rekomendasi', RekomendasiAsesmenMandiri::DILANJUTKAN))
             )
@@ -88,7 +90,7 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                     ->label('Skema'),
                 TextColumn::make('status')
                     ->badge()
-                    ->getStateUsing(fn (Asesmen $record): string => $record->persetujuan()->exists() ? 'Dijadwalkan' : 'Belum Disetujui Asesor')
+                    ->getStateUsing(fn (Asesmen $record): string => $record->persetujuan ? 'Dijadwalkan' : 'Belum Disetujui Asesor')
                     ->sortable(),
             ])
             ->filters([
@@ -106,6 +108,23 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
                                     fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
                                 )
                             );
+                        }
+                    }),
+                SelectFilter::make('Skema')
+                    ->options(
+                        fn() => Skema::query()
+                            ->whereHas(
+                                'asesor',
+                                fn (Builder $query) => $query->where('asesor_id', auth()->user()->asesor_id)
+                            )
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->where('skema_id', '=', (int) $data['value']);
                         }
                     }),
                 Filter::make('persetujuan')

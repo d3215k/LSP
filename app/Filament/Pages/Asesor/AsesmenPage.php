@@ -7,6 +7,7 @@ use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Sekolah;
+use App\Models\Skema;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Tables\Actions\Action;
@@ -56,7 +57,8 @@ class AsesmenPage extends Page implements HasForms, HasTable
             ->query(
                 Asesmen::query()->latest()
                     ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::TERTULIS_ESAI])
-                    ->where('asesor_id', auth()->user()->asesor_id),
+                    ->where('asesor_id', auth()->user()->asesor_id)
+                    ->with('tertulisEsai', 'observasiAktivitas', 'observasiPendukung'),
             )
             ->columns([
                 TextColumn::make('rincianDataPemohon.nama')
@@ -93,6 +95,23 @@ class AsesmenPage extends Page implements HasForms, HasTable
                             );
                         }
                     }),
+                SelectFilter::make('Skema')
+                    ->options(
+                        fn() => Skema::query()
+                            ->whereHas(
+                                'asesor',
+                                fn (Builder $query) => $query->where('asesor_id', auth()->user()->asesor_id)
+                            )
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->where('skema_id', '=', (int) $data['value']);
+                        }
+                    }),
             ])
             ->actions([
                 ActionGroup::make([
@@ -105,11 +124,11 @@ class AsesmenPage extends Page implements HasForms, HasTable
                      Action::make('Tertulis')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => !$record->tertulisEsai()->exists()),
+                        ->hidden(fn (Asesmen $record): bool => !$record->tertulisEsai),
                     Action::make('Rekaman')
                         ->url(fn (Asesmen $record): string => route('filament.app.pages.asesmen.{record}.rekaman', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => !$record->observasiAktivitas()->exists() || !$record->observasiPendukung()->exists()),
+                        ->hidden(fn (Asesmen $record): bool => !$record->observasiAktivitas || !$record->observasiPendukung),
                 ])
                 ->button()
                 ->icon('heroicon-m-document-text')

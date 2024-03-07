@@ -19,12 +19,14 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
     use InteractsWithInfolists;
     use InteractsWithForms;
 
-    public Mandiri $mandiri;
+    public Asesmen $record;
 
     public function asesiInfolist(Infolist $infolist): Infolist
     {
         return $infolist
-            ->record($this->mandiri->asesmen->rincianDataPemohon)
+            ->record(
+                $this->record->rincianDataPemohon
+            )
             ->schema([
                 TextEntry::make('nama')->inlineLabel(),
                 TextEntry::make('tanggal_registrasi')->label('Tanggal')->inlineLabel(),

@@ -13,17 +13,23 @@ class InfoAsesmenMandiriComponent extends Component
 
     public $data;
 
-    public function mount() {
+    public function mount()
+    {
+        $this->mandiri->load('asesmen', 'asesmen.skema', 'asesmen.skema.unit', 'asesmen.skema.unit.elemen', 'asesmen.skema.unit.elemen.kriteriaUnjukKerja');
 
         $jawaban = JawabanMandiri::query()
             ->where('asesmen_mandiri_id', $this->mandiri->id)
             ->get();
 
-        $bukti = BuktiMandiri::query()
-            ->whereIn('id', $jawaban->pluck('bukti_asesmen_mandiri_id'))
-            ->get();
-
         $this->data['kompeten'] = $jawaban->pluck('kompeten', 'elemen_id')->toArray();
+
+        $ids = $jawaban->pluck('bukti_asesmen_mandiri_id')
+            // ->filter(fn ($value) => $value !== null) TODO : filter
+            ;
+
+        $bukti = BuktiMandiri::query()
+            ->whereIn('id', $ids)
+            ->get();
 
         foreach ($jawaban as $item) {
             $this->data['bukti'][$item->elemen_id] = $bukti->where('id', $item->bukti_asesmen_mandiri_id)->first();

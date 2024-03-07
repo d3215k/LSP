@@ -3,7 +3,6 @@
 namespace App\Livewire\Asesi\PermohonanSertifikasiKompetensi;
 
 use App\Models\Asesmen;
-use App\Models\Skema\Persyaratan;
 use App\Support\Signature;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;

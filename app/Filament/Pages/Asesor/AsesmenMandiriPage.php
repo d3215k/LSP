@@ -6,6 +6,7 @@ use App\Enums\AsesmenStatus;
 use App\Enums\RekomendasiAsesmenMandiri;
 use App\Models\Asesmen\Mandiri;
 use App\Models\Sekolah;
+use App\Models\Skema;
 use App\Support\Signature;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
@@ -107,6 +108,29 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                             );
                         }
                     }),
+                SelectFilter::make('Skema')
+                    ->options(
+                        fn() => Skema::query()
+                            ->whereHas(
+                                'asesor',
+                                fn (Builder $query) => $query->where('asesor_id', auth()->user()->asesor_id)
+                            )
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->whereHas(
+                                'asesmen',
+                                fn (Builder $query) => $query->whereHas(
+                                    'skema',
+                                    fn (Builder $query) => $query->where('id', '=', (int) $data['value'])
+                                )
+                            );
+                        }
+                    }),
                 TernaryFilter::make('rekomendasi')
                     ->placeholder('Semua')
                     ->trueLabel('Sudah Direkomendasi')
@@ -119,7 +143,7 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
             ->actions([
                 Action::make('nilai')
                     ->button()
-                    ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{mandiri}.penilaian', $record))
+                    ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{record}.penilaian', $record))
             ])
             ->bulkActions([
                 BulkAction::make('nilai')

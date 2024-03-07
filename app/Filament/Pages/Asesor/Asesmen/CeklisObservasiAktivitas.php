@@ -42,15 +42,17 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
         return $this->record->asesi->nama;
     }
 
-    public function mount(Asesmen $record): void
+    public function mount(): void
     {
         abort_unless(
             auth()->user()->isAsesor && $this->record->asesor_id === auth()->user()->asesor_id,
             403
         );
 
+        $this->record->load('skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kriteriaUnjukKerja', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
+
         $hasil = HasilObservasiAktivitas::query()
-            ->where('asesmen_observasi_aktivitas_id', $record->observasiAktivitas?->id)
+            ->where('asesmen_observasi_aktivitas_id', $this->record->observasiAktivitas?->id)
             ->get();
 
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'kriteria_unjuk_kerja_id')->toArray();
@@ -69,11 +71,11 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
                  Action::make('Tertulis')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
                     ->icon('heroicon-m-document-text')
-                    ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),
+                    ->hidden(fn (): bool => !$this->record->tertulisEsai),
                 Action::make('Rekaman')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.rekaman', $this->record))
                     ->icon('heroicon-m-document-text')
-                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists()),
+                    ->hidden(fn (): bool => !$this->record->observasiAktivitas || !$this->record->observasiPendukung),
             ])
             ->button()
             ->icon('heroicon-m-document-text')

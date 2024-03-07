@@ -4,12 +4,8 @@ namespace App\Filament\Pages\Asesor\Asesmen;
 
 use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
-use App\Models\Asesmen\HasilObservasiAktivitas;
 use App\Models\Asesmen\HasilObservasiPendukung;
-use App\Models\Asesmen\ObservasiAktivitas;
 use App\Models\Asesmen\ObservasiPendukung;
-use App\Models\Asesmen\Persetujuan;
-use App\Models\TempatUjiKompetensi;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms;
@@ -56,6 +52,8 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
             403
         );
 
+        $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanObservasiPendukung', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
+
         $hasil = HasilObservasiPendukung::query()
             ->where('asesmen_observasi_pendukung_id', $this->record->observasiPendukung?->id)
             ->get();
@@ -78,11 +76,11 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
                  Action::make('Tertulis')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.penilaian-asesmen-tertulis-esai', $this->record))
                     ->icon('heroicon-m-document-text')
-                    ->hidden(fn (): bool => !$this->record->tertulisEsai()->exists()),
+                    ->hidden(fn (): bool => !$this->record->tertulisEsai),
                 Action::make('Rekaman')
                     ->url(fn (): string => route('filament.app.pages.asesmen.{record}.rekaman', $this->record))
                     ->icon('heroicon-m-document-text')
-                    ->hidden(fn (): bool => !$this->record->observasiAktivitas()->exists() || !$this->record->observasiPendukung()->exists()),
+                    ->hidden(fn (): bool => !$this->record->observasiAktivitas || !$this->record->observasiPendukung),
             ])
             ->button()
             ->icon('heroicon-m-document-text')

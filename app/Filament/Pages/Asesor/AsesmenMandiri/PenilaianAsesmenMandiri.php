@@ -11,27 +11,25 @@ class PenilaianAsesmenMandiri extends Page
 
     protected static string $view = 'filament.pages.asesor.asesmen-mandiri.penilaian-asesmen-mandiri';
 
-    protected static ?string $slug = 'asesmen-mandiri/{mandiri}/penilaian';
+    protected static ?string $slug = 'asesmen-mandiri/{record}/penilaian';
 
     protected ?string $subheading = 'FR.APL.02 Penilaian Asesmen Mandiri';
 
 	protected static bool $shouldRegisterNavigation = false;
 
-    public Mandiri $mandiri;
+    public Mandiri $record;
 
     public function getHeading(): string
     {
-        return $this->mandiri->asesmen->asesi->nama;
+        return $this->record->asesmen->asesi->nama;
     }
 
-    public function mount(Mandiri $mandiri)
+    public function mount()
     {
         abort_unless(
-            auth()->user()->isAsesor && $mandiri?->asesmen->asesor_id === auth()->user()->asesor_id,
+            auth()->user()->isAsesor && $this->record->asesmen->asesor_id === auth()->user()->asesor_id,
             403
         );
-
-        $this->mandiri = $mandiri;
 
     }
 }

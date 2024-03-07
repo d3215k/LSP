@@ -6,10 +6,14 @@ use App\Enums\JenisKelamin;
 use App\Filament\Resources\AsesiResource\Pages;
 use App\Filament\Resources\AsesiResource\RelationManagers;
 use App\Models\Asesi;
+use App\Models\KompetensiKeahlian;
+use App\Models\Sekolah;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -26,8 +30,7 @@ class AsesiResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()
-            ->latest();
+        return parent::getEloquentQuery();
     }
 
     public static function form(Form $form): Form
@@ -95,6 +98,7 @@ class AsesiResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->defaultSort('nama')
             ->columns([
                 Tables\Columns\TextColumn::make('nama')
                     ->label('Nama / No. Reg')
@@ -111,7 +115,36 @@ class AsesiResource extends Resource
                     ->label('Asesmen'),
             ])
             ->filters([
-                //
+                SelectFilter::make('Asal Sekolah')
+                    ->options(
+                        fn() => Sekolah::query()
+                            ->withoutGlobalScopes()
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->where('sekolah_id', '=', (int) $data['value']);
+                        }
+                    })
+                    ->columnSpan(1),
+                SelectFilter::make('Kompetensi Keahlian')
+                    ->options(
+                        fn() => KompetensiKeahlian::query()
+                            ->withoutGlobalScopes()
+                            ->pluck('nama', 'id')->toArray(),
+                    )
+                    ->preload()
+                    ->searchable()
+                    ->query(function (Builder $query, array $data) {
+                        if (!empty($data['value']))
+                        {
+                            $query->where('kompetensi_keahlian_id', '=', (int) $data['value']);
+                        }
+                    })
+                    ->columnSpan(1),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -120,13 +153,17 @@ class AsesiResource extends Resource
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
-            ]);
+            ])
+            ->filtersLayout(
+                FiltersLayout::AboveContent
+            )
+            ->filtersFormColumns(2);
     }
 
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\AsesmenRelationManager::class,
         ];
     }
 
