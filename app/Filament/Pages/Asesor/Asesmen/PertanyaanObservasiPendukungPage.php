@@ -6,6 +6,7 @@ use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\HasilObservasiPendukung;
 use App\Models\Asesmen\ObservasiPendukung;
+use App\Models\Asesmen\PertanyaanObservasiPendukung;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Forms;
@@ -20,6 +21,7 @@ use Filament\Infolists\Contracts\HasInfolists;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\Computed;
 
 class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfolists
 {
@@ -61,6 +63,21 @@ class PertanyaanObservasiPendukungPage extends Page implements HasForms, HasInfo
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'pertanyaan_id')->toArray();
         $this->data['tanggapan'] = $hasil->pluck('tanggapan', 'pertanyaan_id')->toArray();
 
+    }
+
+    #[Computed()]
+    public function pertanyaanIds()
+    {
+        $unitIds = $this->record->skema->unit->pluck('id');
+        $kuk = PertanyaanObservasiPendukung::whereIn('unit_id', $unitIds)->pluck('id');
+        return $kuk;
+    }
+
+    public function setRekomendasiKompetensiTo($kompeten = true)
+    {
+        foreach ($this->pertanyaanIds as $id) {
+            $this->data['kompeten'][$id] = $kompeten ? 'K' : 'BK';
+        }
     }
 
     protected function getHeaderActions(): array

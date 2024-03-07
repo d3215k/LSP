@@ -6,6 +6,8 @@ use App\Enums\AsesmenStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\HasilObservasiAktivitas;
 use App\Models\Asesmen\ObservasiAktivitas;
+use App\Models\Skema\Elemen;
+use App\Models\Skema\KriteriaUnjukKerja;
 use Filament\Forms;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
@@ -17,6 +19,7 @@ use Filament\Pages\Page;
 use Illuminate\Support\Facades\DB;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Livewire\Attributes\Computed;
 
 class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
 {
@@ -56,6 +59,23 @@ class CeklisObservasiAktivitas extends Page implements HasForms, HasInfolists
             ->get();
 
         $this->data['kompeten'] = $hasil->pluck('kompeten', 'kriteria_unjuk_kerja_id')->toArray();
+
+    }
+
+    #[Computed()]
+    public function kukIds()
+    {
+        $uids = $this->record->skema->unit->pluck('id');
+        $els = Elemen::whereIn('unit_id', $uids)->pluck('id');
+        $kuk = KriteriaUnjukKerja::whereIn('elemen_id', $els)->pluck('id');
+        return $kuk;
+    }
+
+    public function setRekomendasiKompetensiTo($kompeten = true)
+    {
+        foreach ($this->kukIds as $id) {
+            $this->data['kompeten'][$id] = $kompeten ? 'K' : 'BK';
+        }
     }
 
     protected function getHeaderActions(): array

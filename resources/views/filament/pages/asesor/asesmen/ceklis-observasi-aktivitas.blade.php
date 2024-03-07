@@ -233,7 +233,13 @@
     <div class="mt-12"></div>
 
     <div class="flex justify-end w-full fixed bottom-0 bg-gray-100 border-t border-gray-200 right-0">
-        <div class="py-4 px-8">
+        <div class="py-4 px-8 flex gap-2">
+            <x-filament::button size="sm" outlined color="success" wire:click="setRekomendasiKompetensiTo">
+                Tandai Semua Kompeten
+            </x-filament::button>
+            <x-filament::button size="sm" outlined color="danger" wire:click="setRekomendasiKompetensiTo(false)">
+                Tandai Semua Belum Kompeten
+            </x-filament::button>
             <x-filament::button wire:click="handleSave">
                 Simpan
             </x-filament::button>
