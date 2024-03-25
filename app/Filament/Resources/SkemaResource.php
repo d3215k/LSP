@@ -44,12 +44,13 @@ class SkemaResource extends Resource
                                 // Forms\Components\TextInput::make('mode')
                                 //     ->required()
                                 //     ->maxLength(255),
-                                Forms\Components\TextInput::make('nama')
+                                Forms\Components\Textarea::make('nama')
                                     ->required()
                                     ->maxLength(255)
                                     ->columnSpanFull(),
-                                Forms\Components\Select::make('jenis')
+                                Forms\Components\ToggleButtons::make('jenis')
                                     ->required()
+                                    ->inline()
                                     ->options(JenisSkema::class),
                                 Forms\Components\TextInput::make('kode')
                                     ->required()
@@ -133,6 +134,9 @@ class SkemaResource extends Resource
                 Tables\Columns\TextColumn::make('elemen_count')
                     ->label('Elemen')
                     ->counts('elemen'),
+                Tables\Columns\TextColumn::make('sertifikat_count')
+                    ->label('Sertifikat')
+                    ->counts('sertifikat'),
             ])
             ->filters([
                 //

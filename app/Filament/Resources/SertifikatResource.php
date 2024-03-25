@@ -86,6 +86,8 @@ class SertifikatResource extends Resource
                     ->searchable(),
                 Tables\Columns\TextColumn::make('pemilik')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('jenis')
+                    ->badge(),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('kompetensi')
@@ -104,13 +106,7 @@ class SertifikatResource extends Resource
                 ]),
             ])
             ->bulkActions([
-                // Tables\Actions\BulkActionGroup::make([
-                //     Tables\Actions\BulkAction::make('Cetak Sertifikat')
-                //         ->requiresConfirmation()
-                //         ->icon('heroicon-m-printer')
-                //         ->action(fn (Collection $records) => $records->each->print())
-                //     // Tables\Actions\DeleteBulkAction::make(),
-                // ]),
+                //
             ]);
     }
 

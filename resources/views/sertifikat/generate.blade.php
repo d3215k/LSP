@@ -8,14 +8,21 @@
             <div class="mx-auto text-center lg:w-10/12 print:w-full">
                 <div class="space-y-6 leading-5">
                     @if ($setting->logo)
-                    <div class="flex justify-center">
+                    <div class="flex justify-between items-center gap-8">
+                        <div class="h-6 bg-green-500 w-full"></div>
                         <img width="120" src="{{ asset('storage/' . $setting->logo) }}" />
+                        <div class="h-6 bg-yellow-400 w-full"></div>
                     </div>
                     @endif
 
                     <div class="mt-6 font-bold uppercase">
-                        <h1 class="text-2xl">Sertifikat Kompetensi</h1>
-                        <p class="text-lg" class="italic">Certificate Of Competence</p>
+                        @if ($sertifikat->jenis === \App\Enums\JenisSkema::KLASTER)
+                            <h1 class="text-2xl">Skill Passport</h1>
+                            <p class="text-lg" class="italic">Skill Passport</p>
+                        @else
+                            <h1 class="text-2xl">Sertifikat Kompetensi</h1>
+                            <p class="text-lg" class="italic">Certificate Of Competence</p>
+                        @endif
                     </div>
                     <div class="font-bold">
                         NO. {{ $sertifikat->no_sertifikat }}
@@ -70,12 +77,14 @@
                         <p class="italic">{{ $setting->nama_lembaga_en }}</p>
                     </div>
 
-                    <div class="pt-12 font-bold ">
+                    <div class="pt-20 font-bold ">
                         <p>{{ $setting->ketua_lsp }}</p>
                         <p>Ketua</p>
                         <p class="italic">Chairman</p>
                     </div>
+
                 </div>
+                <div class="h-6 mt-12 bottom-0 bg-blue-500 w-full"></div>
 
                 <div class="pagebreak"></div>
 

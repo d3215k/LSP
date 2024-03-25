@@ -57,4 +57,9 @@ class Skema extends Model
     {
         return $this->belongsToMany(Asesor::class);
     }
+
+    public function sertifikat(): HasManyThrough
+    {
+        return $this->hasManyThrough(Sertifikat::class, Asesmen::class);
+    }
 }
