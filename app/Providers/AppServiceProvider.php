@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use Filament\Support\Assets\Js;
+use Filament\Support\Colors\Color;
 use Filament\Support\Facades\FilamentAsset;
+use Filament\Support\Facades\FilamentColor;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\ServiceProvider;
 
@@ -24,8 +26,13 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
-        // FilamentAsset::register([
-        //     Js::make('signature-pad', 'https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js'),
-        // ]);
+        FilamentColor::register([
+            'danger' => Color::Red,
+            'gray' => Color::Zinc,
+            'info' => Color::Blue,
+            'primary' => Color::Teal,
+            'success' => Color::Green,
+            'warning' => Color::Amber,
+        ]);
     }
 }
