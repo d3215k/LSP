@@ -22,9 +22,11 @@
                 @endif
 
                 @if ((int) $this->selectedPertanyaan === count($this->pertanyaanEsai) - 1)
-                <x-filament::button wire:click="finish" icon="heroicon-m-check" icon-position="after">
+                {{ $this->finishAction }}
+
+                {{-- <x-filament::button wire:click="finish" icon="heroicon-m-check" icon-position="after">
                     Selesai
-                </x-filament::button>
+                </x-filament::button> --}}
                 @else
                 <x-filament::button wire:click="next" icon="heroicon-m-chevron-right" icon-position="after">
                     Selanjutnya
@@ -39,7 +41,7 @@
         <div class="bg-white shadow-sm overflow-hidden rounded-lg">
             <div wire:ignore>
                 <div class="bg-gray-50 px-5 py-2 dark:bg-gray-700/50 flex justify-between items-center">
-                    <h3 class="font-semibold">Time Left</h3>
+                    <h3 class="font-semibold">Waktu Tersisa</h3>
                 </div>
                 <div class="px-5">
                     <span class="text-danger-600 font-semibold text-lg" id="timer"></span>
@@ -51,7 +53,7 @@
                 </div>
                 <div class="grid grid-cols-10 md:grid-cols-3 lg:grid-cols-5 gap-2 p-4">
                     @foreach ($this->pertanyaanEsai as $pertanyaan)
-                        <x-filament::button  color="{{ $pertanyaan->dijawab ? 'primary' : 'gray' }}" wire:key="{{ $pertanyaan->id }}" wire:click="next('{{ $loop->index }}')">
+                        <x-filament::button  color="{{ array_key_exists($pertanyaan->id, $this->jawabanTertulisEsai) ? 'primary' : 'gray' }}" wire:key="{{ $pertanyaan->id }}" wire:click="next('{{ $loop->index }}')">
                             {{ $loop->index + 1 }}
                         </x-filament::button>
                     @endforeach
@@ -60,37 +62,41 @@
         </div>
     </div>
 
+    <x-filament-actions::modals />
+
     <script>
         // Set the date we're counting down to
-        var countDownDate = new Date("{{ $this->tertulisEsai->created_at->addMinutes(300) }}").getTime();
+        var countDownDate = new Date("{{ $this->tertulisEsai->created_at->addMinutes($this->asesmen->skema->durasi_tertulis_esai) }}").getTime();
 
         // Update the count down every 1 second
         var x = setInterval(function() {
 
-          // Get today's date and time
-        var now = new Date().getTime();
+            // Get today's date and time
+            var now = new Date().getTime();
 
-        // Find the distance between now and the count down date
-        var distance = countDownDate - now;
+            // Find the distance between now and the count down date
+            var distance = countDownDate - now;
 
-        // Time calculations for hours, minutes, and seconds
-        var hours = Math.floor(distance / (1000 * 60 * 60));
-        var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            // Time calculations for hours, minutes, and seconds
+            var hours = Math.floor(distance / (1000 * 60 * 60));
+            var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-        // Pad single digit values with leading zeros
-        hours = (hours < 10) ? "0" + hours : hours;
-        minutes = (minutes < 10) ? "0" + minutes : minutes;
-        seconds = (seconds < 10) ? "0" + seconds : seconds;
+            // Pad single digit values with leading zeros
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
 
-        // Display the result in the element with id="timer"
-        document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
+            // Display the result in the element with id="timer"
+            document.getElementById("timer").innerHTML = hours + ":" + minutes + ":" + seconds;
 
-        // If the count down is finished, write some text
-        if (distance < 0) {
-            clearInterval(x);
-            document.getElementById("timer").innerHTML = "HABIS";
-        }
+            // If the count down is finished, write some text
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("timer").innerHTML = "HABIS";
+                Livewire.dispatch('timeup');
+            }
+
         }, 1000);
     </script>
 </div>

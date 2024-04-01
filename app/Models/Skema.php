@@ -20,6 +20,8 @@ class Skema extends Model
     protected $table = 'skema';
 
     protected $casts = [
+        'tertulis_esai' => 'bool',
+        'tertulis_pg' => 'bool',
         'jenis' => JenisSkema::class,
     ];
 

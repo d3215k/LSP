@@ -92,6 +92,15 @@ class SkemaResource extends Resource
                                     ->inline(false)
                                     ->default(true)
                                     ->required(),
+                                Forms\Components\Fieldset::make('Asesmen Tertulis')
+                                    ->schema([
+                                        Forms\Components\Toggle::make('tertulis_esai')
+                                            ->inline(false),
+                                        Forms\Components\TextInput::make('durasi_tertulis_esai'),
+                                        Forms\Components\Toggle::make('tertulis_pg')
+                                            ->inline(false),
+                                        Forms\Components\TextInput::make('durasi_tertulis_pg'),
+                                    ]),
                             ]),
                         // Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')
                         //     ->schema([

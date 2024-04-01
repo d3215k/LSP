@@ -18,7 +18,7 @@ class AsesmenSaya extends Component
         return Asesmen::query()
             ->where('asesi_id', auth()->user()->asesi->id)
             // ->whereNotIn('status', [AsesmenStatus::DITOLAK])
-            ->with('skema:id,nama,cover')
+            ->with('skema:id,nama,cover,tertulis_esai,tertulis_pg')
             ->latest()
             ->get();
     }

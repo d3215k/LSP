@@ -2,38 +2,46 @@
 
 namespace App\Livewire\Asesi;
 
+use App\Enums\AsesmenTertulisStatus;
 use App\Models\Asesmen;
 use App\Models\Asesmen\JawabanTertulisEsai;
 use App\Models\Asesmen\PertanyaanTertulisEsai;
 use App\Models\Asesmen\TertulisEsai;
+use Filament\Actions\Action;
+use Filament\Actions\Concerns\InteractsWithActions;
+use Filament\Actions\Contracts\HasActions;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\RichEditor;
 use Livewire\Attributes\Computed;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
+use Livewire\Attributes\On;
+use Livewire\Attributes\Url;
 use Livewire\Component;
 
-class CbtEsaiComponent extends Component implements HasForms
+class CbtEsaiComponent extends Component implements HasForms, HasActions
 {
+    use InteractsWithActions;
     use InteractsWithForms;
 
-    public Asesmen $asesmen;
+    public $asesmenId;
 
     public ?array $data = [];
 
+    #[Url()]
     public $selectedPertanyaan = 0;
 
     #[Computed(persist: true)]
+    public function asesmen() {
+        $asesmen = Asesmen::find($this->asesmenId);
+        $asesmen->load('skema');
+        return $asesmen;
+    }
+
+    #[Computed(persist: true)]
     public function tertulisEsai() {
-        return TertulisEsai::firstOrCreate(
-            [
-                'asesmen_id' => $this->asesmen->id,
-            ],
-            [
-                'tanggal_asesmen' => today(),
-            ]
-        );
+        return TertulisEsai::where('asesmen_id', $this->asesmen->id)->first();
     }
 
     #[Computed(persist: true)]
@@ -44,16 +52,17 @@ class CbtEsaiComponent extends Component implements HasForms
 
     #[Computed(persist: true)]
     public function pertanyaanEsai() {
-        $hasil = JawabanTertulisEsai::query()
+        return PertanyaanTertulisEsai::whereIn('unit_id', $this->unitIds)
+            ->get();
+    }
+
+    #[Computed(persist: true)]
+    public function jawabanTertulisEsai()
+    {
+        return JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->tertulisEsai?->id)
             ->pluck('jawaban', 'pertanyaan_tertulis_esai_id')
             ->toArray();
-
-        return PertanyaanTertulisEsai::whereIn('unit_id', $this->unitIds)
-            ->get()->map(function ($item) use ($hasil) {
-                $item->dijawab = array_key_exists($item->id, $hasil);
-                return $item;
-            });
     }
 
     public function form(Form $form): Form
@@ -62,6 +71,7 @@ class CbtEsaiComponent extends Component implements HasForms
             ->schema([
                 Hidden::make('pertanyaan_tertulis_esai_id'),
                 RichEditor::make('jawaban')
+                    ->autofocus(false)
             ])
             ->statePath('data');
     }
@@ -91,9 +101,27 @@ class CbtEsaiComponent extends Component implements HasForms
 
     }
 
+    #[On('timeup')]
     public function finish()
     {
         $this->save();
+        $this->tertulisEsai->update([
+            'status' => AsesmenTertulisStatus::SELESAI
+        ]);
+        return $this->redirectRoute('asesi.asesmen.tertulis.esai', ['asesmen' => $this->asesmen->id], navigate: true);
+    }
+
+    public function finishAction(): Action
+    {
+        return Action::make('finish')
+            ->label('Selesai')
+            ->action(fn () => $this->finish())
+            ->requiresConfirmation()
+            ->icon('heroicon-m-check')
+            ->modalHeading('Selesaikan Asesmen')
+            ->modalDescription('Yakin ingin menyelesaikan dan mengakhiri Asesmen Tertulis?')
+            ->modalSubmitActionLabel('Selesaikan')
+            ;
     }
 
     public function save()
@@ -114,8 +142,7 @@ class CbtEsaiComponent extends Component implements HasForms
             ],
         );
 
-        unset($this->pertanyaanEsai);
-
+        unset($this->jawabanTertulisEsai);
     }
 
     #[Computed(persist: true)]
