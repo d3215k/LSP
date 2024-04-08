@@ -21,7 +21,7 @@ class Skema extends Model
 
     protected $casts = [
         'tertulis_esai' => 'bool',
-        'tertulis_pg' => 'bool',
+        'tertulis_pilihan_ganda' => 'bool',
         'jenis' => JenisSkema::class,
     ];
 

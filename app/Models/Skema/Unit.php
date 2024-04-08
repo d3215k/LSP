@@ -4,6 +4,7 @@ namespace App\Models\Skema;
 
 use App\Models\Asesmen\PertanyaanObservasiPendukung;
 use App\Models\Asesmen\PertanyaanTertulisEsai;
+use App\Models\Asesmen\PertanyaanTertulisPilihanGanda;
 use App\Models\Scopes\AktifScope;
 use App\Models\Scopes\SortScope;
 use App\Models\Skema;
@@ -48,6 +49,11 @@ class Unit extends Model
     public function pertanyaanTertulisEsai(): HasMany
     {
         return $this->hasMany(PertanyaanTertulisEsai::class);
+    }
+
+    public function pertanyaanTertulisPilihanGanda(): HasMany
+    {
+        return $this->hasMany(PertanyaanTertulisPilihanGanda::class);
     }
 
 }

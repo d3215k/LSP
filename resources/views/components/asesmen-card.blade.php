@@ -68,12 +68,19 @@
                 {{-- <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id) }}" wire:navigate> --}}
                 <a href="{{ route('asesi.asesmen.tertulis.esai', $asesmen->id) }}">
                     <x-filament::button>
-                        FR.IA.06 PERTANYAAN TERTULIS
+                        FR.IA.06 PERTANYAAN TERTULIS ESAI
                     </x-filament::button>
                 </a>
             @endif
 
-            {{-- TODO: Tertulis PG --}}
+            @if (($asesmen->status->value >= 3 && $asesmen->status->value <= 6) && $asesmen->skema->tertulis_pilihan_ganda)
+                {{-- <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id) }}" wire:navigate> --}}
+                <a href="{{ route('asesi.asesmen.tertulis.pilihan.ganda', $asesmen->id) }}">
+                    <x-filament::button>
+                        FR.IA.07 PERTANYAAN TERTULIS PG
+                    </x-filament::button>
+                </a>
+            @endif
 
             @if ($asesmen->status->value >= 11)
                 <a href="{{ route('filament.app.pages.asesi.{record}.umpan-balik', $asesmen->id) }}" wire:navigate>

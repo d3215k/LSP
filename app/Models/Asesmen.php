@@ -14,6 +14,7 @@ use App\Models\Asesmen\Persetujuan;
 use App\Models\Asesmen\Rekaman;
 use App\Models\Asesmen\RincianDataPemohon;
 use App\Models\Asesmen\TertulisEsai;
+use App\Models\Asesmen\TertulisPilihanGanda;
 use App\Models\Asesmen\UmpanBalik;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -52,6 +53,11 @@ class Asesmen extends Model
         return $this->belongsTo(Asesor::class);
     }
 
+    public function admin(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'admin_id');
+    }
+
     public function periode(): BelongsTo
     {
         return $this->belongsTo(Periode::class);
@@ -80,6 +86,11 @@ class Asesmen extends Model
     public function tertulisEsai(): HasOne
     {
         return $this->hasOne(TertulisEsai::class);
+    }
+
+    public function tertulisPilihanGanda(): HasOne
+    {
+        return $this->hasOne(TertulisPilihanGanda::class);
     }
 
     public function rekaman(): HasOne

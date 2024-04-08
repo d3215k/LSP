@@ -97,9 +97,9 @@ class SkemaResource extends Resource
                                         Forms\Components\Toggle::make('tertulis_esai')
                                             ->inline(false),
                                         Forms\Components\TextInput::make('durasi_tertulis_esai'),
-                                        Forms\Components\Toggle::make('tertulis_pg')
+                                        Forms\Components\Toggle::make('tertulis_pilihan_ganda')
                                             ->inline(false),
-                                        Forms\Components\TextInput::make('durasi_tertulis_pg'),
+                                        Forms\Components\TextInput::make('durasi_tertulis_pilihan_ganda'),
                                     ]),
                             ]),
                         // Forms\Components\Tabs\Tab::make('Sub Sektor dan Bidang')

@@ -11,9 +11,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PertanyaanTertulisEsaiRelationManager extends RelationManager
+class PertanyaanTertulisPilihanGandaRelationManager extends RelationManager
 {
-    protected static string $relationship = 'pertanyaanTertulisEsai';
+    protected static string $relationship = 'pertanyaanTertulisPilihanGanda';
 
     public function form(Form $form): Form
     {
@@ -22,8 +22,19 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                 Forms\Components\RichEditor::make('pertanyaan')
                     ->required()
                     ->columnSpanFull(),
-                Forms\Components\RichEditor::make('jawaban')
-                    ->required()
+                Forms\Components\Repeater::make('pilihanJawaban')
+                    ->relationship()
+                    ->schema([
+                        Forms\Components\Toggle::make('kompeten')
+                            ->inline(false)
+                            ->default(false),
+                        Forms\Components\RichEditor::make('jawaban')
+                            ->columnSpanFull()
+                            ->required(),
+                    ])
+                    ->orderColumn('sort')
+                    ->columns(2)
+                    ->defaultItems(5)
                     ->columnSpanFull(),
                 Forms\Components\Toggle::make('aktif')
                     ->default(true)
@@ -39,8 +50,7 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('pertanyaan')
                     ->html()
-                    ->wrap()
-                    ,
+                    ->wrap(),
                 Tables\Columns\ToggleColumn::make('aktif')
                     ->sortable(),
             ])
@@ -48,8 +58,7 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make()
-                    ->modalHeading('Buat Pertanyaan Tertulis Esai'),
+                Tables\Actions\CreateAction::make(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

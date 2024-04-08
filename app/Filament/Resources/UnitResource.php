@@ -124,6 +124,7 @@ class UnitResource extends Resource
             RelationManagers\ElementsRelationManager::class,
             RelationManagers\PertanyaanObservasiPendukungRelationManager::class,
             RelationManagers\PertanyaanTertulisEsaiRelationManager::class,
+            RelationManagers\PertanyaanTertulisPilihanGandaRelationManager::class,
         ];
     }
 

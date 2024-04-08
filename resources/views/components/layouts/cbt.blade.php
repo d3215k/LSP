@@ -6,6 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @filamentStyles
     @vite('resources/css/app.css')
+
+    <style>
+        figcaption {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <!-- Page Container -->
@@ -42,7 +48,7 @@
 
             <!-- Right Section -->
             <div class="flex items-center space-x-2">
-                <span class="text-white font-semibold">{{ auth()->user()->name }}</span>
+                {{-- <span class="text-white font-semibold">{{ auth()->user()->name }}</span> --}}
             </div>
             <!-- END Right Section -->
         </div>

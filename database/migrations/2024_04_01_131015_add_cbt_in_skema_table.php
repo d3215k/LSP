@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('skema', function (Blueprint $table) {
             $table->boolean('tertulis_esai')->default(false);
             $table->unsignedInteger('durasi_tertulis_esai')->default(60);
-            $table->boolean('tertulis_pg')->default(true);
-            $table->unsignedInteger('durasi_tertulis_pg')->default(60);
+            $table->boolean('tertulis_pilihan_ganda')->default(true);
+            $table->unsignedInteger('durasi_tertulis_pilihan_ganda')->default(60);
         });
     }
 
@@ -27,8 +27,8 @@ return new class extends Migration
         Schema::table('skema', function (Blueprint $table) {
             $table->dropColumn('tertulis_esai');
             $table->dropColumn('durasi_tertulis_esai');
-            $table->dropColumn('tertulis_pg');
-            $table->dropColumn('durasi_tertulis_pg');
+            $table->dropColumn('tertulis_pilihan_ganda');
+            $table->dropColumn('durasi_tertulis_pilihan_ganda');
         });
     }
 };
