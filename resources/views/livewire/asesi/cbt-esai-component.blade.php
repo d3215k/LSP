@@ -6,7 +6,7 @@
         <div class="p-6 space-y-6">
             <div class="text-wrap">
                 <div class="fi-ta-col-wrp max-w-screen-lg prose dark:prose-invert bg-white dark:bg-gray-900">
-                    {!! $pertanyaan->pertanyaan !!}
+                    {!! $this->pertanyaan->pertanyaan !!}
                 </div>
             </div>
 
@@ -22,15 +22,11 @@
                 @endif
 
                 @if ((int) $this->selectedPertanyaan === count($this->pertanyaanEsai) - 1)
-                {{ $this->finishAction }}
-
-                {{-- <x-filament::button wire:click="finish" icon="heroicon-m-check" icon-position="after">
-                    Selesai
-                </x-filament::button> --}}
+                    {{ $this->finishAction }}
                 @else
-                <x-filament::button wire:click="next" icon="heroicon-m-chevron-right" icon-position="after">
-                    Selanjutnya
-                </x-filament::button>
+                    <x-filament::button wire:click="next" icon="heroicon-m-chevron-right" icon-position="after">
+                        Selanjutnya
+                    </x-filament::button>
                 @endif
             </div>
 

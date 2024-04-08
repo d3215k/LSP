@@ -28,7 +28,16 @@ class CbtOnboardingTertulisEsaiComponent extends Component implements HasForms, 
 
     #[Computed(persist: true)]
     public function asesmen() {
-        return Asesmen::find($this->asesmenId);
+        $asesmen = Asesmen::select('id', 'asesi_id', 'skema_id')
+            ->find($this->asesmenId);
+
+        $asesmen->load(
+            'skema:id,nama,durasi_tertulis_esai',
+            'tertulisEsai:status,asesmen_id',
+            'asesi:id,nama'
+        );
+
+        return $asesmen;
     }
 
     public function asesmenInfolist(Infolist $infolist): Infolist
@@ -44,6 +53,7 @@ class CbtOnboardingTertulisEsaiComponent extends Component implements HasForms, 
                     ->suffix(' menit'),
                 TextEntry::make('tertulisEsai.status')
                     ->label('Status')
+                    ->badge()
                     ->hidden(fn (Asesmen $asesmen) => ! $asesmen->tertulisEsai)
             ]);
     }

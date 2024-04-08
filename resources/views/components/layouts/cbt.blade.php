@@ -48,7 +48,7 @@
 
             <!-- Right Section -->
             <div class="flex items-center space-x-2">
-                {{-- <span class="text-white font-semibold">{{ auth()->user()->name }}</span> --}}
+                <span class="text-white font-semibold">{{ auth()->user()->name }}</span>
             </div>
             <!-- END Right Section -->
         </div>

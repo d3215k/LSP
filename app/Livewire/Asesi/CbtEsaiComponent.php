@@ -32,16 +32,29 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
     #[Url()]
     public $selectedPertanyaan = 0;
 
+    public function mount()
+    {
+        $this->fetch();
+    }
+
     #[Computed(persist: true)]
     public function asesmen() {
-        $asesmen = Asesmen::find($this->asesmenId);
-        $asesmen->load('skema');
+        $asesmen = Asesmen::select('id', 'skema_id')
+            ->find($this->asesmenId);
+
+        $asesmen->load(
+            'skema:id,durasi_tertulis_esai',
+            'skema.unit:id,skema_id'
+        );
+
         return $asesmen;
     }
 
     #[Computed(persist: true)]
     public function tertulisEsai() {
-        return TertulisEsai::where('asesmen_id', $this->asesmen->id)->first();
+        return TertulisEsai::where('asesmen_id', $this->asesmen->id)
+            ->select('id','created_at')
+            ->first();
     }
 
     #[Computed(persist: true)]
@@ -53,6 +66,7 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
     #[Computed(persist: true)]
     public function pertanyaanEsai() {
         return PertanyaanTertulisEsai::whereIn('unit_id', $this->unitIds)
+            ->select('id','pertanyaan')
             ->get();
     }
 
@@ -63,6 +77,22 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
             ->where('asesmen_tertulis_esai_id', $this->tertulisEsai?->id)
             ->pluck('jawaban', 'pertanyaan_tertulis_esai_id')
             ->toArray();
+    }
+
+    #[Computed(persist: true)]
+    public function pertanyaan()
+    {
+        return $this->pertanyaanEsai[$this->selectedPertanyaan] ?? [];
+    }
+
+    #[Computed(persist: true)]
+    public function jawaban()
+    {
+        return JawabanTertulisEsai::query()
+            ->where('asesmen_tertulis_esai_id', $this->tertulisEsai?->id)
+            ->where('pertanyaan_tertulis_esai_id', $this->pertanyaan->id)
+            ->select('jawaban')
+            ->first();
     }
 
     public function form(Form $form): Form
@@ -76,11 +106,23 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
             ->statePath('data');
     }
 
+    public function fetch()
+    {
+        $this->save();
+
+        unset($this->pertanyaan);
+        unset($this->jawaban);
+
+        $this->form->fill([
+            'jawaban' => $this->jawaban?->jawaban,
+            'pertanyaan_tertulis_esai_id' => $this->pertanyaan->id
+        ]);
+    }
+
     public function prev()
     {
         $this->selectedPertanyaan--;
-        $this->save();
-        unset($this->jawaban);
+        $this->fetch();
 
     }
 
@@ -96,8 +138,7 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
             $this->selectedPertanyaan++;
         }
 
-        $this->save();
-        unset($this->jawaban);
+        $this->fetch();
 
     }
 
@@ -145,29 +186,8 @@ class CbtEsaiComponent extends Component implements HasForms, HasActions
         unset($this->jawabanTertulisEsai);
     }
 
-    #[Computed(persist: true)]
-    public function jawaban()
-    {
-        $pertanyaan = $this->pertanyaanEsai[$this->selectedPertanyaan];
-
-        return JawabanTertulisEsai::query()
-            ->where('asesmen_tertulis_esai_id', $this->tertulisEsai?->id)
-            ->where('pertanyaan_tertulis_esai_id', $pertanyaan->id)
-            ->select('jawaban')
-            ->first();
-    }
-
     public function render()
     {
-        $pertanyaan = $this->pertanyaanEsai[$this->selectedPertanyaan];
-
-        $this->form->fill([
-            'jawaban' => $this->jawaban?->jawaban,
-            'pertanyaan_tertulis_esai_id' => $pertanyaan->id
-        ]);
-
-        return view('livewire.asesi.cbt-esai-component', [
-            'pertanyaan' => $pertanyaan,
-        ]);
+        return view('livewire.asesi.cbt-esai-component');
     }
 }

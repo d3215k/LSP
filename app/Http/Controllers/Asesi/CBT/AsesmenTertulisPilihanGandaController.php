@@ -14,9 +14,10 @@ class AsesmenTertulisPilihanGandaController extends Controller
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
-        $asesmen = Asesmen::findOrFail((int) $asesmenId);
+        $asesmen = Asesmen::select('id')
+            ->findOrFail((int) $asesmenId);
 
-        $asesmen->load('tertulisPilihanGanda');
+        $asesmen->load('tertulisPilihanGanda:status,asesmen_id');
 
         return view('asesi.cbt.pg', [
             'asesmen' => $asesmen

@@ -28,7 +28,16 @@ class CbtOnboardingTertulisPilihanGandaComponent extends Component implements Ha
 
     #[Computed(persist: true)]
     public function asesmen() {
-        return Asesmen::find($this->asesmenId);
+        $asesmen = Asesmen::select('id', 'asesi_id', 'skema_id')
+            ->find($this->asesmenId);
+
+        $asesmen->load(
+            'skema:id,nama,durasi_tertulis_pilihan_ganda',
+            'tertulisPilihanGanda:status,asesmen_id',
+            'asesi:id,nama'
+        );
+
+        return $asesmen;
     }
 
     public function asesmenInfolist(Infolist $infolist): Infolist
@@ -44,6 +53,7 @@ class CbtOnboardingTertulisPilihanGandaComponent extends Component implements Ha
                     ->suffix(' menit'),
                 TextEntry::make('tertulisPilihanGanda.status')
                     ->label('Status')
+                    ->badge()
                     ->hidden(fn (Asesmen $asesmen) => ! $asesmen->tertulisPilihanGanda)
             ]);
     }

@@ -6,11 +6,11 @@
         <div class="p-6 space-y-3">
             <div class="text-wrap">
                 <div class="fi-ta-col-wrp max-w-screen-lg prose dark:prose-invert bg-white dark:bg-gray-900">
-                    {!! $pertanyaan->pertanyaan !!}
+                    {!! $this->pertanyaan->pertanyaan !!}
                 </div>
 
             </div>
-            @foreach ($pertanyaan->pilihanJawaban as $pilihanJawaban)
+            @foreach ($this->pertanyaan->pilihanJawaban as $pilihanJawaban)
             <div class="flex items-center gap-x-3">
                 <input
                     id="pilihan-jawaban.{{ $pilihanJawaban->id }}"
@@ -40,15 +40,11 @@
             @endif
 
             @if ((int) $this->selectedPertanyaan === count($this->pertanyaanPilihanGanda) - 1)
-            {{ $this->finishAction }}
-
-            {{-- <x-filament::button wire:click="finish" icon="heroicon-m-check" icon-position="after">
-                Selesai
-            </x-filament::button> --}}
+                {{ $this->finishAction }}
             @else
-            <x-filament::button wire:click="next" icon="heroicon-m-chevron-right" icon-position="after">
-                Selanjutnya
-            </x-filament::button>
+                <x-filament::button wire:click="next" icon="heroicon-m-chevron-right" icon-position="after">
+                    Selanjutnya
+                </x-filament::button>
             @endif
         </div>
     </div>

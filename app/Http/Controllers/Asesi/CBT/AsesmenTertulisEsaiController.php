@@ -14,7 +14,10 @@ class AsesmenTertulisEsaiController extends Controller
     {
         abort_unless(auth()->user()->isAsesi, 403);
 
-        $asesmen = Asesmen::findOrFail($asesmenId);
+        $asesmen = Asesmen::select('id')
+            ->findOrFail($asesmenId);
+
+        $asesmen->load('tertulisEsai:status,asesmen_id');
 
         return view('asesi.cbt.esai', [
             'asesmen' => $asesmen

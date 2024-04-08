@@ -35,10 +35,21 @@ class CbtPilihanGandaComponent extends Component implements HasForms, HasActions
     #[Url()]
     public $selectedPertanyaan = 0;
 
+    public function mount()
+    {
+        $this->fetch();
+    }
+
     #[Computed(persist: true)]
     public function asesmen() {
-        $asesmen = Asesmen::find($this->asesmenId);
-        $asesmen->load('skema');
+        $asesmen = Asesmen::select('id', 'skema_id')
+            ->find($this->asesmenId);
+
+        $asesmen->load(
+            'skema:id,durasi_tertulis_pilihan_ganda',
+            'skema.unit:id,skema_id'
+        );
+
         return $asesmen;
     }
 
@@ -56,7 +67,7 @@ class CbtPilihanGandaComponent extends Component implements HasForms, HasActions
     #[Computed(persist: true)]
     public function pertanyaanPilihanGanda() {
         return PertanyaanTertulisPilihanGanda::whereIn('unit_id', $this->unitIds)
-            ->with('pilihanJawaban')
+            ->with('pilihanJawaban:pertanyaan_tertulis_pilihan_ganda_id,id,jawaban')
             ->get();
     }
 
@@ -69,26 +80,38 @@ class CbtPilihanGandaComponent extends Component implements HasForms, HasActions
             ->toArray();
     }
 
-    // public function form(Form $form): Form
-    // {
-    //     return $form
-    //         ->schema([
-    //             Hidden::make('pertanyaan_tertulis_pilihan_ganda_id'),
-    //             Radio::make('pilihan_jawaban_id')
-    //                 ->hiddenLabel()
-    //                 ->options(
-    //                     $this->pertanyaanPilihanGanda[$this->selectedPertanyaan]->pilihanJawaban->pluck('jawaban', 'id')
-    //                 )
-    //         ])
-    //         ->statePath('data');
-    // }
+    #[Computed(persist: true)]
+    public function jawaban()
+    {
+        return JawabanTertulisPilihanGanda::query()
+            ->where('asesmen_tertulis_pilihan_ganda_id', $this->tertulisPilihanGanda?->id)
+            ->where('pertanyaan_tertulis_pilihan_ganda_id', $this->pertanyaan->id)
+            ->select('pilihan_jawaban_id')
+            ->first();
+    }
+
+    #[Computed(persist: true)]
+    public function pertanyaan()
+    {
+        return $this->pertanyaanPilihanGanda[$this->selectedPertanyaan];
+    }
+
+    public function fetch()
+    {
+        $this->save();
+
+        unset($this->pertanyaan);
+        unset($this->jawaban);
+
+        $this->data['pertanyaan_tertulis_pilihan_ganda_id'] = $this->pertanyaan->id;
+        $this->data['pilihan_jawaban_id'] = $this->jawaban?->pilihan_jawaban_id;
+    }
 
     public function prev()
     {
         $this->selectedPertanyaan--;
 
-        $this->save();
-        unset($this->jawaban);
+        $this->fetch();
     }
 
     public function next($index = null)
@@ -103,8 +126,7 @@ class CbtPilihanGandaComponent extends Component implements HasForms, HasActions
             $this->selectedPertanyaan++;
         }
 
-        $this->save();
-        unset($this->jawaban);
+        $this->fetch();
     }
 
     public function save()
@@ -151,31 +173,11 @@ class CbtPilihanGandaComponent extends Component implements HasForms, HasActions
             ->icon('heroicon-m-check')
             ->modalHeading('Selesaikan Asesmen')
             ->modalDescription('Yakin ingin menyelesaikan dan mengakhiri Asesmen Tertulis?')
-            ->modalSubmitActionLabel('Selesaikan')
-            ;
-    }
-
-    #[Computed(persist: true)]
-    public function jawaban()
-    {
-        $pertanyaan = $this->pertanyaanPilihanGanda[$this->selectedPertanyaan];
-
-        return JawabanTertulisPilihanGanda::query()
-            ->where('asesmen_tertulis_pilihan_ganda_id', $this->tertulisPilihanGanda?->id)
-            ->where('pertanyaan_tertulis_pilihan_ganda_id', $pertanyaan->id)
-            ->select('pilihan_jawaban_id')
-            ->first();
+            ->modalSubmitActionLabel('Selesaikan');
     }
 
     public function render()
     {
-        $pertanyaan = $this->pertanyaanPilihanGanda[$this->selectedPertanyaan];
-
-        $this->data['pertanyaan_tertulis_pilihan_ganda_id'] = $pertanyaan->id;
-        $this->data['pilihan_jawaban_id'] = $this->jawaban?->pilihan_jawaban_id;
-
-        return view('livewire.asesi.cbt-pilihan-ganda-component', [
-            'pertanyaan' => $pertanyaan,
-        ]);
+        return view('livewire.asesi.cbt-pilihan-ganda-component');
     }
 }

@@ -1,6 +1,6 @@
 <x-layouts.cbt>
     <x-slot name="heading">
-        <h1 class="text-2xl font-semibold">FR.IA.06 PERTANYAAN TERTULIS PILIHAN GANDA</h1>
+        <h1 class="text-2xl font-semibold">FR.IA.05 PERTANYAAN TERTULIS PILIHAN GANDA</h1>
     </x-slot>
 
     @if (isset($asesmen->tertulisPilihanGanda) && $asesmen->tertulisPilihanGanda?->status === \App\Enums\AsesmenTertulisStatus::MULAI)

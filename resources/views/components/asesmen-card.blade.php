@@ -77,7 +77,7 @@
                 {{-- <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id) }}" wire:navigate> --}}
                 <a href="{{ route('asesi.asesmen.tertulis.pilihan.ganda', $asesmen->id) }}">
                     <x-filament::button>
-                        FR.IA.07 PERTANYAAN TERTULIS PG
+                        FR.IA.05 PERTANYAAN TERTULIS PG
                     </x-filament::button>
                 </a>
             @endif
