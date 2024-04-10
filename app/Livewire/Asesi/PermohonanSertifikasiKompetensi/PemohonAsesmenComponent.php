@@ -48,6 +48,8 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
             ->schema([
                 SignaturePad::make('ttd_asesi')
                     ->label(__('Tanda tangan asesi'))
+                    ->penColor('black')
+                    ->penColorOnDark('black')
                     ->maxWidth(100)
                     ->dotSize(2.0)
                     ->lineMinWidth(0.5)
@@ -104,7 +106,7 @@ class PemohonAsesmenComponent extends Component implements HasForms, HasInfolist
             $this->asesmen->update(['ttd_asesi' => $ttd]);
             $this->dispatch('rincian-saved');
 
-            // return to_route('filament.app.pages.beranda');
+            // return to_route('asesi.beranda');
             Notification::make()->title('Berhasil!')->body('Permohonan Sertifikasi Kompetensi Anda Sudah Terkirim')->success()->send();
         } catch (\Throwable $th) {
             Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();

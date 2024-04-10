@@ -52,7 +52,7 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
     public function mount()
     {
         if (! auth()->user()->isAsesor) {
-            return to_route('filament.app.pages.beranda');
+            return to_route('asesi.beranda');
         }
     }
 
@@ -141,7 +141,7 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                     ->options(RekomendasiAsesmenMandiri::class),
             ])
             ->actions([
-                Action::make('nilai')
+                Action::make('Periksa')
                     ->button()
                     ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{record}.penilaian', $record))
             ])
@@ -175,6 +175,8 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                             ->options(RekomendasiAsesmenMandiri::class)
                             ->required(),
                         SignaturePad::make('ttd_asesor')
+                            ->penColor('black')
+                            ->penColorOnDark('black')
                             ->inlineLabel()
                             ->label('Tanda tangan Asesor'),
                     ])

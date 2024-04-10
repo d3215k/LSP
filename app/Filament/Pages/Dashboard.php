@@ -12,7 +12,7 @@ class Dashboard extends \Filament\Pages\Dashboard
     public function mount()
     {
         if (auth()->user()->isAsesi) {
-            return to_route('filament.app.pages.beranda');
+            return to_route('asesi.beranda');
         }
     }
 }

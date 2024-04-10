@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::table('skema', function (Blueprint $table) {
             $table->boolean('tertulis_esai')->default(false);
             $table->unsignedInteger('durasi_tertulis_esai')->default(60);
-            $table->boolean('tertulis_pilihan_ganda')->default(true);
+            $table->boolean('tertulis_pilihan_ganda')->default(false);
             $table->unsignedInteger('durasi_tertulis_pilihan_ganda')->default(60);
         });
     }

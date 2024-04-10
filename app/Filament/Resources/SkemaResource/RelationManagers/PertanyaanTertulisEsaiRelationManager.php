@@ -26,6 +26,7 @@ class PertanyaanTertulisEsaiRelationManager extends RelationManager
                         Unit::where('skema_id', $this->getOwnerRecord()->id)
                             ->pluck('judul', 'id')
                     )
+                    ->required()
                     ->columnSpanFull(),
                 Forms\Components\RichEditor::make('pertanyaan')
                     ->required()

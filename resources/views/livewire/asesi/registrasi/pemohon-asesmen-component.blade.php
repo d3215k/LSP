@@ -1,6 +1,6 @@
 <div>
-    <x-filament::fieldset>
-        <x-slot name="label">
+    <x-filament::section>
+        <x-slot name="heading">
             Pemohon/Kandidat
         </x-slot>
 
@@ -19,7 +19,7 @@
             @endif
         </div>
 
-    </x-filament::fieldset>
+    </x-filament::section>
 
     @if (!$asesmen->ttd_asesi)
     <x-filament::button class="mt-4" wire:click="handleSubmit" wire:confirm="Anda yakin untuk submit Pendaftaran APL 01?">

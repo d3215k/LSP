@@ -90,7 +90,7 @@ class User extends Authenticatable
         return match((int)$this->type) {
             1 => route('filament.app.pages.dashboard'),
             2 => route('filament.app.pages.dashboard'),
-            3 => route('filament.app.pages.beranda'),
+            3 => route('asesi.beranda'),
         };
     }
 

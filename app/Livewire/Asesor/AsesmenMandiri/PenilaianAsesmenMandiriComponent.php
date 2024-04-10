@@ -78,6 +78,8 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
             ->schema([
                 SignaturePad::make('ttd_asesor')
                     ->label('Tanda tangan asesor')
+                    ->penColor('black')
+                    ->penColorOnDark('black')
                     ->columnSpan(1),
             ])
             ->columns(4);

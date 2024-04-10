@@ -47,7 +47,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
     public function mount()
     {
         if (! auth()->user()->isAsesor) {
-            return to_route('filament.app.pages.beranda');
+            return to_route('asesi.beranda');
         }
     }
 

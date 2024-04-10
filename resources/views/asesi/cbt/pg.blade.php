@@ -1,4 +1,4 @@
-<x-layouts.cbt>
+<x-layouts.app>
     <x-slot name="heading">
         <h1 class="text-2xl font-semibold">FR.IA.05 PERTANYAAN TERTULIS PILIHAN GANDA</h1>
     </x-slot>
@@ -9,4 +9,4 @@
         <livewire:asesi.cbt-onboarding-tertulis-pilihan-ganda-component :asesmenId="$asesmen->id" />
     @endif
 
-</x-layouts.cbt>
+</x-layouts.app>

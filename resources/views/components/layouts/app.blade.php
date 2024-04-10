@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-    <title>{{ config('app.name') }}</title>
+    <title>{{ $title ?? config('app.name') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @filamentStyles
@@ -168,7 +168,7 @@
     <div class="dark h-48 bg-primary-900 text-gray-100">
         <div class="container mx-auto px-4 lg:px-8 xl:max-w-7xl">
             <div class="flex items-center py-4">
-                {{ $heading ?? '' }}
+                <div class="font-bold text-2xl">{{ $title ?? '' }}</div>
             </div>
         </div>
     </div>

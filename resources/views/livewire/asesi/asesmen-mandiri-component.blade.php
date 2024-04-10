@@ -1,7 +1,7 @@
-<div>
-    <h5 class="mb-6 text-base font-semibold leading-6 text-gray-950 dark:text-white">
+<x-filament::section>
+    <x-slot name="heading">
         Bagian 2 : Asesmen Mandiri
-    </h5>
+    </x-slot>
 
     <div class="space-y-6">
         @foreach ($asesmen->skema->unit as $unit)
@@ -160,4 +160,4 @@
             simpan
         </x-filament::button>
     </div>
-</div>
+</x-filament::section>

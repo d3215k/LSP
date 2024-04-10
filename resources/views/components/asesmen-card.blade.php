@@ -30,7 +30,7 @@
 
         {{-- @php
             $route = match($asesmen->status->value) {
-                1 => route('filament.app.pages.asesi.{record}.permohonan-sertifikasi-kompetensi', $asesmen->id),
+                1 => route('asesi.permohonan.asesmen', $asesmen->id),
                 2 => route('filament.app.pages.asesi.{record}.asesmen-mandiri', $asesmen->id),
                 3,4,5,6 => route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id),
                 11,12,13 => route('filament.app.pages.asesi.{record}.umpan-balik', $asesmen->id),
@@ -46,10 +46,10 @@
             };
         @endphp --}}
 
-        <div class="flex flex-col md:flex-row gap-4 mt-4">
+        <div class="flex flex-col md:flex-row md:flex-wrap gap-4 mt-4">
 
-            @if ($asesmen->status->value >= 2)
-                <a href="{{ route('filament.app.pages.asesi.{record}.permohonan-sertifikasi-kompetensi', $asesmen->id) }}" wire:navigate>
+            @if ($asesmen->status->value >= 1)
+                <a href="{{ route('asesi.permohonan.asesmen', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.APL.01 PERMOHONAN SERTIFIKASI KOMPETENSI
                     </x-filament::button>
@@ -57,7 +57,7 @@
             @endif
 
             @if ($asesmen->status->value === 2)
-                <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-mandiri', $asesmen->id) }}" wire:navigate>
+                <a href="{{ route('asesi.asesmen.mandiri', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.APL.02 ASESMEN MANDIRI
                     </x-filament::button>
@@ -65,8 +65,7 @@
             @endif
 
             @if (($asesmen->status->value >= 3 && $asesmen->status->value <= 6) && $asesmen->skema->tertulis_esai)
-                {{-- <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id) }}" wire:navigate> --}}
-                <a href="{{ route('asesi.asesmen.tertulis.esai', $asesmen->id) }}">
+                <a href="{{ route('asesi.asesmen.tertulis.esai', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.IA.06 PERTANYAAN TERTULIS ESAI
                     </x-filament::button>
@@ -74,8 +73,7 @@
             @endif
 
             @if (($asesmen->status->value >= 3 && $asesmen->status->value <= 6) && $asesmen->skema->tertulis_pilihan_ganda)
-                {{-- <a href="{{ route('filament.app.pages.asesi.{record}.asesmen-tertulis-esai', $asesmen->id) }}" wire:navigate> --}}
-                <a href="{{ route('asesi.asesmen.tertulis.pilihan.ganda', $asesmen->id) }}">
+                <a href="{{ route('asesi.asesmen.tertulis.pilihan.ganda', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.IA.05 PERTANYAAN TERTULIS PG
                     </x-filament::button>
@@ -83,7 +81,7 @@
             @endif
 
             @if ($asesmen->status->value >= 11)
-                <a href="{{ route('filament.app.pages.asesi.{record}.umpan-balik', $asesmen->id) }}" wire:navigate>
+                <a href="{{ route('asesi.umpan.balik.dan.catatan.asesmen', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.AK.03 UMPAN BALIK DAN CATATAN ASESMEN
                     </x-filament::button>
@@ -91,7 +89,7 @@
             @endif
 
             @if ($asesmen->status->value >= 11 )
-                <a href="{{ route('filament.app.pages.asesi.{record}.banding-asesmen', $asesmen->id) }}" wire:navigate>
+                <a href="{{ route('asesi.banding.asesmen', $asesmen->id) }}" wire:navigate>
                     <x-filament::button>
                         FR.AK.04 BANDING ASESMEN
                     </x-filament::button>

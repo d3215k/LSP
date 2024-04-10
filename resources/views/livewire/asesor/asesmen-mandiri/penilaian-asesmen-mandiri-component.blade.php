@@ -28,7 +28,7 @@
 
     </x-filament::section>
 
-    <x-filament::button class="mt-4" wire:click="handleSubmit">
+    <x-filament::button class="mt-6" wire:click="handleSubmit">
         Simpan
     </x-filament::button>
 </div>

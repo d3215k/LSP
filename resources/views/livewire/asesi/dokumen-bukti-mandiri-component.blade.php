@@ -1,14 +1,14 @@
-<div>
-    <h5 class="text-base font-semibold leading-6 text-gray-950 dark:text-white">
+<x-filament::section>
+    <x-slot name="heading">
         Bagian 1 : Dokumen Bukti Asesmen Mandiri
-    </h5>
+    </x-slot>
 
-    <p class="text-sm text-gray-500 dark:text-gray-400">
+    <x-slot name="description">
         Upload Semua Dokumen Bukti-bukti Untuk Mendukung Asesmen Mandiri
-    </p>
+    </x-slot>
 
     <div class="mt-6">
         {{ $this->table }}
     </div>
 
-</div>
+</x-filament::section>

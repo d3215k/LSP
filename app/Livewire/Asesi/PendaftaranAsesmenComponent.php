@@ -88,7 +88,7 @@ class PendaftaranAsesmenComponent extends Component implements HasForms
 
             $asesmen = Asesmen::updateOrCreate($data);
 
-            return to_route('filament.app.pages.asesi.{record}.permohonan-sertifikasi-kompetensi', $asesmen->id);
+            return to_route('asesi.permohonan.asesmen', $asesmen->id);
 
         } catch (\Throwable $th) {
             Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
