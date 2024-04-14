@@ -14,6 +14,7 @@ enum AsesmenStatus: int implements HasLabel, HasColor
     case OBSERVASI_AKTIVITAS = 4;
     case OBSERVASI_PENDUKUNG = 5;
     case TERTULIS_ESAI = 6;
+    case TERTULIS_PILIHAN_GANDA = 7;
 
     case SELESAI_KOMPETEN = 11;
     case SELESAI_BELUM_KOMPETEN = 12;
@@ -28,7 +29,8 @@ enum AsesmenStatus: int implements HasLabel, HasColor
             self::PERSETUJUAN => 'Diterima dan Dijadwalkan',
             self::OBSERVASI_AKTIVITAS => 'Observasi Aktivitas',
             self::OBSERVASI_PENDUKUNG => 'Pertanyaan Pendukung Observasi',
-            self::TERTULIS_ESAI => 'Pertanyaan Tertulis',
+            self::TERTULIS_ESAI => 'Pertanyaan Tertulis Esai',
+            self::TERTULIS_PILIHAN_GANDA => 'Pertanyaan Tertulis Pilihan Ganda',
             self::SELESAI_KOMPETEN => 'Kompeten',
             self::SELESAI_BELUM_KOMPETEN => 'Belum Kompeten',
             self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'Belum Kompeten, Perlu Tindak Lanjut',
@@ -45,6 +47,7 @@ enum AsesmenStatus: int implements HasLabel, HasColor
             self::OBSERVASI_AKTIVITAS => 'warning',
             self::OBSERVASI_PENDUKUNG => 'warning',
             self::TERTULIS_ESAI => 'warning',
+            self::TERTULIS_PILIHAN_GANDA => 'warning',
             self::SELESAI_KOMPETEN => 'success',
             self::SELESAI_BELUM_KOMPETEN => 'danger',
             self::SELESAI_BELUM_KOMPETEN_PERLU_TINDAK_LANJUT => 'danger',

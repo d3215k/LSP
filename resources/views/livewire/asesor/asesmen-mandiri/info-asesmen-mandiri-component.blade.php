@@ -8,7 +8,7 @@
                             <thead class="bg-gray-100 divide-y divide-gray-200 dark:bg-white/5">
                                 <tr class="divide-x divide-gray-200">
                                     <th colspan="4" class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                                        <span class="flex items-center justify-start w-full group gap-x-1 whitespace-nowrap">
+                                        <span class="flex items-center justify-start w-full group gap-x-1">
                                             <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                 Unit Kompetensi {{ $loop->iteration }} : {{ $unit->kode . ' ' . $unit->judul }}
                                             </span>
@@ -31,7 +31,7 @@
                                         </span>
                                     </th>
                                     <th class="px-3 py-2 fi-ta-header-cell sm:first-of-type:ps-6 sm:last-of-type:pe-6">
-                                        <span class="flex items-center justify-center w-full group gap-x-1 whitespace-nowrap">
+                                        <span class="flex items-center justify-center w-full group gap-x-1">
                                             <span class="text-sm font-semibold fi-ta-header-cell-label text-gray-950 dark:text-white">
                                                 Bukti Yang Relevan
                                             </span>
@@ -40,7 +40,7 @@
                                 </tr>
                             </thead>
 
-                            <tbody class="divide-y divide-gray-200 whitespace-nowrap dark:divide-white/5">
+                            <tbody class="divide-y divide-gray-200 dark:divide-white/5">
                                 @foreach($unit->elemen as $elemen)
                                     <tr wire:key="{{ $elemen->id }}" class="divide-x divide-gray-200 fi-ta-row [@media(hover:hover)]:transition [@media(hover:hover)]:duration-75">
                                         <td class="p-0 fi-ta-cell first-of-type:ps-1 last-of-type:pe-1 sm:first-of-type:ps-3 sm:last-of-type:pe-3">

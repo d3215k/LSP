@@ -11,16 +11,20 @@ use App\Models\Asesmen\Mandiri;
 use App\Models\Asesmen\ObservasiAktivitas;
 use App\Models\Asesmen\ObservasiPendukung;
 use App\Models\Asesmen\Persetujuan;
+use App\Models\Asesmen\PertanyaanTertulisPilihanGanda;
 use App\Models\Asesmen\Rekaman;
 use App\Models\Asesmen\RincianDataPemohon;
 use App\Models\Asesmen\TertulisEsai;
 use App\Models\Asesmen\TertulisPilihanGanda;
 use App\Models\Asesmen\UmpanBalik;
+use App\Models\Skema\Unit;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 
 class Asesmen extends Model
 {

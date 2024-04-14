@@ -17,6 +17,15 @@ class EditAsesmen extends EditRecord
 {
     protected static string $resource = AsesmenResource::class;
 
+    protected static ?string $title = 'FR.APL.01';
+
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    public function getHeading(): string
+    {
+        return $this->getRecord()->asesi->nama;
+    }
+
     protected function getHeaderActions(): array
     {
         return [
