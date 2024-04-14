@@ -288,6 +288,15 @@ class AsesmenResource extends Resource
     {
         return $page->generateNavigationItems([
             AsesmenResource\Pages\EditAsesmen::class,
+            AsesmenResource\Pages\AsesmenMandiriPage::class,
+            AsesmenResource\Pages\PersetujuanAsesmenDanKerahasiaanPage::class,
+            AsesmenResource\Pages\CeklisObservasiAktivitasPage::class,
+            AsesmenResource\Pages\PertanyaanObservasiPendukungPage::class,
+            AsesmenResource\Pages\PertanyaanTertulisPilihanGandaPage::class,
+            AsesmenResource\Pages\PertanyaanTertulisEsaiPage::class,
+            AsesmenResource\Pages\RekamanAsesmenPage::class,
+            AsesmenResource\Pages\UmpanBalikDanCatatanAsesmenPage::class,
+            AsesmenResource\Pages\BandingAsesmenPage::class,
         ]);
     }
 
@@ -297,6 +306,15 @@ class AsesmenResource extends Resource
             'index' => Pages\ListAsesmens::route('/'),
             'create' => Pages\CreateAsesmen::route('/create'),
             'edit' => Pages\EditAsesmen::route('/{record}/edit'),
+            'asesmen-mandiri' => Pages\AsesmenMandiriPage::route('/{record}/asesmen-mandiri'),
+            'persetujuan-asesmen-dan-kerahasiaan' => Pages\PersetujuanAsesmenDanKerahasiaanPage::route('/{record}/persetujuan-asesmen-dan-kerahasiaan'),
+            'ceklis-observasi-aktivitas' => Pages\CeklisObservasiAktivitasPage::route('/{record}/ceklis-observasi-aktivitas'),
+            'pertanyaan-observasi-pendukung' => Pages\PertanyaanObservasiPendukungPage::route('/{record}/pertanyaan-observasi-pendukung'),
+            'pertanyaan-tertulis-pilihan-ganda' => Pages\PertanyaanTertulisPilihanGandaPage::route('/{record}/pertanyaan-tertulis-pilihan-ganda'),
+            'pertanyaan-tertulis-esai' => Pages\PertanyaanTertulisEsaiPage::route('/{record}/pertanyaan-tertulis-esai'),
+            'rekaman' => Pages\RekamanAsesmenPage::route('/{record}/rekaman'),
+            'umpan-balik-dan-catatan' => Pages\UmpanBalikDanCatatanAsesmenPage::route('/{record}/umpan-balik-dan-catatan'),
+            'banding' => Pages\BandingAsesmenPage::route('/{record}/banding'),
         ];
     }
 }

@@ -12,6 +12,7 @@ use Filament\Actions;
 use Filament\Actions\Action;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditAsesmen extends EditRecord
 {
@@ -24,6 +25,11 @@ class EditAsesmen extends EditRecord
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
+    }
+
+    public function getSubheading(): string|Htmlable|null
+    {
+        return 'Permohonan Sertifikasi Kompetensi';
     }
 
     protected function getHeaderActions(): array

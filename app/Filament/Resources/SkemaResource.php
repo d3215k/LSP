@@ -168,6 +168,7 @@ class SkemaResource extends Resource
             RelationManagers\PersyaratanRelationManager::class,
             RelationManagers\TempatUjiKompetensiRelationManager::class,
             RelationManagers\AsesorRelationManager::class,
+            RelationManagers\PertanyaanObservasiPendukungRelationManager::class,
             RelationManagers\PertanyaanTertulisEsaiRelationManager::class,
             RelationManagers\PertanyaanTertulisPilihanGandaRelationManager::class,
         ];

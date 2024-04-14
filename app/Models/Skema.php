@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\JenisSkema;
+use App\Models\Asesmen\PertanyaanObservasiPendukung;
 use App\Models\Asesmen\PertanyaanTertulisEsai;
 use App\Models\Asesmen\PertanyaanTertulisPilihanGanda;
 use App\Models\Scopes\AktifScope;
@@ -65,6 +66,11 @@ class Skema extends Model
     public function sertifikat(): HasManyThrough
     {
         return $this->hasManyThrough(Sertifikat::class, Asesmen::class);
+    }
+
+    public function pertanyaanObservasiPendukung(): HasManyThrough
+    {
+        return $this->hasManyThrough(PertanyaanObservasiPendukung::class, Unit::class);
     }
 
     public function pertanyaanTertulisEsai(): HasManyThrough
