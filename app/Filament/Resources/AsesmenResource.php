@@ -4,16 +4,19 @@ namespace App\Filament\Resources;
 
 use App\Enums\AsesmenStatus;
 use App\Enums\TujuanAsesmen;
+use App\Enums\UserType;
 use App\Filament\Resources\AsesmenResource\Pages;
 use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
 use App\Models\Asesor;
 use App\Models\Periode;
 use App\Models\Sekolah;
+use App\Support\Signature;
 use Filament\Forms;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Fieldset;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -28,6 +31,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\DB;
+use Saade\FilamentAutograph\Forms\Components\SignaturePad;
 
 class AsesmenResource extends Resource
 {
@@ -41,6 +45,11 @@ class AsesmenResource extends Resource
 
     protected static SubNavigationPosition $subNavigationPosition = SubNavigationPosition::Top;
 
+    public static function shouldRegisterNavigation(array $parameters = []): bool
+    {
+        return auth()->user()->isAdmin;
+    }
+
     public static function getEloquentQuery(): Builder
     {
         return parent::getEloquentQuery()
@@ -50,6 +59,7 @@ class AsesmenResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+            ->disabled(auth()->user()->isAsesor)
             ->schema([
                 Forms\Components\Select::make('skema_id')
                     ->relationship('skema', 'nama')
@@ -58,9 +68,6 @@ class AsesmenResource extends Resource
                 Forms\Components\Select::make('periode_id')
                     ->relationship('periode', 'nama')
                     ->options(Periode::all()->pluck('nama', 'id'))
-                    ->required(),
-                Forms\Components\Select::make('asesor_id')
-                    ->relationship('asesor', 'nama')
                     ->required(),
                 Forms\Components\Select::make('tujuan')
                     ->options(TujuanAsesmen::class),
@@ -132,19 +139,43 @@ class AsesmenResource extends Resource
                             ->label('Email Kantor')
                             ->required(),
                     ]),
-                Fieldset::make('Tanda tangan')
+                Fieldset::make('Tanda tangan Asesi')
+                    ->hidden(auth()->user()->isAsesor)
                     ->schema([
                         FileUpload::make('ttd_asesi')
                             ->label('Asesi')
                             ->directory('ttd/asesmen/asesi')
                             ->image()
                             ->maxSize(1024),
+                    ]),
+                Fieldset::make('Asesor')
+                    ->hidden(auth()->user()->isAsesor)
+                    ->schema([
                         FileUpload::make('ttd_asesor')
-                            ->label('Asesor')
+                            ->label('Tanda tangan Asesor')
                             ->directory('ttd/asesmen/asesor')
                             ->image()
                             ->maxSize(1024),
-                    ])
+                        Forms\Components\Select::make('asesor_id')
+                            ->relationship('asesor', 'nama')
+                            ->required(),
+                    ]),
+                Fieldset::make('Admin')
+                    ->hidden(auth()->user()->isAsesor)
+                    ->schema([
+                        FileUpload::make('ttd_admin')
+                            ->label('Tanda tangan Admin')
+                            ->directory('ttd/asesmen/admin')
+                            ->image()
+                            ->maxSize(1024),
+                        Forms\Components\Select::make('admin_id')
+                            ->relationship(
+                                name: 'admin',
+                                titleAttribute: 'name',
+                                modifyQueryUsing: fn (Builder $query) => $query->where('type', UserType::ADMIN),
+                                )
+                            ->required(),
+                    ]),
             ]);
     }
 
@@ -175,6 +206,13 @@ class AsesmenResource extends Resource
                     ->toggleable(
                         condition: true,
                         isToggledHiddenByDefault: false,
+                    ),
+                Tables\Columns\TextColumn::make('admin.name')
+                    ->label('Admin')
+                    ->sortable()
+                    ->toggleable(
+                        condition: true,
+                        isToggledHiddenByDefault: true,
                     ),
                 Tables\Columns\TextColumn::make('status')
                     ->sortable()
@@ -221,26 +259,41 @@ class AsesmenResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\BulkAction::make('Terima Pendaftaran')
+                    Tables\Actions\BulkAction::make('Terima Permohonan')
                         ->icon('heroicon-m-check-circle')
-                        ->requiresConfirmation()
-                        ->action(function (Collection $records): void {
+                        // ->requiresConfirmation()
+                        ->action(function (Collection $records, array $data): void {
                             try {
                                 DB::beginTransaction();
                                 foreach ($records as $record) {
+                                    $ttd = Signature::upload('ttd/asesmen/admin/', $data['ttd_admin'], $record->id);
+                                    $record->update([
+                                        'admin_id' => auth()->id(),
+                                        'ttd_admin' => $ttd
+                                    ]);
                                     if ($record->status === AsesmenStatus::REGISTRASI) {
                                         $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
                                     }
                                 }
                                 DB::commit();
-                                Notification::make()->title('Pengajuan diterima!')->success()->send();
+                                Notification::make()->title('Permohonan Sertifikat Kompetensi diterima!')->success()->send();
                             } catch (\Throwable $th) {
                                 Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
                                 report($th->getMessage());
                                 DB::rollBack();
                             }
-
                         })
+                        ->form([
+                            Placeholder::make('admin')
+                                ->label('Admin (anda)')
+                                ->content(auth()->user()->name)
+                                ->inlineLabel(),
+                            SignaturePad::make('ttd_admin')
+                                ->penColor('black')
+                                ->penColorOnDark('black')
+                                ->inlineLabel()
+                                ->label('Tanda tangan Admin'),
+                        ])
                         ->deselectRecordsAfterCompletion(),
                     Tables\Actions\BulkAction::make('Pilih Asesor')
                         ->icon('heroicon-m-user')

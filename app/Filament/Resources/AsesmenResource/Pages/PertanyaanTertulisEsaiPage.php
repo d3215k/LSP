@@ -26,6 +26,8 @@ class PertanyaanTertulisEsaiPage extends Page
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -39,14 +41,12 @@ class PertanyaanTertulisEsaiPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-
-        $this->record->load('tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
-
+        $this->isShow = $this->getRecord()->skema->tertulis_esai && isset($this->getRecord()->tertulisEsai);
     }
 
     protected function getViewData(): array
     {
-        $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanTertulisEsai');
+        $this->record->load('skema', 'tertulisEsai', 'skema.unit', 'skema.unit.pertanyaanTertulisEsai');
 
         $hasil = JawabanTertulisEsai::query()
             ->where('asesmen_tertulis_esai_id', $this->record->tertulisEsai?->id)

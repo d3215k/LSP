@@ -13,7 +13,7 @@ class AsesmenPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 
     /**
@@ -21,7 +21,7 @@ class AsesmenPolicy
      */
     public function view(User $user, Asesmen $asesmen): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 
     /**
@@ -37,7 +37,7 @@ class AsesmenPolicy
      */
     public function update(User $user, Asesmen $asesmen): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 
     /**
@@ -45,7 +45,7 @@ class AsesmenPolicy
      */
     public function delete(User $user, Asesmen $asesmen): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 
     /**
@@ -53,7 +53,7 @@ class AsesmenPolicy
      */
     public function restore(User $user, Asesmen $asesmen): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 
     /**
@@ -61,6 +61,6 @@ class AsesmenPolicy
      */
     public function forceDelete(User $user, Asesmen $asesmen): bool
     {
-        return $user->isAdmin;
+        return $user->isAdmin || $user->isAsesor;
     }
 }

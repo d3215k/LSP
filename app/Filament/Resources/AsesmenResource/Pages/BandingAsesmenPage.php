@@ -32,6 +32,8 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -45,6 +47,7 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = isset($this->getRecord()->banding);
 
         $this->form->fill($this->record->banding?->toArray());
     }

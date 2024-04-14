@@ -8,11 +8,15 @@ use App\Filament\Resources\AsesmenResource;
 use App\Models\Asesi;
 use App\Models\Asesmen;
 use App\Models\BuktiPersyaratan;
+use App\Support\Signature;
 use Filament\Actions;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Placeholder;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Support\Facades\DB;
+use Saade\FilamentAutograph\Forms\Components\SignaturePad;
 
 class EditAsesmen extends EditRecord
 {
@@ -35,19 +39,38 @@ class EditAsesmen extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            Action::make('Terima Pendaftaran')
-                ->action(function (Asesmen $record) {
+            Action::make('Terima')
+                ->action(function (Asesmen $record, array $data): void {
                     try {
-                        $record->update(['status' => AsesmenStatus::ASESMEN_MANDIRI]);
-                        Notification::make()->title('Pendaftaran diterima!')->success()->send();
+                        DB::beginTransaction();
+                        $ttd = Signature::upload('ttd/asesmen/admin/', $data['ttd_admin'], $record->id);
+                        $record->update([
+                            'status' => AsesmenStatus::ASESMEN_MANDIRI,
+                            'admin_id' => auth()->id(),
+                            'ttd_admin' => $ttd
+                        ]);
+                        DB::commit();
+                        Notification::make()->title('Permohonan Sertifikat Kompetensi diterima!')->success()->send();
                     } catch (\Throwable $th) {
                         Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
                         report($th->getMessage());
+                        DB::rollBack();
                     }
                 })
-                ->requiresConfirmation()
-                ->hidden(fn (Asesmen $record) => $record->status->value > AsesmenStatus::REGISTRASI->value),
-            Actions\DeleteAction::make(),
+                ->form([
+                    Placeholder::make('admin')
+                        ->label('Admin (anda)')
+                        ->content(auth()->user()->name)
+                        ->inlineLabel(),
+                    SignaturePad::make('ttd_admin')
+                        ->penColor('black')
+                        ->penColorOnDark('black')
+                        ->inlineLabel()
+                        ->label('Tanda tangan Admin'),
+                ])
+                ->hidden(fn (Asesmen $record) => $record->status->value > AsesmenStatus::REGISTRASI->value || auth()->user()->isAsesor),
+            Actions\DeleteAction::make()
+                ->hidden(auth()->user()->isAsesor),
         ];
     }
 }

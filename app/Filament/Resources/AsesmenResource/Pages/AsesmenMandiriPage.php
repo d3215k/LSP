@@ -21,6 +21,8 @@ class AsesmenMandiriPage extends Page
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -34,9 +36,6 @@ class AsesmenMandiriPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-
-        // $this->form->fill(
-        //     $this->getRecord()->ortu->toArray(),
-        // );
+        $this->isShow = isset($this->getRecord()->mandiri);
     }
 }

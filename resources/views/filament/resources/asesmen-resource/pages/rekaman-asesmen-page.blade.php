@@ -1,4 +1,5 @@
 <x-filament-panels::page>
+    @if ($isShow)
     <div class="fi-ta">
         <div class="overflow-hidden bg-white divide-y divide-gray-200 shadow-sm fi-ta-ctn ring-1 ring-gray-950/5 dark:divide-white/10 dark:bg-gray-900 dark:ring-white/10">
             <div class="overflow-x-auto divide-y divide-gray-200 fi-ta-content dark:divide-white/10 dark:border-t-white/10">
@@ -255,4 +256,9 @@
             simpan
         </x-filament::button>
     </div>
+    @else
+    <div class="text-gray-400 text-md text-center">
+        Menunggu FR.AK.01 Persetujuan Asesmen dan Kerahasiaan
+    </div>
+    @endif
 </x-filament-panels::page>

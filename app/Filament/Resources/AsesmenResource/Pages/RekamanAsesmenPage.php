@@ -36,6 +36,8 @@ class RekamanAsesmenPage extends Page implements HasForms
 
     public ?array $state = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -49,6 +51,7 @@ class RekamanAsesmenPage extends Page implements HasForms
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = $this->getRecord()->status->value >= 3;
 
         $this->record->load('tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 

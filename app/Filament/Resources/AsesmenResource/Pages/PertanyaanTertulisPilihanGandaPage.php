@@ -22,6 +22,8 @@ class PertanyaanTertulisPilihanGandaPage extends Page
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -35,13 +37,7 @@ class PertanyaanTertulisPilihanGandaPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-
-        $this->record->load(
-            'tertulisPilihanGanda',
-            'observasiAktivitas',
-            'observasiPendukung',
-
-        );
+        $this->isShow = $this->getRecord()->skema->tertulis_esai && $this->getRecord()->tertulisEsai;
     }
 
     protected function getViewData(): array

@@ -26,4 +26,12 @@ class ListAsesmens extends ListRecords
             AsesmenResource\Widgets\AsesmenOverview::class,
         ];
     }
+
+    public function mount(): void
+    {
+        parent::mount();
+        if (!auth()->user()->isAdmin) {
+            to_route('filament.app.pages.asesor.asesmen');
+        }
+    }
 }

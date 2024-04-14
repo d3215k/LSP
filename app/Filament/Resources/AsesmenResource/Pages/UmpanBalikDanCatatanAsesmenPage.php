@@ -30,6 +30,8 @@ class UmpanBalikDanCatatanAsesmenPage extends Page implements HasForms
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -43,6 +45,7 @@ class UmpanBalikDanCatatanAsesmenPage extends Page implements HasForms
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = isset($this->getRecord()->umpanBalik);
 
         $hasil = HasilUmpanBalik::query()
             ->where('asesmen_umpan_balik_id', $this->record->umpanBalik?->id)

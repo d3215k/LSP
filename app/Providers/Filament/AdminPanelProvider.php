@@ -29,6 +29,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('app')
             ->path('/')
             ->spa()
+            ->darkMode(false)
             ->registration(Register::class)
             ->databaseNotifications()
             ->databaseNotificationsPolling(null)

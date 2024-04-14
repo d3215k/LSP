@@ -37,6 +37,8 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->record->asesi->nama;
@@ -50,6 +52,7 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = $this->getRecord()->status->value > 2;
 
         $this->form->fill($this->getRecord()->persetujuan?->toArray());
     }

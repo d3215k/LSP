@@ -143,10 +143,10 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
             ->actions([
                 Action::make('Periksa')
                     ->button()
-                    ->url(fn (Mandiri $record): string => route('filament.app.pages.asesmen-mandiri.{record}.penilaian', $record))
+                    ->url(fn (Mandiri $record): string => route('filament.app.resources.asesmens.asesmen-mandiri', $record->asesmen))
             ])
             ->bulkActions([
-                BulkAction::make('nilai')
+                BulkAction::make('Periksa')
                     ->Action(function (Collection $records, array $data): void {
                         try {
                             DB::beginTransaction();

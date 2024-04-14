@@ -28,6 +28,8 @@ class PertanyaanObservasiPendukungPage extends Page
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->getRecord()->asesi->nama;
@@ -41,6 +43,7 @@ class PertanyaanObservasiPendukungPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = $this->getRecord()->status->value >= 3;
 
         $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanObservasiPendukung', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 

@@ -35,6 +35,8 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
 
     public ?array $data = [];
 
+    public $isShow = false;
+
     public function getHeading(): string
     {
         return $this->record->asesi->nama;
@@ -48,6 +50,7 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
+        $this->isShow = $this->getRecord()->status->value >= 3;
 
         $this->record->load('skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kriteriaUnjukKerja', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 

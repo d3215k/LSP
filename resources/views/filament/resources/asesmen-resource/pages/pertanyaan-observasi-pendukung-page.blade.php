@@ -1,4 +1,5 @@
 <x-filament-panels::page>
+    @if ($isShow)
     <div class="flex flex-col">
         <div class="space-y-6 flex-grow">
             @foreach ($record->skema->unit as $unit)
@@ -219,4 +220,9 @@
             </div>
         </div>
     </div>
+    @else
+    <div class="text-gray-400 text-md text-center">
+        Menunggu FR.AK.01 Persetujuan Asesmen dan Kerahasiaan
+    </div>
+    @endif
 </x-filament-panels::page>
