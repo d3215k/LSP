@@ -43,7 +43,7 @@ class PertanyaanObservasiPendukungPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->status->value >= 3;
+        $this->isShow = $this->getRecord()->status->value >= AsesmenStatus::PERSETUJUAN->value;
 
         $this->record->load('skema', 'skema.unit', 'skema.unit.pertanyaanObservasiPendukung', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 
@@ -73,6 +73,10 @@ class PertanyaanObservasiPendukungPage extends Page
 
     public function handleSave()
     {
+        if (! auth()->user()->isAsesor) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
         try {
             DB::beginTransaction();
             $observasi = ObservasiPendukung::updateOrCreate(

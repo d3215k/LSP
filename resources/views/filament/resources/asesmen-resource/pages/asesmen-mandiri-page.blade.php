@@ -5,7 +5,7 @@
         <livewire:asesor.asesmen-mandiri.penilaian-asesmen-mandiri-component lazy="on-load" :mandiri="$this->getRecord()->mandiri" />
     @else
         <div class="text-gray-400 text-md text-center">
-            Asesi Belum mengisi Asesmen Mandiri
+            Asesi belum mengisi Asesmen Mandiri
         </div>
     @endif
 </x-filament-panels::page>

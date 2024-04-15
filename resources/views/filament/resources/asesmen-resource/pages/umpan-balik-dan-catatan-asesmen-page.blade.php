@@ -72,6 +72,7 @@
                                                                 id="data.hasil.{{ $komponen->id }}.Y"
                                                                 name="data.hasil.{{ $komponen->id }}"
                                                                 value="Y"
+                                                                @disabled(! auth()->user()->isAdmin)
                                                                 wire:loading.attr="disabled"
                                                                 wire:model="data.hasil.{{ $komponen->id }}"
                                                             >
@@ -96,6 +97,7 @@
                                                                 id="data.hasil.{{ $komponen->id }}.T"
                                                                 name="data.hasil.{{ $komponen->id }}"
                                                                 value="T"
+                                                                @disabled(! auth()->user()->isAdmin)
                                                                 wire:loading.attr="disabled"
                                                                 wire:model="data.hasil.{{ $komponen->id }}"
                                                             >
@@ -123,6 +125,7 @@
                                                     <textarea
                                                         id="data.catatan.{{ $komponen->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAdmin)
                                                         wire:model="data.catatan.{{ $komponen->id }}"
                                                         class="block w-full border-none bg-transparent px-3 py-1.5 text-base text-gray-950 placeholder:text-gray-400 focus:ring-0 disabled:text-gray-500 disabled:[-webkit-text-fill-color:theme(colors.gray.500)] disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.400)] dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 dark:disabled:[-webkit-text-fill-color:theme(colors.gray.400)] dark:disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.500)] sm:text-sm sm:leading-6"></textarea>
                                                 </div>
@@ -137,11 +140,13 @@
             </div>
         </div>
 
+        @if (auth()->user()->isAdmin)
         <div class="mt-4">
             <x-filament::button wire:click="handleSave">
                 simpan
             </x-filament::button>
         </div>
+        @endif
     @else
         <div class="text-gray-400 text-md text-center">
             Asesi belum mengisi Umpan Balik dan Catatan Asesmen.

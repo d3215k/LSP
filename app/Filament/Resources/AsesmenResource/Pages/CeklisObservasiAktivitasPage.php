@@ -50,7 +50,7 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->status->value >= 3;
+        $this->isShow = $this->getRecord()->status->value >= AsesmenStatus::PERSETUJUAN->value;
 
         $this->record->load('skema', 'skema.unit', 'skema.unit.elemen', 'skema.unit.elemen.kriteriaUnjukKerja', 'tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 
@@ -73,6 +73,10 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
 
     public function setRekomendasiKompetensiTo($kompeten = true)
     {
+        if (! auth()->user()->isAsesor) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
         foreach ($this->kukIds as $id) {
             $this->data['kompeten'][$id] = $kompeten ? 'K' : 'BK';
         }
@@ -80,6 +84,10 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
 
     public function handleSave()
     {
+        if (! auth()->user()->isAsesor) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
         try {
             DB::beginTransaction();
             $observasi = ObservasiAktivitas::updateOrCreate(
@@ -98,8 +106,6 @@ class CeklisObservasiAktivitasPage extends Page implements HasForms, HasInfolist
                     "kompeten" => $this->data['kompeten'][$key] ?? null,
                 ];
             }
-
-            // dd($data, $observasi);
 
             foreach ($data as $key => $value) {
                 HasilObservasiAktivitas::updateOrCreate(

@@ -113,7 +113,10 @@ class LaporanAsesmenPage extends Page implements HasForms, HasTable
                     }),
             ])
             ->actions([
-                //
+                Action::make('Rekaman')
+                    ->button()
+                    ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.rekaman', $record))
+                    ->icon('heroicon-m-document-text'),
             ])
             ->bulkActions([
                 // ...

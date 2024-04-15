@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\AsesmenResource\Pages;
 
 use App\Enums\AsesmenStatus;
+use App\Enums\RekomendasiAsesmenMandiri;
 use App\Filament\Resources\AsesmenResource;
 use App\Models\Asesmen;
 use App\Models\Asesmen\Persetujuan;
@@ -52,7 +53,7 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->status->value > 2;
+        $this->isShow = $this->getRecord()->mandiri?->rekomendasi === RekomendasiAsesmenMandiri::DILANJUTKAN;
 
         $this->form->fill($this->getRecord()->persetujuan?->toArray());
     }
@@ -60,6 +61,7 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
     public function form(Form $form): Form
     {
         return $form
+            ->disabled(auth()->user()->isAdmin)
             ->schema([
                 Forms\Components\Fieldset::make('bukti')
                     ->label('Bukti yang akan dikumpulkan')
@@ -93,6 +95,12 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
 
     public function handleSubmit()
     {
+        if (auth()->user()->isAdmin) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
+        $this->validate();
+
         Persetujuan::updateOrCreate(
             [
                 'asesmen_id' => $this->record->id,
@@ -100,7 +108,9 @@ class PersetujuanAsesmenDanKerahasiaanPage extends Page implements HasForms, Has
             $this->form->getState()
         );
 
-        $this->record->update(['status' => AsesmenStatus::PERSETUJUAN]);
+        if ($this->getRecord()->status === AsesmenStatus::ASESMEN_MANDIRI) {
+            $this->getRecord()->update(['status' => AsesmenStatus::PERSETUJUAN]);
+        }
 
         Notification::make()->title('Persetujuan Tersimpan!')->success()->send();
     }

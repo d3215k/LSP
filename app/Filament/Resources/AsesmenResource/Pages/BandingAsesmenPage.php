@@ -55,6 +55,7 @@ class BandingAsesmenPage extends Page implements HasForms, HasInfolists
     public function form(Form $form): Form
     {
         return $form
+            ->disabled(! auth()->user()->isAdmin)
             ->schema([
                 Forms\Components\Radio::make('telah_dijelaskan')
                     ->boolean('Ya', 'Tidak')

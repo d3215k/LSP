@@ -96,6 +96,7 @@
                                                         id="state.observasi_demonstrasi.{{ $unit->id }}"
                                                         name="state.observasi_demonstrasi.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.observasi_demonstrasi.{{ $unit->id }}"
                                                     >
 
@@ -118,6 +119,7 @@
                                                         id="state.portofolio.{{ $unit->id }}"
                                                         name="state.portofolio.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.portofolio.{{ $unit->id }}"
                                                     >
 
@@ -140,6 +142,7 @@
                                                         id="state.pernyataan_pihak_ketiga_pertanyaan_wawancara.{{ $unit->id }}"
                                                         name="state.pernyataan_pihak_ketiga_pertanyaan_wawancara.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.pernyataan_pihak_ketiga_pertanyaan_wawancara.{{ $unit->id }}"
                                                     >
 
@@ -162,6 +165,7 @@
                                                         id="state.pertanyaan_lisan.{{ $unit->id }}"
                                                         name="state.pertanyaan_lisan.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.pertanyaan_lisan.{{ $unit->id }}"
                                                     >
 
@@ -184,6 +188,7 @@
                                                         id="state.pertanyaan_tertulis.{{ $unit->id }}"
                                                         name="state.pertanyaan_tertulis.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.pertanyaan_tertulis.{{ $unit->id }}"
                                                     >
 
@@ -206,6 +211,7 @@
                                                         id="state.proyek_kerja.{{ $unit->id }}"
                                                         name="state.proyek_kerja.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.proyek_kerja.{{ $unit->id }}"
                                                     >
 
@@ -228,6 +234,7 @@
                                                         id="state.lainnya.{{ $unit->id }}"
                                                         name="state.lainnya.{{ $unit->id }}"
                                                         wire:loading.attr="disabled"
+                                                        @disabled(! auth()->user()->isAsesor)
                                                         wire:model="state.lainnya.{{ $unit->id }}"
                                                     >
 
@@ -251,14 +258,17 @@
 
     {{ $this->form }}
 
+    @if (auth()->user()->isAsesor)
     <div class="mt-4">
         <x-filament::button wire:click="handleSave">
             simpan
         </x-filament::button>
     </div>
+    @endif
+
     @else
     <div class="text-gray-400 text-md text-center">
-        Menunggu FR.AK.01 Persetujuan Asesmen dan Kerahasiaan
+        Menunggu FR.APL.01, FR.APL.02, FR.AK.01, FR.IA.01, FR.IA.03, FR.IA.05, FR.IA.06 selesai
     </div>
     @endif
 </x-filament-panels::page>

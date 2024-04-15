@@ -51,7 +51,7 @@ class RekamanAsesmenPage extends Page implements HasForms
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->status->value >= 3;
+        $this->isShow = $this->getRecord()->status->value === AsesmenStatus::TERTULIS_PILIHAN_GANDA->value || $this->getRecord()->status->value >= AsesmenStatus::TERTULIS_ESAI->value;
 
         $this->record->load('tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 
@@ -73,6 +73,7 @@ class RekamanAsesmenPage extends Page implements HasForms
     public function form(Form $form): Form
     {
         return $form
+            ->disabled(! auth()->user()->isAsesor)
             ->schema([
                 Forms\Components\DatePicker::make('tanggal_mulai')
                     ->inlineLabel()

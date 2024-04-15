@@ -134,6 +134,7 @@ class PraAsesmenPage extends Page implements HasForms, HasTable
             ->actions([
                 Action::make('persetujuan')
                     ->button()
+                    ->icon('heroicon-m-document-text')
                     ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.persetujuan-asesmen-dan-kerahasiaan', $record))
             ])
             ->bulkActions([

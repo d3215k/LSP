@@ -136,6 +136,7 @@
                                                                         id="data.kompeten.{{ $pertanyaan->id }}.K"
                                                                         name="data.kompeten.{{ $pertanyaan->id }}"
                                                                         value="K"
+                                                                        @disabled(! auth()->user()->isAsesor)
                                                                         wire:loading.attr="disabled"
                                                                         wire:model="data.kompeten.{{ $pertanyaan->id }}"
                                                                     >
@@ -160,6 +161,7 @@
                                                                         id="data.kompeten.{{ $pertanyaan->id }}.BK"
                                                                         name="data.kompeten.{{ $pertanyaan->id }}"
                                                                         value="BK"
+                                                                        @disabled(! auth()->user()->isAsesor)
                                                                         wire:loading.attr="disabled"
                                                                         wire:model="data.kompeten.{{ $pertanyaan->id }}"
                                                                     >
@@ -215,6 +217,7 @@
                 @endforeach
             </div>
 
+            @if (auth()->user()->isAsesor)
             <div class="sticky bottom-0">
                 <div class="flex justify-end shadow-sm px-6 bg-gray-100 border border-gray-200">
                     <div class="py-4 px-8">
@@ -224,6 +227,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </div>
     @else
         <div class="text-gray-400 text-md text-center">

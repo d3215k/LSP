@@ -15,6 +15,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Notifications\Notification;
 use Filament\Resources\Pages\EditRecord;
 use Illuminate\Contracts\Support\Htmlable;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Saade\FilamentAutograph\Forms\Components\SignaturePad;
 
@@ -34,6 +35,14 @@ class EditAsesmen extends EditRecord
     public function getSubheading(): string|Htmlable|null
     {
         return 'Permohonan Sertifikasi Kompetensi';
+    }
+
+    protected function beforeSave(): void
+    {
+        if (! auth()->user()->isAdmin) {
+            Notification::make()->title('Whoops!')->body('Hanya bisa oleh Admin')->danger()->send();
+            $this->halt();
+        }
     }
 
     protected function getHeaderActions(): array

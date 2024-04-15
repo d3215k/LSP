@@ -57,6 +57,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
     public function rekomendasiForm(Form $form): Form
     {
         return $form
+            ->disabled(auth()->user()->isAdmin)
             ->schema([
                 TextInput::make('catatan')
                     ->required()
@@ -75,6 +76,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
     public function ttdAsesorForm(Form $form): Form
     {
         return $form
+            ->disabled(auth()->user()->isAdmin)
             ->schema([
                 SignaturePad::make('ttd_asesor')
                     ->label('Tanda tangan asesor')
@@ -98,6 +100,10 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
     public function handleSubmit()
     {
+        if (auth()->user()->isAdmin) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
         $this->validate();
 
         try {
@@ -131,7 +137,7 @@ class PenilaianAsesmenMandiriComponent extends Component implements HasForms, Ha
 
         } catch (\Throwable $th) {
             report($th->getMessage());
-            Notification::make()->title('Whoops! Ada yang salah')->danger()->send();
+            Notification::make()->title('Whoops!')->body('Ada yang salah')->danger()->send();
             DB::rollBack();
         }
 

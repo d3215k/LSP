@@ -21,7 +21,7 @@ class Mandiri extends Model
 
     public function jawaban(): HasMany
     {
-        return $this->hasMany(JawabanAsesmenMandiri::class);
+        return $this->hasMany(JawabanMandiri::class);
     }
 
     public function asesmen(): BelongsTo

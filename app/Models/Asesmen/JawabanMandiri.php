@@ -2,7 +2,7 @@
 
 namespace App\Models\Asesmen;
 
-use App\Models\Elemen;
+use App\Models\Skema\Elemen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;

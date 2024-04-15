@@ -3,9 +3,11 @@
         <form wire:submit="handleSave">
             {{ $this->form }}
 
+            @if (auth()->user()->isAdmin)
             <x-filament::button type="submit" class="mt-6">
                 Simpan
             </x-filament::button>
+            @endif
         </form>
     @else
         <div class="text-gray-400 text-md text-center">

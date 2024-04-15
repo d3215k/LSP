@@ -37,7 +37,7 @@ class PertanyaanTertulisPilihanGandaPage extends Page
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->skema->tertulis_esai && $this->getRecord()->tertulisEsai;
+        $this->isShow = $this->getRecord()->skema->tertulis_pilihan_ganda && $this->getRecord()->tertulisPilihanGanda;
     }
 
     protected function getViewData(): array

@@ -137,6 +137,7 @@
                                                                         id="data.kompeten.{{ $pertanyaan->id }}.K"
                                                                         name="data.kompeten.{{ $pertanyaan->id }}"
                                                                         value="K"
+                                                                        @disabled(! auth()->user()->isAsesor)
                                                                         wire:loading.attr="disabled"
                                                                         wire:model="data.kompeten.{{ $pertanyaan->id }}"
                                                                     >
@@ -161,6 +162,7 @@
                                                                         id="data.kompeten.{{ $pertanyaan->id }}.BK"
                                                                         name="data.kompeten.{{ $pertanyaan->id }}"
                                                                         value="BK"
+                                                                        @disabled(! auth()->user()->isAsesor)
                                                                         wire:loading.attr="disabled"
                                                                         wire:model="data.kompeten.{{ $pertanyaan->id }}"
                                                                     >
@@ -188,6 +190,7 @@
                                                             <textarea
                                                                 id="tanggapan.{{ $pertanyaan->id }}"
                                                                 wire:loading.attr="disabled"
+                                                                @disabled(! auth()->user()->isAsesor)
                                                                 wire:model="data.tanggapan.{{ $pertanyaan->id }}"
                                                                 class="block w-full border-none bg-transparent px-3 py-1.5 text-base text-gray-950 placeholder:text-gray-400 focus:ring-0 disabled:text-gray-500 disabled:[-webkit-text-fill-color:theme(colors.gray.500)] disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.400)] dark:text-white dark:placeholder:text-gray-500 dark:disabled:text-gray-400 dark:disabled:[-webkit-text-fill-color:theme(colors.gray.400)] dark:disabled:placeholder:[-webkit-text-fill-color:theme(colors.gray.500)] sm:text-sm sm:leading-6"></textarea>
                                                         </div>
@@ -204,6 +207,7 @@
             @endforeach
         </div>
 
+        @if (auth()->user()->isAsesor)
         <div class="sticky bottom-0">
             <div class="flex justify-end px-6 bg-gray-100 border border-gray-200">
                 <div class="py-4 px-8 flex gap-2">
@@ -219,6 +223,7 @@
                 </div>
             </div>
         </div>
+        @endif
     </div>
     @else
     <div class="text-gray-400 text-md text-center">

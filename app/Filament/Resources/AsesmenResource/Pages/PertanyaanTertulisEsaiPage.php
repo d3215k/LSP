@@ -60,6 +60,10 @@ class PertanyaanTertulisEsaiPage extends Page
 
     public function handleSave()
     {
+        if (! auth()->user()->isAsesor) {
+            return Notification::make()->title('Whoops!')->body('Hanya bisa oleh Asesor')->danger()->send();
+        }
+
         try {
             DB::beginTransaction();
             $esai = TertulisEsai::updateOrCreate(
