@@ -125,16 +125,16 @@ class AsesmenPage extends Page implements HasForms, HasTable
                         ->label('Tertulis Esai')
                         ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.pertanyaan-tertulis-esai', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => !$record->tertulisEsai),
+                        ->hidden(fn (Asesmen $record): bool => ! $record->tertulisEsai),
                     Action::make('pg')
                         ->label('Tertulis PG')
                         ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.pertanyaan-tertulis-pilihan-ganda', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => !$record->tertulisPilihanGanda),
+                        ->hidden(fn (Asesmen $record): bool => ! $record->tertulisPilihanGanda),
                     Action::make('Rekaman')
                         ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.rekaman', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => $record->status->value !== AsesmenStatus::TERTULIS_PILIHAN_GANDA->value || $record->status->value >= AsesmenStatus::TERTULIS_ESAI->value),
+                        ->hidden(fn (Asesmen $record): bool => $record->status->value < AsesmenStatus::TERTULIS_ESAI->value),
                 ])
                 ->button()
                 ->icon('heroicon-m-document-text')

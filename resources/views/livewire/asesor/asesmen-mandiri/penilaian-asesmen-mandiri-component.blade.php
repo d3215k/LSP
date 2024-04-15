@@ -28,7 +28,9 @@
 
     </x-filament::section>
 
+    @if (auth()->user()->isAsesor)
     <x-filament::button class="mt-6" wire:click="handleSubmit">
         Simpan
     </x-filament::button>
+    @endif
 </div>

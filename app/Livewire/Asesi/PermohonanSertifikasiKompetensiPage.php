@@ -12,7 +12,9 @@ class PermohonanSertifikasiKompetensiPage extends Component
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
+        abort_unless(
+            auth()->user()->isAsesi && $this->asesmen->asesi_id === auth()->user()->asesi_id
+        , 403);
     }
 
     #[Title('FR.APL.01 Permohonan Sertifikasi Kompetensi')]

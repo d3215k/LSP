@@ -10,6 +10,13 @@ class UmpanBalikDanCatatanAsesmenPage extends Component
 {
     public Asesmen $asesmen;
 
+    public function mount()
+    {
+        abort_unless(
+            auth()->user()->isAsesi && $this->asesmen->asesi_id === auth()->user()->asesi_id
+        , 403);
+    }
+
     #[Title('FR.AK.03 UMPAN BALIK DAN CATATAN ASESMEN')]
     public function render()
     {

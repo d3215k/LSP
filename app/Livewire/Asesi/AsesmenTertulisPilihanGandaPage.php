@@ -12,7 +12,10 @@ class AsesmenTertulisPilihanGandaPage extends Component
 
     public function mount()
     {
-        abort_unless(auth()->user()->isAsesi, 403);
+        abort_unless(
+            auth()->user()->isAsesi && $this->asesmen->asesi_id === auth()->user()->asesi_id
+        , 403);
+
         $this->asesmen->load('tertulisPilihanGanda:status,asesmen_id');
     }
 
