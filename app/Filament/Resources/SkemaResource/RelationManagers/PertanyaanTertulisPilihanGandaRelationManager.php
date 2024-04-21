@@ -67,11 +67,13 @@ class PertanyaanTertulisPilihanGandaRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-                Tables\Actions\CreateAction::make(),
+                Tables\Actions\CreateAction::make()
+                    ->closeModalByClickingAway(false),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
-                    ->modalHeading('Edit'),
+                    ->modalHeading('Edit')
+                    ->closeModalByClickingAway(false),
                 Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
