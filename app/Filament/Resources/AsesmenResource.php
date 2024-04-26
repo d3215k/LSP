@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Enums\AsesmenStatus;
 use App\Enums\TujuanAsesmen;
 use App\Enums\UserType;
+use App\Filament\Clusters\Asesmen as ClustersAsesmen;
 use App\Filament\Resources\AsesmenResource\Pages;
 use App\Filament\Resources\AsesmenResource\RelationManagers;
 use App\Models\Asesmen;
@@ -25,6 +26,7 @@ use Filament\Pages\SubNavigationPosition;
 use Filament\Resources\Pages\Page;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
@@ -37,9 +39,11 @@ class AsesmenResource extends Resource
 {
     protected static ?string $model = Asesmen::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-document-check';
+    protected static ?string $cluster = ClustersAsesmen::class;
 
-    protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationIcon = 'heroicon-o-document-text';
+
+    protected static ?string $navigationLabel = 'FR.APL.01';
 
     protected static ?int $navigationSort = 1;
 
@@ -320,7 +324,9 @@ class AsesmenResource extends Resource
                         ])
                         ->deselectRecordsAfterCompletion(),
                 ]),
-            ]);
+            ])
+            ->filtersLayout(FiltersLayout::AboveContent)
+            ->filtersFormColumns(2);
     }
 
     public static function getRelations(): array

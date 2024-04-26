@@ -9,6 +9,11 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class AsesmenOverview extends BaseWidget
 {
+    protected function getColumns(): int
+    {
+        return 1;
+    }
+
     protected function getStats(): array
     {
         return [
