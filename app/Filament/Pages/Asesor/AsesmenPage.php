@@ -116,23 +116,23 @@ class AsesmenPage extends Page implements HasForms, HasTable
             ->actions([
                 ActionGroup::make([
                     Action::make('Observasi Aktivitas')
-                        ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.ceklis-observasi-aktivitas', $record))
+                        ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.ceklis-observasi-aktivitas', $record))
                         ->icon('heroicon-m-document-text'),
                     Action::make('Observasi Pendukung')
-                        ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.pertanyaan-observasi-pendukung', $record))
+                        ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.pertanyaan-observasi-pendukung', $record))
                         ->icon('heroicon-m-document-text'),
                     Action::make('esai')
                         ->label('Tertulis Esai')
-                        ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.pertanyaan-tertulis-esai', $record))
+                        ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.pertanyaan-tertulis-esai', $record))
                         ->icon('heroicon-m-document-text')
                         ->hidden(fn (Asesmen $record): bool => ! $record->tertulisEsai),
                     Action::make('pg')
                         ->label('Tertulis PG')
-                        ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.pertanyaan-tertulis-pilihan-ganda', $record))
+                        ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.pertanyaan-tertulis-pilihan-ganda', $record))
                         ->icon('heroicon-m-document-text')
                         ->hidden(fn (Asesmen $record): bool => ! $record->tertulisPilihanGanda),
                     Action::make('Rekaman')
-                        ->url(fn (Asesmen $record): string => route('filament.app.resources.asesmens.rekaman', $record))
+                        ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.rekaman', $record))
                         ->icon('heroicon-m-document-text')
                         ->hidden(fn (Asesmen $record): bool => $record->status->value < AsesmenStatus::TERTULIS_ESAI->value),
                 ])

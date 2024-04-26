@@ -144,7 +144,7 @@ class AsesmenMandiriPage extends Page implements HasForms, HasTable
                 Action::make('Periksa')
                     ->button()
                     ->icon('heroicon-m-document-text')
-                    ->url(fn (Mandiri $record): string => route('filament.app.resources.asesmens.asesmen-mandiri', $record->asesmen))
+                    ->url(fn (Mandiri $record): string => route('filament.app.asesmen.resources.asesmens.asesmen-mandiri', $record->asesmen))
             ])
             ->bulkActions([
                 BulkAction::make('Periksa')

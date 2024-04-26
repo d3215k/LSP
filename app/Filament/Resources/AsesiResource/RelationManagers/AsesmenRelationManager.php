@@ -30,7 +30,7 @@ class AsesmenRelationManager extends RelationManager
         return $table
             ->recordTitleAttribute('skema.nama')
             ->recordUrl(
-                fn (Asesmen $record): string => route('filament.app.resources.asesmens.edit', $record),
+                fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.edit', $record),
             )
             ->columns([
                 Tables\Columns\TextColumn::make('skema.nama')
