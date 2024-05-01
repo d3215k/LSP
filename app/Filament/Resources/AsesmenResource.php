@@ -304,6 +304,12 @@ class AsesmenResource extends Resource
                         ->action(function (Collection $records, array $data): void {
                             try {
                                 foreach ($records as $record) {
+                                    if ($data['status']) {
+                                        $record->status = AsesmenStatus::ASESMEN_MANDIRI;
+                                    }
+                                    if ($data['asesor_id'] != $record->asesor_id) {
+                                        $record->ttd_asesor = null;
+                                    }
                                     $record->asesor_id = $data['asesor_id'];
                                     $record->save();
                                 }
@@ -321,6 +327,9 @@ class AsesmenResource extends Resource
                                 ->searchable()
                                 ->preload()
                                 ->required(),
+                            Forms\Components\Checkbox::make('status')
+                                ->label('Reset Status Asesmen')
+                                ->default(true),
                         ])
                         ->deselectRecordsAfterCompletion(),
                 ]),
