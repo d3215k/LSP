@@ -51,7 +51,7 @@ class RekamanAsesmenPage extends Page implements HasForms
     public function mount(int | string $record): void
     {
         $this->record = $this->resolveRecord($record);
-        $this->isShow = $this->getRecord()->status->value === AsesmenStatus::TERTULIS_ESAI->value || $this->getRecord()->status->value >= AsesmenStatus::TERTULIS_PILIHAN_GANDA->value;
+        $this->isShow = $this->getRecord()->status->value >= AsesmenStatus::OBSERVASI_PENDUKUNG->value;
 
         $this->record->load('tertulisEsai', 'observasiAktivitas', 'observasiPendukung');
 

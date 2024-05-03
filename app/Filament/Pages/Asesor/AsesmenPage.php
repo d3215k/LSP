@@ -56,7 +56,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
         return $table
             ->query(
                 Asesmen::query()->latest()
-                    ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::TERTULIS_ESAI])
+                    ->whereIn('status', [AsesmenStatus::PERSETUJUAN, AsesmenStatus::OBSERVASI_AKTIVITAS, AsesmenStatus::OBSERVASI_PENDUKUNG, AsesmenStatus::TERTULIS_ESAI, AsesmenStatus::TERTULIS_PILIHAN_GANDA])
                     ->where('asesor_id', auth()->user()->asesor_id)
                     ->with('tertulisEsai', 'tertulisPilihanGanda', 'observasiAktivitas', 'observasiPendukung'),
             )
@@ -134,7 +134,7 @@ class AsesmenPage extends Page implements HasForms, HasTable
                     Action::make('Rekaman')
                         ->url(fn (Asesmen $record): string => route('filament.app.asesmen.resources.asesmens.rekaman', $record))
                         ->icon('heroicon-m-document-text')
-                        ->hidden(fn (Asesmen $record): bool => $record->status->value < AsesmenStatus::TERTULIS_ESAI->value),
+                        ->hidden(fn (Asesmen $record): bool => (int) $record->status->value <= AsesmenStatus::OBSERVASI_AKTIVITAS->value),
                 ])
                 ->button()
                 ->icon('heroicon-m-document-text')
