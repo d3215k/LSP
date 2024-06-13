@@ -54,6 +54,8 @@ class AsesmenExporter extends Exporter
                 ->label('No. Telepon HP'),
             ExportColumn::make('rincianDataPemohon.kualifikasi_pendidikan')
                 ->label('Kualifikasi Pendidikan'),
+            ExportColumn::make('asesi.email')
+                ->label('Email'),
             ExportColumn::make('rincianDataPemohon.nama_institusi')
                 ->label('Nama Institusi'),
             ExportColumn::make('rincianDataPemohon.jabatan')
